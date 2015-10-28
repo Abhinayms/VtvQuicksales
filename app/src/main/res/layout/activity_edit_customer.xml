@@ -69,6 +69,7 @@
                 android:src="@drawable/cancel_edit"
                 android:layout_weight="8"
                 android:id="@+id/cbname"
+                android:visibility="invisible"
                 />
         </LinearLayout>
     <LinearLayout
@@ -97,6 +98,7 @@
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
             android:id="@+id/cbnum"
+            android:visibility="invisible"
             />
     </LinearLayout>
         <LinearLayout
@@ -123,6 +125,7 @@
         android:src="@drawable/cancel_edit"
         android:layout_weight="8"
             android:id="@+id/cbpro"
+            android:visibility="invisible"
             />
     </LinearLayout>
     <LinearLayout
@@ -149,6 +152,7 @@
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
             android:id="@+id/cbgen"
+            android:visibility="invisible"
             />
     </LinearLayout>
 
@@ -176,6 +180,7 @@
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
             android:id="@+id/cbcpmny"
+            android:visibility="invisible"
             />
     </LinearLayout>
 
@@ -204,6 +209,7 @@
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
             android:id="@+id/cbln"
+            android:visibility="invisible"
             />
     </LinearLayout>
     <LinearLayout
@@ -230,6 +236,7 @@
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
             android:id="@+id/cbadd"
+            android:visibility="invisible"
             />
     </LinearLayout>
     <LinearLayout
@@ -257,6 +264,8 @@
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
             android:id="@+id/cbmail"
+            android:visibility="invisible"
+
             />
     </LinearLayout>
         <Button

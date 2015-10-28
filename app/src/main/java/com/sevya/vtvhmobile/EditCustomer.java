@@ -49,7 +49,15 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
 
 
-    String name;
+    String custName;
+    String custNum;
+    String custPro;
+    String custComp;
+    String custLn;
+    String custGen;
+    String custAdd;
+    String custEmail;
+
 
 
     @Override
@@ -69,13 +77,13 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getDetails();
+
 
         cname = (EditText) findViewById(R.id.cname);
         cnum = (EditText) findViewById(R.id.cnum);
-        compName = (EditText) findViewById(R.id.cpro);
+        compName = (EditText) findViewById(R.id.compName);
         cgen = (EditText) findViewById(R.id.cgen);
-        cpro = (EditText) findViewById(R.id.compName);
+        cpro = (EditText) findViewById(R.id.cpro);
         cln = (EditText) findViewById(R.id.cln);
         cadd = (EditText) findViewById(R.id.cadd);
         cmail = (EditText) findViewById(R.id.cmail);
@@ -106,6 +114,8 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cbmail.setOnTouchListener(this);
         cbgen.setOnTouchListener(this);
         cbpro.setOnTouchListener(this);
+
+        getDetails();
     }
 
 
@@ -116,6 +126,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         try {
                 Intent i=getIntent();
                String num= i.getStringExtra("cnum");
+
+
+
             //phnnum = (EditText) findViewById(R.id.edit_phone);
            // num = phnnum.getText().toString();
 
@@ -126,15 +139,26 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
             if (cursor != null) {
 
                 cursor.moveToFirst();
-                name = cursor.getString(1);
-                cname.setText(cursor.getString(1));
-                cnum.setText(cursor.getString(2));
-                compName.setText(cursor.getString(3));
-                cgen.setText(cursor.getString(4));
-                cpro.setText(cursor.getString(5));
-                cln.setText(cursor.getString(6));
-                cadd.setText(cursor.getString(7));
-                cmail.setText(cursor.getString(8));
+                custName = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
+                custNum = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
+                custGen = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.GENDER));
+                custPro = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PROFESSION));
+                custLn = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.LANDLINE_NUMBER));
+                custAdd = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.ADDRESS));
+                custEmail = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.EMAIL));
+                custComp = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.COMPANY_NAME));
+
+
+
+
+                cname.setText(custName);
+                cnum.setText(custNum);
+                compName.setText(custComp);
+                cgen.setText(custGen);
+                cpro.setText(custPro);
+                cln.setText(custLn);
+                cadd.setText(custAdd);
+                cmail.setText(custEmail);
             } else {
 
 
@@ -150,19 +174,37 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     {
         ButtonAnimation.animation(view);
 
-        int i=dataBaseHelper.update(cname.getText().toString(),cnum.getText().toString(),compName.getText().toString(),cgen.getText().toString(),cpro.getText().toString(),cln.getText().toString(),cadd.getText().toString(),
-                cmail.getText().toString());
+        /*if (custName.length() == 0) {
 
-        Intent intent=new Intent(EditCustomer.this,ReceiveDetails.class);
-        intent.putExtra("cname", cname.getText().toString());
-        intent.putExtra("cnum", cnum.getText().toString());
-        intent.putExtra("compName", cpro.getText().toString());
-        intent.putExtra("cpro", compName.getText().toString());
-        intent.putExtra("cln", cln.getText().toString());
-        intent.putExtra("cadd", cadd.getText().toString());
-        intent.putExtra("cmail", cmail.getText().toString());
-        intent.putExtra("rb", cgen.getText().toString());
-        startActivity(intent);
+            cname.setError("Please enter the required details");
+
+        }
+        else if (custNo.length() != 10) {
+            cnum.setError("please enter 10 digit Mobile number");
+        }
+        else if(cAdd.length() <=0 )
+        {
+            cadd.setError("Please enter Valid Address");
+        }
+        else if(cMail.length()!=0) {
+            if (!isEmailValid(cMail))
+                cmail.setError("please enter Valid email");
+            else {*/
+
+                int i = dataBaseHelper.update(cname.getText().toString(), cnum.getText().toString(), compName.getText().toString(), cgen.getText().toString(), cpro.getText().toString(), cln.getText().toString(), cadd.getText().toString(),
+                        cmail.getText().toString());
+
+                Intent intent = new Intent(EditCustomer.this, ReceiveDetails.class);
+                intent.putExtra("cname", cname.getText().toString());
+                intent.putExtra("cnum", cnum.getText().toString());
+                intent.putExtra("compName", compName.getText().toString());
+                intent.putExtra("cpro", cpro.getText().toString());
+                intent.putExtra("cln", cln.getText().toString());
+                intent.putExtra("cadd", cadd.getText().toString());
+                intent.putExtra("cmail", cmail.getText().toString());
+                intent.putExtra("rb", cgen.getText().toString());
+                startActivity(intent);
+
     }
 
 
@@ -198,91 +240,91 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
             switch(v.getId())
             {
                 case R.id.cname:
-                    cname.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.VISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbname:
                     cname.setText("");
                     break;
                 case R.id.cnum:
-                    cnum.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.VISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbnum:
                     cnum.setText("");
                     break;
                 case R.id.compName:
-                    compName.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.VISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbcpmny:
                     compName.setText("");
                     break;
                 case R.id.cln:
-                    cln.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.VISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbln:
                     cln.setText("");
                     break;
                 case R.id.cadd:
-                    cadd.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.VISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbadd:
                     cadd.setText("");
                     break;
                 case R.id.cmail:
-                    cmail.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.VISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbmail:
                     cmail.setText("");
                     break;
                 case R.id.cpro:
-                    cmail.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
@@ -290,22 +332,22 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.VISIBLE);
-                    cgen.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
 
                     break;
                 case R.id.cbpro:
                     cpro.setText("");
                     break;
                 case R.id.cgen:
-                    cmail.setFocusableInTouchMode(true);
+
                     cbname.setVisibility(View.INVISIBLE);
                     cbnum.setVisibility(View.INVISIBLE);
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cgen.setVisibility(View.VISIBLE);
-                    cpro.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.VISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbgen:
                     cgen.setText("");

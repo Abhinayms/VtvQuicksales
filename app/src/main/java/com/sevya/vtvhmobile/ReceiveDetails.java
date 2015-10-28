@@ -22,6 +22,9 @@ public class ReceiveDetails extends AppCompatActivity {
     TextView pro;
     TextView email;
     TextView add;
+    TextView add1;
+    TextView add2;
+    TextView add3;
     TextView gen;
     TextView ln;
     Button rcontinue;
@@ -40,6 +43,9 @@ public class ReceiveDetails extends AppCompatActivity {
         pro=(TextView)findViewById(R.id.epro);
         email=(TextView)findViewById(R.id.email);
         add=(TextView)findViewById(R.id.eadd);
+        add1=(TextView)findViewById(R.id.eadd1);
+        add2=(TextView)findViewById(R.id.eadd2);
+        add3=(TextView)findViewById(R.id.eadd3);
         gen=(TextView) findViewById(R.id.egen);
         ln=(TextView) findViewById(R.id.eln);
 
@@ -51,6 +57,9 @@ public class ReceiveDetails extends AppCompatActivity {
         String cpro=i.getStringExtra("cpro");
         String cmail=i.getStringExtra("cmail");
         String cadd=i.getStringExtra("cadd");
+        String cadd1=i.getStringExtra("cadd1");
+        String cadd2=i.getStringExtra("cadd2");
+        String cadd3=i.getStringExtra("cadd3");
         String cgen=i.getStringExtra("rb");
         String cln=i.getStringExtra("cln");
 
@@ -60,6 +69,9 @@ public class ReceiveDetails extends AppCompatActivity {
         pro.setText(cpro);
         email.setText(cmail);
         add.setText(cadd);
+        add1.setText(cadd1);
+        add2.setText(cadd2);
+        add3.setText(cadd3);
         gen.setText(cgen);
         ln.setText(cln);
 

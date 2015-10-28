@@ -18,10 +18,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.Customer;
+import com.sevya.vtvhmobile.models.FactoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     EditText compName;
     EditText cln;
     EditText cadd;
+    EditText cadd1;
+    EditText cadd2;
+    EditText cadd3;
     EditText cmail;
 
     ImageButton cbname;
@@ -42,16 +47,23 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     ImageButton cbcpmny;
     ImageButton cbmail;
     ImageButton cbadd;
+    ImageButton cbadd1;
+    ImageButton cbadd2;
+    ImageButton cbadd3;
     ImageButton cbln;
 
     Spinner spinner1;
 
     public RadioGroup rdg;
+    public RadioGroup compGroup;
     public  RadioButton male;
     public RadioButton female;
-    public String selectedType="Male";
+    public  RadioButton yes;
+    public RadioButton no;
+    public String selectedType="";
     Button done;
     Button cancel;
+    RelativeLayout genderlayout;
 
     DataBaseAdapter dataBaseHelper;
     Customer customer;
@@ -68,6 +80,12 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         spinner1 = (Spinner) findViewById(R.id.spinner1);
         cln = (EditText) findViewById(R.id.cln);
         cadd = (EditText) findViewById(R.id.cadd);
+        cadd1=(EditText)findViewById(R.id.cadd1);
+        cadd2=(EditText)findViewById(R.id.cadd2);
+        cadd3=(EditText)findViewById(R.id.cadd3);
+
+         genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
+
         cmail=(EditText)findViewById(R.id.cmail);
 
         cbname=(ImageButton)findViewById(R.id.cbname);
@@ -75,6 +93,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cbcpmny=(ImageButton)findViewById(R.id.cbcpmny);
         cbmail=(ImageButton)findViewById(R.id.cbmail);
         cbadd=(ImageButton)findViewById(R.id.cbadd);
+        cbadd1=(ImageButton)findViewById(R.id.cbadd1);
+        cbadd2=(ImageButton)findViewById(R.id.cbadd2);
+        cbadd3=(ImageButton)findViewById(R.id.cbadd3);
         cbln=(ImageButton)findViewById(R.id.cbln);
 
 
@@ -98,6 +119,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cnum.setOnTouchListener(this);
         compName.setOnTouchListener(this);
         cadd.setOnTouchListener(this);
+        cadd1.setOnTouchListener(this);
+        cadd2.setOnTouchListener(this);
+        cadd3.setOnTouchListener(this);
         cln.setOnTouchListener(this);
         cmail.setOnTouchListener(this);
 
@@ -105,6 +129,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cbnum.setOnTouchListener(this);
         cbcpmny.setOnTouchListener(this);
         cbadd.setOnTouchListener(this);
+        cbadd1.setOnTouchListener(this);
+        cbadd2.setOnTouchListener(this);
+        cbadd3.setOnTouchListener(this);
         cbln.setOnTouchListener(this);
         cbmail.setOnTouchListener(this);
     }
@@ -128,23 +155,46 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
     public void onButtonClickDone()
     {
-        rdg = (RadioGroup) findViewById(R.id.radioSex);
-        male = (RadioButton) findViewById(R.id.radioMale);
-        female = (RadioButton) findViewById(R.id.radioFemale);
 
+        compGroup=(RadioGroup)findViewById(R.id.company);
+        yes=(RadioButton)findViewById(R.id.compyes);
+        no=(RadioButton)findViewById(R.id.compno);
+        no.setChecked(true);
 
-        male.setChecked(true);
-        rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.radioMale) {
-                    selectedType = male.getText().toString();
+        compGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            if (i == R.id.compyes) {
+                genderlayout.setVisibility(View.INVISIBLE);
 
-                } else if (i == R.id.radioFemale) {
-                    selectedType = female.getText().toString();
-                }
+            } else if (i == R.id.compno) {
+                genderlayout.setVisibility(View.VISIBLE);
+                rdg = (RadioGroup) findViewById(R.id.radioSex);
+                male = (RadioButton) findViewById(R.id.radioMale);
+                female = (RadioButton) findViewById(R.id.radioFemale);
+
+                selectedType="Male";
+                male.setChecked(true);
+                rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        if (i == R.id.radioMale) {
+                            selectedType = male.getText().toString();
+
+                        } else if (i == R.id.radioFemale) {
+                            selectedType = female.getText().toString();
+                        }
+                    }
+                });
+
             }
+        }
         });
+
+
+
+
 
         try {
             done = (Button) findViewById(R.id.button_done);
@@ -153,7 +203,10 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 public void onClick(View v) {
 
                     ButtonAnimation.animation(v);
-                    customer=new Customer();
+
+                    customer= FactoryModel.getInstanceCustomer();
+
+
                     String custName = cname.getText().toString();
                     customer.setName(custName);
                     String custNo = cnum.getText().toString();
@@ -168,6 +221,11 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     customer.setLandlineNumber(cLn);
                     String cAdd = cadd.getText().toString();
                     customer.setAddress(cAdd);
+
+                    String cAdd1 = cadd1.getText().toString();
+                    String cAdd2 = cadd2.getText().toString();
+                    String cAdd3 = cadd3.getText().toString();
+
                     String cMail = cmail.getText().toString();
 
                     customer.setEmail(cMail);
@@ -198,6 +256,10 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                             i.putExtra("cpro", cPro);
                             i.putExtra("cln", cLn);
                             i.putExtra("cadd", cAdd);
+                            i.putExtra("cadd1", cAdd1);
+                            i.putExtra("cadd2", cAdd2);
+                            i.putExtra("cadd3", cAdd3);
+
                             i.putExtra("cmail", cMail);
                             i.putExtra("rb", gender);
                             startActivity(i);
@@ -214,6 +276,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                         i.putExtra("cpro", cPro);
                         i.putExtra("cln", cLn);
                         i.putExtra("cadd", cAdd);
+                        i.putExtra("cadd1", cAdd1);
+                        i.putExtra("cadd2", cAdd2);
+                        i.putExtra("cadd3", cAdd3);
                         i.putExtra("cmail", cMail);
                         i.putExtra("rb", gender);
                         startActivity(i);
@@ -306,6 +371,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 cbcpmny.setVisibility(View.INVISIBLE);
                 cbln.setVisibility(View.INVISIBLE);
                 cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
                 cbmail.setVisibility(View.INVISIBLE);
                 break;
             case R.id.cbname:
@@ -317,6 +385,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 cbcpmny.setVisibility(View.INVISIBLE);
                 cbln.setVisibility(View.INVISIBLE);
                 cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
                 cbmail.setVisibility(View.INVISIBLE);
 
                 break;
@@ -330,6 +401,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 cbcpmny.setVisibility(View.VISIBLE);
                 cbln.setVisibility(View.INVISIBLE);
                 cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
                 cbmail.setVisibility(View.INVISIBLE);
                 break;
             case R.id.cbcpmny:
@@ -342,6 +416,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 cbcpmny.setVisibility(View.INVISIBLE);
                 cbln.setVisibility(View.VISIBLE);
                 cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
                 cbmail.setVisibility(View.INVISIBLE);
                 break;
             case R.id.cbln:
@@ -354,6 +431,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 cbcpmny.setVisibility(View.INVISIBLE);
                 cbln.setVisibility(View.INVISIBLE);
                 cbadd.setVisibility(View.VISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
                 cbmail.setVisibility(View.INVISIBLE);
                 break;
             case R.id.cbadd:
@@ -366,11 +446,60 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 cbcpmny.setVisibility(View.INVISIBLE);
                 cbln.setVisibility(View.INVISIBLE);
                 cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
                 cbmail.setVisibility(View.VISIBLE);
                 break;
             case R.id.cbmail:
                 cmail.setText("");
                 break;
+            case R.id.cadd1:
+
+                cbname.setVisibility(View.INVISIBLE);
+                cbnum.setVisibility(View.INVISIBLE);
+                cbcpmny.setVisibility(View.INVISIBLE);
+                cbln.setVisibility(View.INVISIBLE);
+                cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.VISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
+                cbmail.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.cbadd1:
+                cadd1.setText("");
+                break;
+            case R.id.cadd2:
+
+                cbname.setVisibility(View.INVISIBLE);
+                cbnum.setVisibility(View.INVISIBLE);
+                cbcpmny.setVisibility(View.INVISIBLE);
+                cbln.setVisibility(View.INVISIBLE);
+                cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.VISIBLE);
+                cbadd3.setVisibility(View.INVISIBLE);
+                cbmail.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.cbadd2:
+                cadd2.setText("");
+                break;
+            case R.id.cadd3:
+
+                cbname.setVisibility(View.INVISIBLE);
+                cbnum.setVisibility(View.INVISIBLE);
+                cbcpmny.setVisibility(View.INVISIBLE);
+                cbln.setVisibility(View.INVISIBLE);
+                cbadd.setVisibility(View.INVISIBLE);
+                cbadd1.setVisibility(View.INVISIBLE);
+                cbadd2.setVisibility(View.INVISIBLE);
+                cbadd3.setVisibility(View.VISIBLE);
+                cbmail.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.cbadd3:
+                cadd3.setText("");
+                break;
+
 
         }
         return false;

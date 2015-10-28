@@ -281,7 +281,7 @@
                 android:src="@drawable/cancel_edit"
                 android:layout_alignParentRight="true"
                 android:layout_weight="8"
-                android:id="@+id/cbadd4"
+                android:id="@+id/cbadd3"
                 android:visibility="invisible"
                 />
         </LinearLayout>
@@ -318,6 +318,50 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Is Company ?"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/rbcomp" />
+            <RadioGroup
+                android:id="@+id/company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+
+                android:layout_marginLeft="100dp"
+                >
+
+
+                <RadioButton
+                    android:id="@+id/compyes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:layout_toEndOf="@+id/rbcomp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/compno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:layout_marginLeft="10dp"
+                    />
+            </RadioGroup>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/genderlayout"
             >
             <TextView
                 android:layout_width="wrap_content"

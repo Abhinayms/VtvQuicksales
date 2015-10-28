@@ -49,7 +49,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     public RadioGroup rdg;
     public  RadioButton male;
     public RadioButton female;
-    public String selectedType="";
+    public String selectedType="Male";
     Button done;
     Button cancel;
 
@@ -133,12 +133,13 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         female = (RadioButton) findViewById(R.id.radioFemale);
 
 
-        male.setSelected(true);
+        male.setChecked(true);
         rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (i == R.id.radioMale) {
                     selectedType = male.getText().toString();
+
                 } else if (i == R.id.radioFemale) {
                     selectedType = female.getText().toString();
                 }

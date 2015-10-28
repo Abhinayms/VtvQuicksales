@@ -53,12 +53,13 @@
 
     <style name="spinner_style" parent="@android:style/Theme.Holo.Light">
 
-        <item name="android:showDividers">none</item>
+        <item name="android:showDividers"></item>
         <item name="android:dividerHeight">2dp</item>
 
         <item name="android:background">@drawable/sample_bg</item>
         <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
         <item name="android:dropDownSelector">@android:color/white</item>
+
     </style>
 
 </resources>

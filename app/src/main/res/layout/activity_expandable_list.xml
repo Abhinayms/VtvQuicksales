@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+
+    tools:context="com.sevya.vtvhmobile.ExpandableListActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+
+        >
+
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@android:id/list"
+        android:dividerHeight="0.5dp"
+        android:divider="#A4C739"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        >
+
+    </ExpandableListView>
+        //android:groupIndicator="@drawable/expandableindicator"
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Sorry, No sales have been done "
+        android:textColor="#00BCD4"
+        android:textSize="30dp"
+        android:textStyle="italic|bold"
+        android:id="@+id/saletextview"
+        android:layout_marginTop="70dp"
+
+        />
+
+
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Id"
+                android:id="@+id/p_id"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:paddingRight="10dp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name"
+                android:id="@+id/p_name"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:paddingRight="10dp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Number"
+                android:id="@+id/p_number"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:paddingRight="10dp"
+
+                />
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Category"
+                android:id="@+id/p_category"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:paddingRight="10dp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Manufacturer"
+                android:id="@+id/p_manufacturer"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:paddingRight="10dp"
+
+                />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Model ID"
+                android:id="@+id/p_model"
+                android:paddingRight="10dp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Quantity"
+                android:id="@+id/p_qty"
+                android:paddingRight="10dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="price"
+                android:id="@+id/p_price"
+                android:paddingRight="10dp"
+
+                />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

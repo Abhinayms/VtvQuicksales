@@ -1,0 +1,49 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.abhinaym.crm.ReceiveDetails">
+    <!--<item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+-->
+    <item
+        android:id="@+id/action_cart"
+        android:title="@string/action_cart"
+        android:orderInCategory="99"
+        android:icon="@drawable/ic_action_trolley"
+        app:showAsAction="ifRoom" >
+        <menu>
+            <item
+                android:id="@+id/cart"
+                android:title="Cart"/>.
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_edit"
+        android:title="edit"
+        android:orderInCategory="100"
+        android:icon="@drawable/edit"
+        app:showAsAction="ifRoom" />
+
+
+
+
+    <item
+        android:id="@+id/ic_action_settings_01"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_settings_01"
+        app:showAsAction="ifRoom" >
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:title="Settings"/>.
+
+
+
+            <item
+                android:id="@+id/editcustomer"
+                android:title="Edit Customer"/>
+        </menu>
+
+    </item>
+</menu>

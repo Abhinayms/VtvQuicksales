@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sevya.vtvhmobile" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyMaterialTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchResultsActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ThankyouScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.ThankyouScreen" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".LoginActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.SettingsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".BuyProducts"
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.DropDownActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AddCustomer"
+            android:label="@string/title_activity_search_" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.Search_Activity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ReceiveDetails"
+            android:label="@string/title_activity_receive_details"
+            android:parentActivityName=".MainActivity"
+            >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.ReceiveDetails" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--<activity
+            android:name=".CustomerDeatils"
+            android:label="@string/title_activity_customer_deatils" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.CustomerDeatils" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SelectItems"
+            android:label="@string/title_activity_select_items" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.SelectItems" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>-->
+        <activity
+            android:name=".CartActivity"
+            android:label="@string/title_activity_cart"
+            android:launchMode="singleTop"
+            android:parentActivityName=".BuyProducts" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.CartActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PurchaseActivity"
+            android:label="@string/title_activity_purchase"
+            android:launchMode="singleTop"
+            android:parentActivityName=".CartActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.PurchaseActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SurveyActivity"
+            android:label="@string/title_activity_survey"
+            android:parentActivityName=".PurchaseActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.SurveyActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ViewAllCustomers"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_view_all_customers"
+            android:parentActivityName=".MainActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.ViewAllCustomers" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DeleteCustomer"
+            android:label="@string/title_activity_delete_customer"
+            android:parentActivityName=".MainActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.DeleteCustomer" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchResultsActivity"
+            android:label="@string/app_name" >
+
+            <!-- to identify this activity as "searchable" -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".EditCustomer"
+            android:label="@string/title_activity_edit_customer"
+            android:parentActivityName=".MainActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.EditCustomer" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.LoginActivity" />
+
+                <category android:name="android.intent.category.Default" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PopupActivity"
+            android:label="@string/title_activity_popup"
+            android:parentActivityName=".MainActivity" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.PopActivity" />
+
+                <category android:name="android.intent.category.Default" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GetDetailsByDate"
+            android:label="@string/title_activity_get_details_by_date"
+            android:parentActivityName=".ViewAllCustomers" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.GetDetailsByDate" />
+
+                <category android:name="android.intent.category.Default" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SalesList"
+            android:label="@string/title_activity_sales_list"
+            android:parentActivityName=".GetDetailsByDate" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.SalesList" />
+
+                <category android:name="android.intent.category.Default" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ExpandableListActivity"
+            android:label="@string/title_activity_expandable_list"
+            android:parentActivityName=".GetDetailsByDate"
+            >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.ExpandableListActivity" />
+
+                <category android:name="android.intent.category.Default" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

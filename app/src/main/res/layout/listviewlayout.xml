@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Id"
+        android:id="@+id/c_id"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Name"
+        android:id="@+id/c_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Number"
+        android:id="@+id/c_number"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Age"
+        android:id="@+id/c_age"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Gender"
+        android:id="@+id/c_gender"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Profession"
+        android:id="@+id/c_profession"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="LandNumber"
+        android:id="@+id/c_landnumber"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Address"
+        android:id="@+id/c_address"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Email"
+        android:id="@+id/c_email"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+
+        />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Email"
+                android:id="@+id/c_date"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

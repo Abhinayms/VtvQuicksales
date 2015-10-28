@@ -1,0 +1,38 @@
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BBDEFB"
+
+        tools:context="com.sevya.vtvhmobile.NavigationDrawerFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/containerDrawerImage"
+            android:background="#607d8b"
+
+            >
+        <ImageView
+
+            android:layout_width="280dp"
+            android:layout_height="102dp"
+            android:src="@drawable/vtvh_logo"
+            />
+            <!--android:layout_marginBottom="16dp"-->
+
+
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drawerList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>

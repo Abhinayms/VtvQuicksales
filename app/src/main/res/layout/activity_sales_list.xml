@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sevya.vtvhmobile.SalesList">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saleslist"
+        android:layout_marginTop="55dp"
+        android:dividerHeight="1px"
+        android:divider="#000"
+        android:cacheColorHint="#00000000"
+        >
+    </ListView>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Sorry, No sales have been done "
+            android:textColor="#00BCD4"
+            android:textSize="30dp"
+            android:textStyle="italic|bold"
+            android:id="@+id/saletextview"
+            android:layout_marginTop="70dp"
+
+            />
+
+
+</RelativeLayout>

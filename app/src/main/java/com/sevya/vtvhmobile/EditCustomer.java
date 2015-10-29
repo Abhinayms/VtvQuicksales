@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class EditCustomer extends AppCompatActivity implements View.OnTouchListener {
 
     DataBaseAdapter dataBaseHelper;
@@ -67,7 +70,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Edit Customer");
+        mToolbar.setTitle("\t\tEdit Customer");
         setSupportActionBar(mToolbar);
 
         dataBaseHelper=new DataBaseAdapter(this);
@@ -170,26 +173,21 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
     }
 
-    public void update(View view)
-    {
+    public void update(View view) {
         ButtonAnimation.animation(view);
 
-        /*if (custName.length() == 0) {
+        if (cname.getText().toString().length() == 0) {
 
             cname.setError("Please enter the required details");
 
-        }
-        else if (custNo.length() != 10) {
+        } else if (cnum.getText().toString().length() != 10) {
             cnum.setError("please enter 10 digit Mobile number");
-        }
-        else if(cAdd.length() <=0 )
-        {
+        } else if (cadd.getText().toString().length() <= 0) {
             cadd.setError("Please enter Valid Address");
-        }
-        else if(cMail.length()!=0) {
-            if (!isEmailValid(cMail))
+        } else if (cmail.getText().toString().length() != 0) {
+            if (!isEmailValid(cmail.getText().toString()))
                 cmail.setError("please enter Valid email");
-            else {*/
+            else {
 
                 int i = dataBaseHelper.update(cname.getText().toString(), cnum.getText().toString(), compName.getText().toString(), cgen.getText().toString(), cpro.getText().toString(), cln.getText().toString(), cadd.getText().toString(),
                         cmail.getText().toString());
@@ -204,10 +202,40 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                 intent.putExtra("cmail", cmail.getText().toString());
                 intent.putExtra("rb", cgen.getText().toString());
                 startActivity(intent);
+            }
+        } else {
+
+            int i = dataBaseHelper.update(cname.getText().toString(), cnum.getText().toString(), compName.getText().toString(), cgen.getText().toString(), cpro.getText().toString(), cln.getText().toString(), cadd.getText().toString(),
+                    cmail.getText().toString());
+
+            Intent intent = new Intent(EditCustomer.this, ReceiveDetails.class);
+            intent.putExtra("cname", cname.getText().toString());
+            intent.putExtra("cnum", cnum.getText().toString());
+            intent.putExtra("compName", compName.getText().toString());
+            intent.putExtra("cpro", cpro.getText().toString());
+            intent.putExtra("cln", cln.getText().toString());
+            intent.putExtra("cadd", cadd.getText().toString());
+            intent.putExtra("cmail", cmail.getText().toString());
+            intent.putExtra("rb", cgen.getText().toString());
+            startActivity(intent);
+        }
 
     }
 
 
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

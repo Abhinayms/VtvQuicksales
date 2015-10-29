@@ -11,6 +11,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +29,7 @@ import com.sevya.vtvhmobile.CartActivity;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 
-public class BuyProducts extends Activity {
+public class BuyProducts extends Activity  implements OnTouchListener {
 
     private Spinner spinner1, spinner2,spinner3;
     private Button btnSubmit;
@@ -38,6 +41,9 @@ public class BuyProducts extends Activity {
     AutoCompleteTextView autotv;
     int i;
     String date;
+    ImageButton modelimagebutton;
+    ImageButton qtyimagebutton;
+    ImageButton priceimagebutton;
 
     DataBaseAdapter dataBaseHelper;
 
@@ -59,6 +65,18 @@ public class BuyProducts extends Activity {
         qty=(EditText)findViewById(R.id.edit_text);
         cprice=(EditText)findViewById(R.id.price);
         autotv=(AutoCompleteTextView)findViewById(R.id.autoTv);
+        modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
+        qtyimagebutton=(ImageButton)findViewById(R.id.cbqty);
+        priceimagebutton=(ImageButton)findViewById(R.id.cbup);
+
+        modelimagebutton.setOnTouchListener(this);
+        qtyimagebutton.setOnTouchListener(this);
+        priceimagebutton.setOnTouchListener(this);
+        autotv.setOnTouchListener(this);
+        qty.setOnTouchListener(this);
+        cprice.setOnTouchListener(this);
+
+
 
         String items[]={"CR1223","BR1226","AB19I4RT5","EB19RT5","R4S5UIA","D5TY6H","P0O9KHA","T78U7JK","X4RXFV","M87RU46","JH8I9","Q7UW3W","W39OS8","Y67UI9",
 
@@ -85,7 +103,7 @@ public class BuyProducts extends Activity {
 
         String name=intent.getStringExtra("cname");
         String num=intent.getStringExtra("cnum");
-         i=intent.getIntExtra("listsize",0);
+        i=intent.getIntExtra("listsize",0);
 
         dname.setText(name);
         dnum.setText(num);
@@ -156,17 +174,23 @@ public class BuyProducts extends Activity {
                                              productsInfo.setQty(qty.getText().toString());
 
 
-                                             long id=dataBaseHelper.insertDataItems(productsInfo);
+                                             if((autotv.getText().toString().length()==0))
+                                                 autotv.setError("Please enter model no");
+                                             else if(qty.getText().toString().length()==0)
+                                                 qty.setError("Please enter Qty");
+                                             else if(cprice.getText().toString().length()==0)
+                                                 cprice.setError("Please enter UnitPrice");
+                                             else {
+                                                 long id = dataBaseHelper.insertDataItems(productsInfo);
 
 
+                                                 Intent intent = new Intent(BuyProducts.this, CartActivity.class);
+                                                 intent.putExtra("cname", dname.getText().toString());
+                                                 intent.putExtra("cnum", dnum.getText().toString());
+                                                 intent.putExtra("Date", date);
 
-
-                                             Intent intent = new Intent(BuyProducts.this, CartActivity.class);
-                                             intent.putExtra("cname", dname.getText().toString());
-                                             intent.putExtra("cnum", dnum.getText().toString());
-                                             intent.putExtra("Date",date);
-                                             startActivity(intent);
-
+                                                 startActivity(intent);
+                                             }
 
                                          }
                                      }
@@ -229,5 +253,47 @@ public class BuyProducts extends Activity {
             }
 
         });
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        switch (v.getId()){
+            case R.id.autoTv:
+                modelimagebutton.setVisibility(View.VISIBLE);
+                qtyimagebutton.setVisibility(View.INVISIBLE);
+                priceimagebutton.setVisibility(View.INVISIBLE);
+                break;
+
+            case R.id.modelimagebutton:
+                autotv.setText("");
+                break;
+            case R.id.edit_text:
+                modelimagebutton.setVisibility(View.INVISIBLE);
+                qtyimagebutton.setVisibility(View.VISIBLE);
+                priceimagebutton.setVisibility(View.INVISIBLE);
+                break;
+
+            case R.id.cbqty:
+                qty.setText("");
+                break;
+
+            case R.id.price:
+                modelimagebutton.setVisibility(View.INVISIBLE);
+                qtyimagebutton.setVisibility(View.INVISIBLE);
+                priceimagebutton.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.cbup:
+                cprice.setText("");
+                break;
+
+
+        }
+
+
+
+        return false;
+
     }
 }

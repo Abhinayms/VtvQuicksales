@@ -43,7 +43,7 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.cart);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Cart");
+        mToolbar.setTitle("\t\tCart");
         setSupportActionBar(mToolbar);
         /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);

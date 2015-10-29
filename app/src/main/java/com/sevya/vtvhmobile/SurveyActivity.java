@@ -1,6 +1,7 @@
 package com.sevya.vtvhmobile;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,19 +28,21 @@ public class SurveyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_survey);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Send Survey");
+        mToolbar.setTitle("\t\tSend Survey");
+
+
         setSupportActionBar(mToolbar);
         /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        addItemsOnSpinner1();
-        addListenerOnButton();
+       // addItemsOnSpinner1();
+        //addListenerOnButton();
     }
 
-    public void addItemsOnSpinner1() {
+   /* public void addItemsOnSpinner1() {
 
         spinner1 = (Spinner) findViewById(R.id.spinner1);
         List<String> list = new ArrayList<String>();
@@ -57,7 +60,7 @@ public class SurveyActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -79,7 +82,28 @@ public class SurveyActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void addListenerOnButton() {
+
+    public void survey1(View v)
+    {
+        ButtonAnimation.animation(v);
+
+    }
+    public void survey2(View v)
+    {
+        ButtonAnimation.animation(v);
+
+    }
+    public void survey3(View v)
+    {
+        ButtonAnimation.animation(v);
+
+    }
+    public void survey4(View v)
+    {
+        ButtonAnimation.animation(v);
+
+    }
+    /*public void addListenerOnButton() {
 
         spinner1 = (Spinner) findViewById(R.id.spinner1);
         sgs= (Button) findViewById(R.id.sgs);
@@ -91,15 +115,14 @@ public class SurveyActivity extends AppCompatActivity {
 
                 ButtonAnimation.animation(v);
 
-                /*Toast.makeText(SurveyActivity.this,
+                Toast.makeText(SurveyActivity.this,
                          String.valueOf(spinner1.getSelectedItem())+"  Survey sent",
-
-                        Toast.LENGTH_SHORT).show();*/
+                        Toast.LENGTH_SHORT).show();
 
                 Intent i=new Intent(SurveyActivity.this,MainActivity.class);
                 startActivity(i);
             }
 
         });
-    }
+    }*/
 }

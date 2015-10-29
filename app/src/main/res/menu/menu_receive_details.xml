@@ -11,11 +11,7 @@
         android:orderInCategory="99"
         android:icon="@drawable/ic_action_trolley"
         app:showAsAction="ifRoom" >
-        <menu>
-            <item
-                android:id="@+id/cart"
-                android:title="Cart"/>.
-        </menu>
+
     </item>
     <item
         android:id="@+id/action_edit"

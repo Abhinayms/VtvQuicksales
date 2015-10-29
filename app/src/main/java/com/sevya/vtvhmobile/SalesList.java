@@ -28,7 +28,7 @@ public class SalesList extends AppCompatActivity {
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Sales List");
+        mToolbar.setTitle("\t\tSales List");
         setSupportActionBar(mToolbar);
         /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);

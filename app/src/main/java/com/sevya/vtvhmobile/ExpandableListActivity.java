@@ -36,7 +36,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        mToolbar.setTitle("Sales List");
+        mToolbar.setTitle("\t\tSales Report");
 
        /* AppCompatActivity appCompatActivity=new AppCompatActivity();
         Log.d("Object", "onCreate "+appCompatActivity);*/

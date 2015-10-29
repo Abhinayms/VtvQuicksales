@@ -6,8 +6,54 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
+
         />
-    <RelativeLayout
+
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Survey 1"
+        android:background="@drawable/buttonshape"
+        android:textColor="#fff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:onClick="survey1"
+        />
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Survey 2"
+        android:background="@drawable/buttonshape"
+        android:textColor="#fff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:onClick="survey2"
+
+        />
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Survey 3"
+        android:background="@drawable/buttonshape"
+        android:textColor="#fff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:onClick="survey3"
+
+        />
+    <Button
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Survey 4"
+        android:background="@drawable/buttonshape"
+        android:textColor="#fff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:onClick="survey4"
+
+        />
+
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -31,8 +77,8 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="140dp"
             />
-    </RelativeLayout>
-    <LinearLayout
+    </RelativeLayout>-->
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -40,7 +86,7 @@
         android:layout_marginTop="150dp"
         >
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/buttonshape"
         android:text="Send Survey"
@@ -49,6 +95,9 @@
         android:layout_gravity="center_horizontal"
 
         />
-        </LinearLayout>
+        </LinearLayout>-->
+
+
+
 
 </LinearLayout>

@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity{
 
         setContentView(R.layout.settings);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Settings");
+        mToolbar.setTitle("\t\tSettings");
         setSupportActionBar(mToolbar);
         /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);

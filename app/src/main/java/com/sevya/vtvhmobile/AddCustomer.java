@@ -167,6 +167,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             if (i == R.id.compyes) {
                 genderlayout.setVisibility(View.INVISIBLE);
+                selectedType="";
 
             } else if (i == R.id.compno) {
                 genderlayout.setVisibility(View.VISIBLE);

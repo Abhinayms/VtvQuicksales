@@ -34,21 +34,12 @@
             android:text="Delete Customer"
             android:onClick="deleteCustomer"
             android:layout_marginLeft="60dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/buttonshape"
             android:textColor="#ffffff"
 
             />
 
     </LinearLayout>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewFromDB"
-        android:layout_marginTop="190dp"
-
-        >
-
-    </ListView>
 
 </RelativeLayout>

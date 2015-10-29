@@ -70,7 +70,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tEdit Customer");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
 
         dataBaseHelper=new DataBaseAdapter(this);

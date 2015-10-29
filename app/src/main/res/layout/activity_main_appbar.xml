@@ -9,7 +9,7 @@
     >
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
+        layout="@layout/maintoolbar"
 
         />
     <android.support.v4.widget.DrawerLayout
@@ -51,6 +51,7 @@
                     android:inputType="number"
                     android:layout_marginTop="10dp"
                     android:maxLength="10"
+                    android:background="@drawable/edit_text_design"
 
 
                     />

@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.sevya.vtvhmobile.models.Customer;
 
+import java.util.Calendar;
+
 public class ReceiveDetails extends AppCompatActivity {
 
 
@@ -28,6 +30,7 @@ public class ReceiveDetails extends AppCompatActivity {
     TextView gen;
     TextView ln;
     Button rcontinue;
+    String date;
 
     private Toolbar mToolbar;
 
@@ -75,8 +78,14 @@ public class ReceiveDetails extends AppCompatActivity {
         gen.setText(cgen);
         ln.setText(cln);
 
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH)+1;
+        int year = c.get(Calendar.YEAR);
+        date ="" + year + "-" + "" + month + "-" + ""+ day;
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tCustomer");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
@@ -130,6 +139,7 @@ public class ReceiveDetails extends AppCompatActivity {
             Intent intent=new Intent(this,CartActivity.class);
             intent.putExtra("cname",name.getText().toString());
             intent.putExtra("cnum",numm.getText().toString());
+            intent.putExtra("Date",date);
             startActivity(intent);
 
         }

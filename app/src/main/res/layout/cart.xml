@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
+        layout="@layout/carttoolbar"
 
         />
 
@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
         android:id="@+id/linearLayout_01"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         >
@@ -100,7 +100,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cart Items"
+            android:text="Purchased Items"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
             android:textColor="#00bcd4"
@@ -134,48 +134,69 @@
 
         </ListView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="There are no items in the Cart "
+            android:textColor="#00BCD4"
+            android:textSize="25dp"
+            android:textStyle="italic|bold"
+            android:id="@+id/cartitemtextview"
 
-    </LinearLayout>
+            />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continue Shopping"
+                android:textColor="#ffffff"
+                android:background="@drawable/buttonshape"
+                android:id="@+id/continueshopping"
+                android:layout_gravity="center_horizontal"
+                />
+        </LinearLayout>
 
 
 
-    <LinearLayout
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="100dp"
+        android:gravity="bottom"
+        android:layout_marginBottom="10dp"
+
         >
-
-
-
     <ImageButton
         android:layout_width="60dp"
         android:layout_height="60dp"
-
         android:text="New button"
         android:id="@+id/float_button_plus"
         android:background="@drawable/fb"
         android:src="@drawable/fbplus"
-        android:layout_marginRight="175dp"
-        android:layout_gravity="left|bottom"
+        android:layout_alignParentBottom="true"
         />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Submit"
             android:textColor="#ffffff"
             android:background="@drawable/buttonshape"
             android:id="@+id/float_button_tick"
-            android:layout_gravity="right|bottom"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
 
             />
 
-    </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
 </LinearLayout>
 
-</LinearLayout>
+
 

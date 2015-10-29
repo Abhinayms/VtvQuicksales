@@ -33,7 +33,7 @@ public class PopupActivity extends AppCompatActivity {
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tCustomers List");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);

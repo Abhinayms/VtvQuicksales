@@ -29,7 +29,7 @@ public class ViewAllCustomers extends AppCompatActivity {
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tCustomers Info");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);

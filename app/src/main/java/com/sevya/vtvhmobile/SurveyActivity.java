@@ -22,49 +22,34 @@ public class SurveyActivity extends AppCompatActivity {
     Toolbar mToolbar;
     Spinner spinner1;
     Button sgs;
+    Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tSend Survey");
+        mToolbar.setTitle("");
 
 
         setSupportActionBar(mToolbar);
-        /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-       // addItemsOnSpinner1();
-        //addListenerOnButton();
+        i=new Intent(SurveyActivity.this,MainActivity.class);
+
+
     }
 
-   /* public void addItemsOnSpinner1() {
 
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
-        List<String> list = new ArrayList<String>();
-        list.add("Select Category");
-        list.add("category 1");
-        list.add("category 2");
-        list.add("category 3");
-        list.add("category 4");
-        list.add("category 5");
-        list.add("category 6");
-        list.add("category 7");
-        list.add("category 8");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
-    }
-*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_survey, menu);
+
         return true;
     }
 
@@ -87,42 +72,29 @@ public class SurveyActivity extends AppCompatActivity {
     {
         ButtonAnimation.animation(v);
 
+        startActivity(i);
+
     }
     public void survey2(View v)
     {
         ButtonAnimation.animation(v);
+
+        startActivity(i);
 
     }
     public void survey3(View v)
     {
         ButtonAnimation.animation(v);
 
+        startActivity(i);
+
     }
     public void survey4(View v)
     {
         ButtonAnimation.animation(v);
 
+        startActivity(i);
+
     }
-    /*public void addListenerOnButton() {
 
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
-        sgs= (Button) findViewById(R.id.sgs);
-
-        sgs.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                ButtonAnimation.animation(v);
-
-                Toast.makeText(SurveyActivity.this,
-                         String.valueOf(spinner1.getSelectedItem())+"  Survey sent",
-                        Toast.LENGTH_SHORT).show();
-
-                Intent i=new Intent(SurveyActivity.this,MainActivity.class);
-                startActivity(i);
-            }
-
-        });
-    }*/
 }

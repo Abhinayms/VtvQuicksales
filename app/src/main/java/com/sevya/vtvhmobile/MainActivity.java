@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tCustomer Search");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

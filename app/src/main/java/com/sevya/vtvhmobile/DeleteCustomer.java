@@ -27,7 +27,7 @@ public class DeleteCustomer extends AppCompatActivity {
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tDelete Customer");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);

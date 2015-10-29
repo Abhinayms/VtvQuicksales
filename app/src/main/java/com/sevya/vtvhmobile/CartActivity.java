@@ -31,6 +31,8 @@ public class CartActivity extends AppCompatActivity {
     Toolbar mToolbar;
     Button tickButton;
     ImageButton plusButton;
+    TextView textView;
+    Button continueshopping;
 
     DataBaseAdapter dataBaseHelper;
     SimpleCursorAdapter simpleCursorAdapter;
@@ -43,7 +45,7 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.cart);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("\t\tCart");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
@@ -72,7 +74,7 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
-
+    @SuppressWarnings("deprecation")
     private void populateItemsListFromDB()
     {
         String number=cnum.getText().toString();
@@ -83,35 +85,66 @@ public class CartActivity extends AppCompatActivity {
         cursor=dataBaseHelper.getItem(number, date);
         startManagingCursor(cursor);
 
-        String[] fromFieldsNames = new String[]{ DataBaseAdapter.DataBaseHelper.MODEL_ID,DataBaseAdapter.DataBaseHelper.QUANTITY,DataBaseAdapter.DataBaseHelper.PRICE,};
-        int[] toViewIDs = new int[]
-                {R.id.p_model,R.id.p_qty,R.id.p_price, };
+        if(cursor.getCount()==0)
+        {
+            textView=(TextView)findViewById(R.id.cartitemtextview);
+            textView.setVisibility(View.VISIBLE);
+            continueshopping=(Button)findViewById(R.id.continueshopping);
+            tickButton.setVisibility(View.INVISIBLE);
+            plusButton.setVisibility(View.INVISIBLE);
 
-        simpleCursorAdapter= new SimpleCursorAdapter(
+            continueshopping.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        ButtonAnimation.animation(v);
+                                                        Intent intent=new Intent(CartActivity.this,BuyProducts.class);
+                                                        intent.putExtra("cname",cname.getText().toString());
+                                                        intent.putExtra("cnum",cnum.getText().toString());
+                                                                startActivity(intent);
+                                                    }
+                                                }
 
-                this,
-                R.layout.cartitemlayout,
-                cursor,
-                fromFieldsNames,
-                toViewIDs,
-                0
-        );
-
-        listView = (ListView) findViewById(R.id.cartitemview);
-        listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
-        listView.setAdapter(simpleCursorAdapter);
+            );
 
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            // setting onItemLongClickListener and passing the position to the function
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int position, long arg3) {
-                removeItemFromList(position);
+        }
+        else {
+            textView=(TextView)findViewById(R.id.cartitemtextview);
+            continueshopping=(Button)findViewById(R.id.continueshopping);
+            textView.setVisibility(View.INVISIBLE);
+            continueshopping.setVisibility(View.INVISIBLE);
 
-                return true;
-            }
-        });
+            String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE,};
+            int[] toViewIDs = new int[]
+                    {R.id.p_model, R.id.p_qty, R.id.p_price,};
+
+            simpleCursorAdapter = new SimpleCursorAdapter(
+
+                    this,
+                    R.layout.cartitemlayout,
+                    cursor,
+                    fromFieldsNames,
+                    toViewIDs,
+                    0
+            );
+
+            listView = (ListView) findViewById(R.id.cartitemview);
+            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
+            listView.setAdapter(simpleCursorAdapter);
+
+
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                // setting onItemLongClickListener and passing the position to the function
+                @Override
+                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                               int position, long arg3) {
+                    removeItemFromList(position);
+
+                    return true;
+                }
+            });
+        }
+
     }
     // method to remove list item
     protected void removeItemFromList(final int position) {
@@ -145,10 +178,6 @@ public class CartActivity extends AppCompatActivity {
         alert.show();
 
     }
-
-
-
-
 
     public void onTickButtonClick()
     {
@@ -208,7 +237,11 @@ public class CartActivity extends AppCompatActivity {
             intent.putExtra("cname",cname.getText().toString());
             intent.putExtra("cnum",cnum.getText().toString());
             startActivity(intent);
-
+        }
+        if(id==R.id.homeicon)
+        {
+            Intent intent=new Intent(CartActivity.this,MainActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

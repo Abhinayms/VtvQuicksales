@@ -55,6 +55,9 @@ public class
         contentValues.put(dataBaseHelper.MOBILE_NUMBER,productsInfo.getNumber());
         contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModelNo());
         contentValues.put(dataBaseHelper.PRICE,productsInfo.getPrice());
+
+        Log.d("insert", "insertDataItems "+productsInfo.getModelNo());
+
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
 
         long id= db.insert(dataBaseHelper.Table_items,null,contentValues);

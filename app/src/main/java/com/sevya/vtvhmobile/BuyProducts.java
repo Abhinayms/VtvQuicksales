@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +24,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.sevya.vtvhmobile.CartActivity;
+
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 
@@ -65,6 +64,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         qty=(EditText)findViewById(R.id.edit_text);
         cprice=(EditText)findViewById(R.id.price);
         autotv=(AutoCompleteTextView)findViewById(R.id.autoTv);
+        autotv.requestFocus();
         modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
         qtyimagebutton=(ImageButton)findViewById(R.id.cbqty);
         priceimagebutton=(ImageButton)findViewById(R.id.cbup);
@@ -91,8 +91,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
             public void onItemClick(AdapterView<?> p, View v, int pos, long id) {
                 //TODO: set focus on next view
 
-                spinner1.setFocusableInTouchMode(true);
-                spinner1.requestFocus();
+                qty.setFocusableInTouchMode(true);
+                qty.requestFocus();
             }
         });
 
@@ -181,6 +181,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              else if(cprice.getText().toString().length()==0)
                                                  cprice.setError("Please enter UnitPrice");
                                              else {
+
                                                  long id = dataBaseHelper.insertDataItems(productsInfo);
 
 
@@ -215,19 +216,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
 
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                qty.setFocusableInTouchMode(true);
-                qty.requestFocus();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
     }
 
     // get the selected dropdown list value

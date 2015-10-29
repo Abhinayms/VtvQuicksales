@@ -5,7 +5,7 @@
     tools:context="com.sevya.vtvhmobile.SurveyActivity">
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"
+        layout="@layout/surveytoolbar"
 
         />
 

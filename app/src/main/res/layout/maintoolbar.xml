@@ -7,15 +7,17 @@
     android:elevation="4dp"
     android:id="@+id/maintoolbar">
     <!--android:paddingTop="24dp"-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Customer Search"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold"
 
-        android:layout_gravity="center"
-        android:id="@+id/toolbar_maintitle" />
 
 </android.support.v7.widget.Toolbar>
+
+
+<!--
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Customer Search"
+android:textColor="#ffffff"
+android:textSize="20dp"
+android:layout_gravity="center"
+android:id="@+id/toolbar_maintitle" />-->

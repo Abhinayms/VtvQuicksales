@@ -50,9 +50,9 @@ public class ExpandableListActivity extends AppCompatActivity{
 
         fillData();
     }
-
-    private void fillData() {
-
+    @SuppressWarnings("deprecation")
+    private void fillData()
+    {
         i=getIntent();
 
         String mDate=i.getStringExtra("Date");
@@ -88,8 +88,6 @@ public class ExpandableListActivity extends AppCompatActivity{
 
         }
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

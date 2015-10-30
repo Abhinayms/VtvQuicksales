@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -55,6 +56,8 @@ public class CartActivity extends AppCompatActivity {
 
         dataBaseHelper=new DataBaseAdapter(this);
 
+
+
         cname=(TextView)findViewById(R.id.cname);
         cnum=(TextView)findViewById(R.id.cnum);
 
@@ -90,6 +93,7 @@ public class CartActivity extends AppCompatActivity {
             textView=(TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
             continueshopping=(Button)findViewById(R.id.continueshopping);
+            continueshopping.setVisibility(View.VISIBLE);
             tickButton.setVisibility(View.INVISIBLE);
             plusButton.setVisibility(View.INVISIBLE);
 
@@ -114,6 +118,8 @@ public class CartActivity extends AppCompatActivity {
             textView.setVisibility(View.INVISIBLE);
             continueshopping.setVisibility(View.INVISIBLE);
 
+
+
             String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE,};
             int[] toViewIDs = new int[]
                     {R.id.p_model, R.id.p_qty, R.id.p_price,};
@@ -129,6 +135,9 @@ public class CartActivity extends AppCompatActivity {
             );
 
             listView = (ListView) findViewById(R.id.cartitemview);
+            ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
+            lp.height = 300;
+            listView.setLayoutParams(lp);
             listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
             listView.setAdapter(simpleCursorAdapter);
 

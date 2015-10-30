@@ -18,7 +18,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Name"
             android:id="@+id/p_name"
-            android:textColor="#009688"
+            android:textColor="#03A9F4"
 
             />
         <TextView
@@ -27,7 +27,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Number"
             android:id="@+id/p_number"
-            android:textColor="#009688"
+            android:textColor="#03A9F4"
 
             android:layout_alignParentRight="true"
 

@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Model No "
+                    android:text="Model No  "
                     android:textColor="#00BCD4"
                     android:id="@+id/p_model"
                     />
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Quantity"
-                    android:textColor="#607d8b"
+                    android:textColor="#263238"
 
                     android:id="@+id/p_qty"
                     />

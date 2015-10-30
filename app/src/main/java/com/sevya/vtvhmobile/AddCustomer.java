@@ -6,12 +6,12 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -144,13 +145,27 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         list.add("Select Category");
         list.add("Business");
         list.add("Agriculture");
-        list.add("Govt Employee");
+        list.add("Govt. Employee");
         list.add("Private Employee");
         list.add("Others");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
+
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ScrollView sv=(ScrollView)findViewById(R.id.scrollview);
+                sv.fullScroll(view.getTop());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void onButtonClickDone()
@@ -158,16 +173,19 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
         compGroup=(RadioGroup)findViewById(R.id.company);
         yes=(RadioButton)findViewById(R.id.compyes);
+        male = (RadioButton) findViewById(R.id.radioMale);
         no=(RadioButton)findViewById(R.id.compno);
+        male.setChecked(true);
         no.setChecked(true);
-
+        genderlayout.setVisibility(View.VISIBLE);
         compGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             if (i == R.id.compyes) {
-                genderlayout.setVisibility(View.INVISIBLE);
+                genderlayout.setVisibility(View.GONE);
                 selectedType="";
+
 
             } else if (i == R.id.compno) {
                 genderlayout.setVisibility(View.VISIBLE);

@@ -24,6 +24,9 @@ import android.widget.TextView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class CartActivity extends AppCompatActivity {
 
     TextView cname;
@@ -34,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
     ImageButton plusButton;
     TextView textView;
     Button continueshopping;
+    TextView totalPrice;
 
     DataBaseAdapter dataBaseHelper;
     SimpleCursorAdapter simpleCursorAdapter;
@@ -60,6 +64,7 @@ public class CartActivity extends AppCompatActivity {
 
         cname=(TextView)findViewById(R.id.cname);
         cnum=(TextView)findViewById(R.id.cnum);
+        totalPrice=(TextView)findViewById(R.id.totalprice);
 
         intent=getIntent();
 
@@ -79,7 +84,7 @@ public class CartActivity extends AppCompatActivity {
     }
     @SuppressWarnings("deprecation")
     private void populateItemsListFromDB()
-    {
+    {   int sum=0;
         String number=cnum.getText().toString();
 
         String date=intent.getStringExtra("Date");
@@ -87,7 +92,6 @@ public class CartActivity extends AppCompatActivity {
 
         cursor=dataBaseHelper.getItem(number, date);
         startManagingCursor(cursor);
-
         if(cursor.getCount()==0)
         {
             textView=(TextView)findViewById(R.id.cartitemtextview);
@@ -135,9 +139,9 @@ public class CartActivity extends AppCompatActivity {
             );
 
             listView = (ListView) findViewById(R.id.cartitemview);
-            ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
+            /*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
             lp.height = 300;
-            listView.setLayoutParams(lp);
+            listView.setLayoutParams(lp);*/
             listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
             listView.setAdapter(simpleCursorAdapter);
 
@@ -152,6 +156,16 @@ public class CartActivity extends AppCompatActivity {
                     return true;
                 }
             });
+            cursor.moveToFirst();
+            for(int i=0;i<cursor.getCount();i++) {
+                int index = cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE);
+                String price = cursor.getString(index);
+                int convertedPrice=Integer.parseInt(price);
+                sum+=convertedPrice;
+                cursor.moveToNext();
+            }
+            String tcost=NumberFormat.getNumberInstance(Locale.US).format(sum);
+            totalPrice.setText(tcost);
         }
 
     }

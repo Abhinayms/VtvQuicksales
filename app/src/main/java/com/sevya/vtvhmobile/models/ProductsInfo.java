@@ -53,6 +53,16 @@ public class ProductsInfo {
         this.price = price;
     }
 
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String totalPrice;
+
     private String name;
     private String number;
     private String modelNo;

@@ -58,7 +58,7 @@ public class GetDetailsByDate extends AppCompatActivity {
         if(mMonth < 10){
 
             month = "0" + mMonth;
-        }
+        }else{month=""+mMonth;}
         if(mDay < 10){
 
             day  = "0" + mDay ;

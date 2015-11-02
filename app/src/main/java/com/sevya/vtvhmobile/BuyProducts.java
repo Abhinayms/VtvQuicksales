@@ -175,11 +175,18 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              ButtonAnimation.animation(view);
                                              ProductsInfo productsInfo=new ProductsInfo();
 
+                                             int p=Integer.parseInt(cprice.getText().toString());
+                                             int q=Integer.parseInt(qty.getText().toString());
+
+                                             String tp=""+(p*q);
+
+
                                              productsInfo.setName(dname.getText().toString());
                                              productsInfo.setNumber(dnum.getText().toString());
                                              productsInfo.setModelNo(autotv.getText().toString());
                                              productsInfo.setPrice(cprice.getText().toString());
                                              productsInfo.setQty(qty.getText().toString());
+                                             productsInfo.setTotalPrice(tp);
 
 
                                              if((autotv.getText().toString().length()==0))
@@ -191,6 +198,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              else {
 
                                                  long id = dataBaseHelper.insertDataItems(productsInfo);
+
+
 
 
                                                  Intent intent = new Intent(BuyProducts.this, CartActivity.class);

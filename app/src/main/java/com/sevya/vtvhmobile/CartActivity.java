@@ -34,6 +34,7 @@ public class CartActivity extends AppCompatActivity {
     TextView textView;
     Button continueshopping;
     TextView totalPrice;
+    TextView textTotalPrice;
 
     DataBaseAdapter dataBaseHelper;
     SimpleCursorAdapter simpleCursorAdapter;
@@ -84,6 +85,7 @@ public class CartActivity extends AppCompatActivity {
         String number=cnum.getText().toString();
 
         String date=intent.getStringExtra("Date");
+        listView = (ListView) findViewById(R.id.cartitemview);
 
         try {
             cursor = dataBaseHelper.getItem(number, date);
@@ -94,12 +96,16 @@ public class CartActivity extends AppCompatActivity {
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
+            textTotalPrice=(TextView)findViewById(R.id.texttotalprice);
+            textTotalPrice.setVisibility(View.INVISIBLE);
             textView = (TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
             continueshopping=(Button)findViewById(R.id.continueshopping);
             continueshopping.setVisibility(View.VISIBLE);
             tickButton.setVisibility(View.INVISIBLE);
             plusButton.setVisibility(View.INVISIBLE);
+
 
             continueshopping.setOnClickListener(new View.OnClickListener() {
                                                     @Override
@@ -124,9 +130,9 @@ public class CartActivity extends AppCompatActivity {
 
 
 
-            String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE,};
+            String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
             int[] toViewIDs = new int[]
-                    {R.id.p_model, R.id.p_qty, R.id.p_price,};
+                    {R.id.p_model, R.id.p_qty, R.id.p_price,R.id.p_totalprice};
 
             simpleCursorAdapter = new SimpleCursorAdapter(
 
@@ -138,7 +144,7 @@ public class CartActivity extends AppCompatActivity {
                     0
             );
 
-            listView = (ListView) findViewById(R.id.cartitemview);
+
             /*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
             lp.height = 300;
             listView.setLayoutParams(lp);*/
@@ -158,9 +164,9 @@ public class CartActivity extends AppCompatActivity {
             });
             cursor.moveToFirst();
             for(int i=0;i<cursor.getCount();i++) {
-                int index = cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE);
-                String price = cursor.getString(index);
-                int convertedPrice=Integer.parseInt(price);
+                int index = cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE);
+                String tprice = cursor.getString(index);
+                int convertedPrice=Integer.parseInt(tprice);
                 sum+=convertedPrice;
                 cursor.moveToNext();
             }

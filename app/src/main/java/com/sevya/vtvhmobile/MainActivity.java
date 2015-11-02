@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,15 @@ import android.widget.ListView;
 
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.webservices.WebServiceClass;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     DataBaseAdapter dataBaseHelper;
     public Context context;
     public Cursor cursor;
+    private ResponseStatus status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +90,38 @@ public class MainActivity extends AppCompatActivity {
                     number.setError("Please enter 10 digit Mobile Number");
 
                 } else {
+                    /*Thread thread=new Thread() {
 
+                        public void run() {
+                            WebServiceClass webServiceClass = new WebServiceClass();
+                            try
 
+                            {
+                                status = (ResponseStatus) webServiceClass.getDetailsByMobileNumber(numberr);
+                                JSONArray array = new JSONArray(status.getStatusResponse());
+                                for (int index = 0; index < array.length(); index++) {
+                                    try {
+                                        JSONObject eachObject = (JSONObject) array.get(index);
+                                        Log.d("check", "" + eachObject.get("ActID"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (XmlPullParserException e) {
+                                e.printStackTrace();
+                            } catch (
+                                    JSONException e
+                                    )
+
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    thread.start();*/
                     cursor = dataBaseHelper.getPerson(numberr);
                     int length = cursor.getCount();
 
@@ -90,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else {
+
 
                         if (cursor != null && cursor.moveToFirst()) {
 

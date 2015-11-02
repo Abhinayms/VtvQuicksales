@@ -1,8 +1,5 @@
 package com.sevya.vtvhmobile;
 
-/**
- * Created by abhinaym on 24/10/15.
- */
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,13 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
@@ -89,12 +85,16 @@ public class CartActivity extends AppCompatActivity {
 
         String date=intent.getStringExtra("Date");
 
-
-        cursor=dataBaseHelper.getItem(number, date);
-        startManagingCursor(cursor);
-        if(cursor.getCount()==0)
+        try {
+            cursor = dataBaseHelper.getItem(number, date);
+        }catch (Exception s)
         {
-            textView=(TextView)findViewById(R.id.cartitemtextview);
+            s.printStackTrace();
+        }
+        startManagingCursor(cursor);
+        if (cursor.getCount()==0)
+        {
+            textView = (TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
             continueshopping=(Button)findViewById(R.id.continueshopping);
             continueshopping.setVisibility(View.VISIBLE);
@@ -108,7 +108,7 @@ public class CartActivity extends AppCompatActivity {
                                                         Intent intent=new Intent(CartActivity.this,BuyProducts.class);
                                                         intent.putExtra("cname",cname.getText().toString());
                                                         intent.putExtra("cnum",cnum.getText().toString());
-                                                                startActivity(intent);
+                                                        startActivity(intent);
                                                     }
                                                 }
 
@@ -270,4 +270,3 @@ public class CartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-

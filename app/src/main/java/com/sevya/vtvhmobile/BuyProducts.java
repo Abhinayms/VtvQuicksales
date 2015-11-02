@@ -3,14 +3,18 @@ package com.sevya.vtvhmobile;
 /**
  * Created by abhinaym on 24/10/15.
  */
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
@@ -37,6 +41,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     TextView dnum;
     EditText qty;
     EditText cprice;
+    TextView totalPrice;
     AutoCompleteTextView autotv;
     int i;
     String date;
@@ -53,16 +58,17 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         addItemsOnSpinner1();
         addListenerOnButton();
 
-        Calendar c = Calendar.getInstance();
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int month = c.get(Calendar.MONTH)+1;
-        int year = c.get(Calendar.YEAR);
-        date ="" + year + "-" + "" + month + "-" + ""+ day;
+
+        Date pdate=new Date();
+         date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
+
+
 
         dname=(TextView)findViewById(R.id.dname);
         dnum=(TextView)findViewById(R.id.dnum);
         qty=(EditText)findViewById(R.id.edit_text);
         cprice=(EditText)findViewById(R.id.price);
+        totalPrice=(TextView)findViewById(R.id.totalprice);
         autotv=(AutoCompleteTextView)findViewById(R.id.autoTv);
         autotv.requestFocus();
         modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
@@ -109,9 +115,12 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         dnum.setText(num);
 
 
+
         onButtonClick();
 
     }
+
+
     public void cancel(View v)
     {
         ButtonAnimation.animation(v);
@@ -158,7 +167,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
 
     }
-
     public void onButtonClick() {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
                                          @Override
@@ -238,7 +246,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                 "\nModel ID: " + String.valueOf(spinner3.getSelectedItem()) +
                                 "\nQty: "+ qty.getText().toString() ,
 
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             }
 
         });

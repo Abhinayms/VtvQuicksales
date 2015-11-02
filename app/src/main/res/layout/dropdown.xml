@@ -338,6 +338,31 @@
 
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Price  :"
+                android:textColor="#000"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/totalprice"
+                android:textColor="#009688"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
 
 
     </LinearLayout>

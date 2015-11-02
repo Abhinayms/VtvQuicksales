@@ -72,7 +72,7 @@ public class ViewAllCustomers extends AppCompatActivity {
     {
         count++;
         Cursor cursor = dataBaseHelper.getAllData();
-        startManagingCursor(cursor);
+        this.startManagingCursor(cursor);
         String[] fromFieldNames = new String[]
                 {DataBaseAdapter.DataBaseHelper.UID, DataBaseAdapter.DataBaseHelper.NAME, DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER,
                         DataBaseAdapter.DataBaseHelper.COMPANY_NAME, DataBaseAdapter.DataBaseHelper.GENDER, DataBaseAdapter.DataBaseHelper.PROFESSION,

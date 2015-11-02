@@ -54,9 +54,8 @@ public class
         contentValues.put(dataBaseHelper.NAME,productsInfo.getName());
         contentValues.put(dataBaseHelper.MOBILE_NUMBER,productsInfo.getNumber());
         contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModelNo());
-        contentValues.put(dataBaseHelper.PRICE,productsInfo.getPrice());
+        contentValues.put(dataBaseHelper.PRICE, productsInfo.getPrice());
 
-        Log.d("insert", "insertDataItems "+productsInfo.getModelNo());
 
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
 
@@ -81,28 +80,22 @@ public class
 
     public Cursor getItem(String number,String date)
     {
+
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
-
-
 
         String[] columns={dataBaseHelper.Item_id,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
                 dataBaseHelper.MANUFACTURER,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY};
 
         String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
 
-       // String whereNull=dataBaseHelper.MOBILE_NUMBER + "IS NULL" + " AND " + dataBaseHelper.CREATED_DATE +"IS NULL" ;
 
         String[] args={number,date};
 
-        Cursor cursor =db.query(dataBaseHelper.Table_items, columns,where,args, null, null, null);
+         cursor =db.query(dataBaseHelper.Table_items, columns,where,args, null, null, null);
 
 
         return cursor;
-
     }
-
-
-
     public Cursor getAllData()
     {
 
@@ -170,7 +163,7 @@ public class
 
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_NAME = "Vtvh_Customer";
-        private static final int DATABASE_VERSION =21;
+        private static final int DATABASE_VERSION =22;
         public static final String UID = "_id";
         public static final String NAME = "NAME";
         public static final String MOBILE_NUMBER = "MOBILE_NUMBER";
@@ -203,11 +196,6 @@ public class
                 "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +MANUFACTURER+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(100)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
         private static final String DROP_TABLE_ITEMS= "DROP TABLE IF EXISTS " + Table_items;
-
-
-
-
-
 
 
         public DataBaseHelper(Context context) {

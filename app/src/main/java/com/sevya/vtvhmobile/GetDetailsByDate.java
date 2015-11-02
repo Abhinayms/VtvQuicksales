@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.DatePicker;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class GetDetailsByDate extends AppCompatActivity {
     Toolbar mToolbar;
     DatePicker datePicker;
@@ -19,6 +22,8 @@ public class GetDetailsByDate extends AppCompatActivity {
     int mMonth;
     int mDay;
     String date;
+    String month;
+    String day;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +54,16 @@ public class GetDetailsByDate extends AppCompatActivity {
 
         mMonth = datePicker.getMonth()+1;
         mDay = datePicker.getDayOfMonth();
-        date ="" + mYear + "-" + "" + mMonth + "-" + ""+ mDay;
 
+        if(mMonth < 10){
+
+            month = "0" + mMonth;
+        }
+        if(mDay < 10){
+
+            day  = "0" + mDay ;
+        }
+        date ="" + mYear + "-" + "" + month + "-" + ""+ day;
 
 
         Intent intent=new Intent(GetDetailsByDate.this,ExpandableListActivity.class);

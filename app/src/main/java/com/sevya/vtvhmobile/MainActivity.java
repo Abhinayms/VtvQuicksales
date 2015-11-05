@@ -22,6 +22,8 @@ import android.widget.ListView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.WebServiceClass;
 
 import org.json.JSONArray;
@@ -106,18 +108,19 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     Thread thread = new Thread() {
                         public void run() {
-                            WebServiceClass webServiceClass = new WebServiceClass();
+                            SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                             try
 
                             {
-                                status = (ResponseStatus) webServiceClass.getDetailsByMobileNumber(numberr);
+                                status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"),numberr,
+                                        Integer.class, "MobileNo");
                                 if(status.getStatusCode() == 200 ) {
                                     array = new JSONArray(status.getStatusResponse());
                                 for (int index = 0; index < array.length(); index++) {
                                     try {
                                         JSONObject eachObject = (JSONObject) array.get(index);
 
-                                        actId=eachObject.getString("ActID");
+                                        actId=eachObject.getString("PrimaryActID");
                                         name=eachObject.getString("ActName");
                                         address1=eachObject.getString("Address1");
                                         mobileNo=eachObject.getString("MobileNo");
@@ -197,15 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (XmlPullParserException e) {
-                                e.printStackTrace();
-                            } catch (
-                                    JSONException e
-                                    )
-
-                            {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }

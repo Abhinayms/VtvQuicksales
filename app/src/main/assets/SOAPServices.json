@@ -1,0 +1,44 @@
+{
+
+  "SOAPServices":[
+    {
+      "soapServiceName":"deleteCartItemsService",
+      "method":"DeleteCartItems"
+    },
+    {
+      "soapServiceName":"getAccountDetailsService",
+      "method":"GetAccountDetails"
+    },
+    {
+      "soapServiceName":"getModelDetailsService",
+      "method":"GetModelDetails"
+    },
+    {
+      "soapServiceName":"getModelsForListService",
+      "method":"GetModelsForList"
+    },
+    {
+      "soapServiceName":"getPrimaryAccountDetailsService",
+      "method":"GetPrimaryAccountDetails"
+    },
+    {
+      "soapServiceName":"insertCartDetailsService",
+      "method":"InsertCartDetails"
+    },
+    {
+      "soapServiceName":"insertCustomerDetailsService",
+      "method":"InsertCustomerDetails"
+    },
+    {
+      "soapServiceName":"updateCartItemsService",
+      "method":"UpdateCartItems"
+    },
+    {
+      "soapServiceName":"updateCustomerService",
+      "method":"UpdateCustomer"
+    }
+  ],
+
+  "soapUrl":"http://192.168.1.19:2002/VTVHQuickSaleService.asmx",
+  "targetNameSpace":"http://tempuri.org/"
+}

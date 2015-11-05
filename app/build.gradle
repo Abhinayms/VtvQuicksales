@@ -26,5 +26,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.+'
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile project(':ksoap2')
-    compile project(':jaxb-api')
 }

@@ -28,6 +28,8 @@ import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.FactoryModel;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.WebServiceClass;
 
 import org.json.JSONArray;
@@ -279,7 +281,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
                     userModel=new UserModel();
-                    userModel.setActID(new Integer(10));
+                    userModel.setActID(0);
                     userModel.setActName(custName);
                     userModel.setMobileNo(custNo);
                     userModel.setAddress1(cAdd1);
@@ -318,10 +320,11 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                         else  {
                             thread=new Thread() {
                                 public void run() {
-                                    WebServiceClass webServiceClass = new WebServiceClass();
+                                    SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                                     {
                                         try {
-                                            status = (ResponseStatus) webServiceClass.insertCustomerDetails(userModel);
+                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), userModel,
+                                                    UserModel.class, "userModel");
                                             if (status.getStatusCode() == 200) {
                                                 array = new JSONArray(status.getStatusResponse());
                                                 for (int index = 0; index < array.length(); index++) {

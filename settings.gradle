@@ -1,1 +1,1 @@
-include ':app', ':ksoap2', ':jaxb-api'
+include ':app', ':ksoap2', ':jaxb-api', ':saaj-impl-1.3.25', ':jsr173-1.0'

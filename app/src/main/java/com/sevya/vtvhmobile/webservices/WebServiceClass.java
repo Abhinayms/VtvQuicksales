@@ -70,31 +70,7 @@ public class WebServiceClass {
         SOAP_ACTION="http://tempuri.org/insertdetails";
         METHOD_NAME="insertdetails";
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-        /*request.addProperty("Name",name);
-        request.addProperty("SurName",surName);
-        request.addProperty("EmailId",emialId);
-        request.addProperty("Flat",flat);
-        request.addProperty("CompanyName",companyName);
-        request.addProperty("TINNo",tinno);
-        request.addProperty("Street",street);
-        request.addProperty("City",city);
-        request.addProperty("Mandal",mandal);
-        request.addProperty("District",district);
-        request.addProperty("State",state);
-        request.addProperty("Mobile",mobile);
-        request.addProperty("Phone",phone);
-        request.addProperty("Country",country);
-        request.addProperty("Gender",gender);
-        request.addProperty("UserId",userId);
-        request.addProperty("PrimaryActID",primaryactId);
-        request.addProperty("DuplicateIds",duplicateIds);*/
 
-        /*PropertyInfo pi=new PropertyInfo();
-        pi.setName("userModel");
-        pi.setValue(usermodel);
-        //  Log.d("actid",""+usermodel.getActID());
-
-        pi.setType(usermodel.getClass());*/
         request.addProperty("userModel", usermodel);
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet=true;

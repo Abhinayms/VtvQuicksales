@@ -170,7 +170,8 @@
         <activity
             android:name=".EditCustomer"
             android:label="@string/title_activity_edit_customer"
-            android:parentActivityName=".MainActivity" >
+            android:launchMode="singleTop"
+            android:parentActivityName=".ReceiveDetails" >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.EditCustomer" />
 

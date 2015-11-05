@@ -14,13 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
-
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.webservices.WebServiceClass;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +40,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     EditText cpro;
     EditText cln;
     EditText cadd;
+    EditText cadd1;
+    EditText cadd2;
+    EditText cadd3;
     EditText cmail;
 
     ImageButton cbname;
@@ -46,22 +50,30 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     ImageButton cbcpmny;
     ImageButton cbmail;
     ImageButton cbadd;
+    ImageButton cbadd1;
+    ImageButton cbadd2;
+    ImageButton cbadd3;
     ImageButton cbln;
     ImageButton cbpro;
     ImageButton cbgen;
 
+    String cusName;
+    String cusNum;
+    String cusGen;
+    String cusLn;
+    String cusAdd;
+    String cusAdd1;
+    String cusEmail;
+    String cusCompNmae;
+    String cusActid;
 
 
-    String custName;
-    String custNum;
-    String custPro;
-    String custComp;
-    String custLn;
-    String custGen;
-    String custAdd;
-    String custEmail;
 
+    JSONArray array;
 
+    ResponseStatus status;
+    String actid;
+    int acctId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +84,12 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-
-        dataBaseHelper=new DataBaseAdapter(this);
-
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        dataBaseHelper=new DataBaseAdapter(this);
 
 
 
@@ -89,6 +100,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cpro = (EditText) findViewById(R.id.cpro);
         cln = (EditText) findViewById(R.id.cln);
         cadd = (EditText) findViewById(R.id.cadd);
+        cadd1 = (EditText) findViewById(R.id.cadd1);
+        cadd2 = (EditText) findViewById(R.id.cadd2);
+        cadd3 = (EditText) findViewById(R.id.cadd3);
         cmail = (EditText) findViewById(R.id.cmail);
 
         cbname=(ImageButton)findViewById(R.id.cbname);
@@ -96,6 +110,10 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cbcpmny=(ImageButton)findViewById(R.id.cbcpmny);
         cbmail=(ImageButton)findViewById(R.id.cbmail);
         cbadd=(ImageButton)findViewById(R.id.cbadd);
+        cbadd=(ImageButton)findViewById(R.id.cbadd);
+        cbadd1=(ImageButton)findViewById(R.id.cbadd1);
+        cbadd2=(ImageButton)findViewById(R.id.cbadd2);
+        cbadd3=(ImageButton)findViewById(R.id.cbadd3);
         cbln=(ImageButton)findViewById(R.id.cbln);
         cbpro=(ImageButton)findViewById(R.id.cbpro);
         cbgen=(ImageButton)findViewById(R.id.cbgen);
@@ -104,6 +122,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cnum.setOnTouchListener(this);
         compName.setOnTouchListener(this);
         cadd.setOnTouchListener(this);
+        cadd1.setOnTouchListener(this);
+        cadd2.setOnTouchListener(this);
+        cadd3.setOnTouchListener(this);
         cln.setOnTouchListener(this);
         cmail.setOnTouchListener(this);
         cpro.setOnTouchListener(this);
@@ -113,6 +134,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cbnum.setOnTouchListener(this);
         cbcpmny.setOnTouchListener(this);
         cbadd.setOnTouchListener(this);
+        cbadd1.setOnTouchListener(this);
+        cbadd2.setOnTouchListener(this);
+        cbadd3.setOnTouchListener(this);
         cbln.setOnTouchListener(this);
         cbmail.setOnTouchListener(this);
         cbgen.setOnTouchListener(this);
@@ -127,54 +151,55 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         //ButtonAnimation.animation(view);
 
         try {
-                Intent i=getIntent();
-               String num= i.getStringExtra("cnum");
+                Intent intent=getIntent();
+            String name=intent.getStringExtra("cname");
+            String compname=intent.getStringExtra("compName");
+            String num=intent.getStringExtra("cnum");
+            String pro=intent.getStringExtra("cpro");
+            String mail=intent.getStringExtra("cmail");
+            String add=intent.getStringExtra("cadd");
+            String add1=intent.getStringExtra("cadd1");
+            String add2=intent.getStringExtra("cadd2");
+            String add3=intent.getStringExtra("cadd3");
+            String gen=intent.getStringExtra("rb");
+            String ln=intent.getStringExtra("cln");
+            String actid=intent.getStringExtra("actId");
 
 
 
-            //phnnum = (EditText) findViewById(R.id.edit_phone);
-           // num = phnnum.getText().toString();
-
-            cursor = dataBaseHelper.getPerson(num);
+            acctId=Integer.parseInt(actid);
 
 
 
-            if (cursor != null) {
+            cname.setText(name);
+            cnum.setText(num);
+            compName.setText(compname);
+            cgen.setText(gen);
+            cpro.setText(pro);
+            cln.setText(ln);
+            cadd.setText(add);
+            cadd1.setText(add1);
+            cadd2.setText(add2);
+            cadd3.setText(add3);
+            cmail.setText(mail);
 
-                cursor.moveToFirst();
-                custName = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
-                custNum = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
-                custGen = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.GENDER));
-                custPro = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PROFESSION));
-                custLn = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.LANDLINE_NUMBER));
-                custAdd = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.ADDRESS));
-                custEmail = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.EMAIL));
-                custComp = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.COMPANY_NAME));
-
-
-
-
-                cname.setText(custName);
-                cnum.setText(custNum);
-                compName.setText(custComp);
-                cgen.setText(custGen);
-                cpro.setText(custPro);
-                cln.setText(custLn);
-                cadd.setText(custAdd);
-                cmail.setText(custEmail);
-            } else {
-
-
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void update(View view) {
         ButtonAnimation.animation(view);
+
+        cusName=cname.getText().toString();
+        cusNum=cnum.getText().toString();
+        cusAdd=cadd.getText().toString();
+        cusAdd1=cadd1.getText().toString();
+        cusEmail=cmail.getText().toString();
+        cusCompNmae=compName.getText().toString();
+        cusGen=cgen.getText().toString();
+        cusLn=cln.getText().toString();
+
 
         if (cname.getText().toString().length() == 0) {
 
@@ -184,55 +209,78 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
             cnum.setError("please enter 10 digit Mobile number");
         } else if (cadd.getText().toString().length() <= 0) {
             cadd.setError("Please enter Valid Address");
-        } else if (cmail.getText().toString().length() != 0) {
-            if (!isEmailValid(cmail.getText().toString()))
-                cmail.setError("please enter Valid email");
+        }
+        else if (!isEmailValid(cusEmail))
+            cmail.setError("please enter Valid email");
             else {
+                   Thread  thread=new Thread() {
+                    public void run() {
+                        WebServiceClass webServiceClass = new WebServiceClass();
+                        {
+                            try {
+                                status = (ResponseStatus) webServiceClass.updateCustomer(cusName,cusNum,cusCompNmae,cusGen,cusLn,cusAdd,cusAdd1,
+                                        cusEmail,acctId);
+                                if (status.getStatusCode() == 200) {
+                                    array = new JSONArray(status.getStatusResponse());
+                                    for (int index = 0; index < array.length(); index++) {
+                                        try {
+                                            JSONObject eachObject = (JSONObject) array.get(index);
+                                          final String actid = eachObject.getString("ActID");
 
-                int i = dataBaseHelper.update(cname.getText().toString(), cnum.getText().toString(), compName.getText().toString(), cgen.getText().toString(), cpro.getText().toString(), cln.getText().toString(), cadd.getText().toString(),
-                        cmail.getText().toString());
+                                            EditCustomer.this.runOnUiThread(new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Intent i = new Intent(EditCustomer.this, ReceiveDetails.class);
+                                                    i.putExtra("cname", cusName);
+                                                    i.putExtra("cnum", cusNum);
+                                                    i.putExtra("cpro", cusCompNmae);
+                                                    i.putExtra("rb", cusGen);
+                                                    //   i.putExtra("compName", prof);
+                                                    i.putExtra("cmail", cusEmail);
+                                                    i.putExtra("cadd",cusAdd);
+                                                    i.putExtra("cln", cusLn);
+                                                    i.putExtra("cadd1", cusAdd1);
+                                                    //i.putExtra("cadd2", cAdd2);
+                                                    //i.putExtra("cadd3", cAdd3);
+                                                    i.putExtra("actId",acctId);
 
-                Intent intent = new Intent(EditCustomer.this, ReceiveDetails.class);
-                intent.putExtra("cname", cname.getText().toString());
-                intent.putExtra("cnum", cnum.getText().toString());
-                intent.putExtra("compName", compName.getText().toString());
-                intent.putExtra("cpro", cpro.getText().toString());
-                intent.putExtra("cln", cln.getText().toString());
-                intent.putExtra("cadd", cadd.getText().toString());
-                intent.putExtra("cmail", cmail.getText().toString());
-                intent.putExtra("rb", cgen.getText().toString());
-                startActivity(intent);
+                                                    startActivity(i);
+                                                }
+                                            }));
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                };
+                thread.start();
             }
-        } else {
 
-            int i = dataBaseHelper.update(cname.getText().toString(), cnum.getText().toString(), compName.getText().toString(), cgen.getText().toString(), cpro.getText().toString(), cln.getText().toString(), cadd.getText().toString(),
-                    cmail.getText().toString());
 
-            Intent intent = new Intent(EditCustomer.this, ReceiveDetails.class);
-            intent.putExtra("cname", cname.getText().toString());
-            intent.putExtra("cnum", cnum.getText().toString());
-            intent.putExtra("compName", compName.getText().toString());
-            intent.putExtra("cpro", cpro.getText().toString());
-            intent.putExtra("cln", cln.getText().toString());
-            intent.putExtra("cadd", cadd.getText().toString());
-            intent.putExtra("cmail", cmail.getText().toString());
-            intent.putExtra("rb", cgen.getText().toString());
-            startActivity(intent);
         }
 
-    }
-
-
-    public static boolean isEmailValid(String email) {
+    public  boolean isEmailValid(String email) {
         boolean isValid = false;
 
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$";
         CharSequence inputStr = email;
+        if(email.length()>0) {
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(inputStr);
+            if (matcher.matches()) {
+                isValid = true;
+            }
 
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
+        }else{
+            isValid=true;
         }
         return isValid;
     }
@@ -262,9 +310,6 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View v,MotionEvent event) {
 
-
-
-
             switch(v.getId())
             {
                 case R.id.cname:
@@ -274,6 +319,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);
@@ -288,6 +336,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);
@@ -302,6 +353,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.VISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);
@@ -316,6 +370,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.VISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);
@@ -330,12 +387,66 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.VISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);
                     break;
                 case R.id.cbadd:
                     cadd.setText("");
+                    break;
+                case R.id.cadd1:
+
+                    cbname.setVisibility(View.INVISIBLE);
+                    cbnum.setVisibility(View.INVISIBLE);
+                    cbcpmny.setVisibility(View.INVISIBLE);
+                    cbln.setVisibility(View.INVISIBLE);
+                    cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.VISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
+                    cbmail.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
+                    break;
+                case R.id.cbadd1:
+                    cadd1.setText("");
+                    break;
+                case R.id.cadd2:
+
+                    cbname.setVisibility(View.INVISIBLE);
+                    cbnum.setVisibility(View.INVISIBLE);
+                    cbcpmny.setVisibility(View.INVISIBLE);
+                    cbln.setVisibility(View.INVISIBLE);
+                    cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.VISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
+                    cbmail.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
+                    break;
+                case R.id.cbadd2:
+                    cadd2.setText("");
+                    break;
+                case R.id.cadd3:
+
+                    cbname.setVisibility(View.INVISIBLE);
+                    cbnum.setVisibility(View.INVISIBLE);
+                    cbcpmny.setVisibility(View.INVISIBLE);
+                    cbln.setVisibility(View.INVISIBLE);
+                    cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.VISIBLE);
+                    cbmail.setVisibility(View.INVISIBLE);
+                    cbgen.setVisibility(View.INVISIBLE);
+                    cbpro.setVisibility(View.INVISIBLE);
+                    break;
+                case R.id.cbadd3:
+                    cadd3.setText("");
                     break;
                 case R.id.cmail:
 
@@ -344,6 +455,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.VISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);
@@ -358,6 +472,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbpro.setVisibility(View.VISIBLE);
                     cbgen.setVisibility(View.INVISIBLE);
@@ -373,6 +490,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbcpmny.setVisibility(View.INVISIBLE);
                     cbln.setVisibility(View.INVISIBLE);
                     cbadd.setVisibility(View.INVISIBLE);
+                    cbadd1.setVisibility(View.INVISIBLE);
+                    cbadd2.setVisibility(View.INVISIBLE);
+                    cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
                     cbgen.setVisibility(View.VISIBLE);
                     cbpro.setVisibility(View.INVISIBLE);

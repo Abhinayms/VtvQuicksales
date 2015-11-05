@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('jaxb-api-2.2.3.jar'))

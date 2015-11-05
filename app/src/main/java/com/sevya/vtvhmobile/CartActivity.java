@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
 import java.text.NumberFormat;
@@ -86,13 +88,7 @@ public class CartActivity extends AppCompatActivity {
 
         String date=intent.getStringExtra("Date");
         listView = (ListView) findViewById(R.id.cartitemview);
-
-        try {
-            cursor = dataBaseHelper.getItem(number, date);
-        }catch (Exception s)
-        {
-            s.printStackTrace();
-        }
+        cursor = dataBaseHelper.getItem(number, date);
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
@@ -130,7 +126,7 @@ public class CartActivity extends AppCompatActivity {
 
 
 
-            String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
+            /*String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
             int[] toViewIDs = new int[]
                     {R.id.p_model, R.id.p_qty, R.id.p_price,R.id.p_totalprice};
 
@@ -145,9 +141,9 @@ public class CartActivity extends AppCompatActivity {
             );
 
 
-            /*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
+            *//*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
             lp.height = 300;
-            listView.setLayoutParams(lp);*/
+            listView.setLayoutParams(lp);*//*
             listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
             listView.setAdapter(simpleCursorAdapter);
 
@@ -162,6 +158,15 @@ public class CartActivity extends AppCompatActivity {
                     return true;
                 }
             });
+*/
+
+
+            CustomCartListViewAdapter customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor,0);
+            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
+            listView.setAdapter(customCartListViewAdapter);
+
+
+
             cursor.moveToFirst();
             for(int i=0;i<cursor.getCount();i++) {
                 int index = cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE);
@@ -237,7 +242,7 @@ public class CartActivity extends AppCompatActivity {
                 intent.putExtra("cname",cname.getText().toString());
                 intent.putExtra("cnum",cnum.getText().toString());
                 //intent.putExtra("listsize",((Integer)listView.getScrollBarSize()).toString());
-                intent.putExtra("listsize",simpleCursorAdapter.getCount());
+                intent.putExtra("listsize", listView.getCount());
                 startActivity(intent);
             }
         });

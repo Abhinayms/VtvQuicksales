@@ -64,6 +64,9 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
 
 
+
+
+
         dname=(TextView)findViewById(R.id.dname);
         dnum=(TextView)findViewById(R.id.dnum);
         qty=(EditText)findViewById(R.id.edit_text);
@@ -206,6 +209,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                                  intent.putExtra("cname", dname.getText().toString());
                                                  intent.putExtra("cnum", dnum.getText().toString());
                                                  intent.putExtra("Date", date);
+
 
                                                  startActivity(intent);
                                              }

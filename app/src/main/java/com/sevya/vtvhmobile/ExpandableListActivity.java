@@ -79,7 +79,7 @@ public class ExpandableListActivity extends AppCompatActivity{
                     R.layout.rowlayout_itemlist_exp,                 // Your row layout for a child
                     new String[]{DataBaseAdapter.DataBaseHelper.NAME, DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER},          // Field(s) to use from group cursor
                     new int[]{R.id.p_name, R.id.p_number},                 // Widget ids to put group data into
-                    new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE},  // Field(s) to use from child cursors
+                    new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE},  // Field(s) to use from child cursors
                     new int[]{R.id.p_model, R.id.p_qty, R.id.p_price});          // Widget ids to put child data into
 
 

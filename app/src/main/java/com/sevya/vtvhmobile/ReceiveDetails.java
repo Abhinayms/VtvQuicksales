@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,7 @@ public class ReceiveDetails extends AppCompatActivity {
     TextView ln;
     Button rcontinue;
     String date;
-
+    String actid;
     private Toolbar mToolbar;
 
     @Override
@@ -65,6 +66,7 @@ public class ReceiveDetails extends AppCompatActivity {
         String cadd3=i.getStringExtra("cadd3");
         String cgen=i.getStringExtra("rb");
         String cln=i.getStringExtra("cln");
+        actid=i.getStringExtra("actId");
 
         name.setText(cname);
         numm.setText(cnum);
@@ -145,9 +147,33 @@ public class ReceiveDetails extends AppCompatActivity {
         }
         if(id==R.id.action_edit)
         {
-            Intent intent=new Intent(this,EditCustomer.class);
-            intent.putExtra("cnum",numm.getText().toString());
-            startActivity(intent);
+            Intent i=new Intent(this,EditCustomer.class);
+            /*String cname=intent.getStringExtra("cname");
+            String cage=intent.getStringExtra("compName");
+            String cnum=intent.getStringExtra("cnum");
+            String cpro=intent.getStringExtra("cpro");
+            String cmail=intent.getStringExtra("cmail");
+            String cadd=intent.getStringExtra("cadd");
+            String cadd1=intent.getStringExtra("cadd1");
+            String cadd2=intent.getStringExtra("cadd2");
+            String cadd3=intent.getStringExtra("cadd3");
+            String cgen=intent.getStringExtra("rb");
+            String cln=intent.getStringExtra("cln");*/
+
+            i.putExtra("cname", name.getText().toString());
+            i.putExtra("cnum", numm.getText().toString());
+            i.putExtra("cpro", pro.getText().toString());
+            i.putExtra("rb", gen.getText().toString());
+              i.putExtra("compName", CompName.getText().toString());
+            i.putExtra("cmail", email.getText().toString());
+            i.putExtra("cadd",add.getText().toString());
+            i.putExtra("cln", ln.getText().toString());
+            i.putExtra("cadd1", add1.getText().toString());
+            i.putExtra("cadd2", add2.getText().toString());
+            i.putExtra("cadd3", add3.getText().toString());
+            i.putExtra("actId",actid);
+
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

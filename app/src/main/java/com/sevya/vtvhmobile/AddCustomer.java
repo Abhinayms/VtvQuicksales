@@ -6,6 +6,7 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,7 +26,16 @@ import android.widget.Spinner;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.FactoryModel;
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.UserModel;
+import com.sevya.vtvhmobile.webservices.WebServiceClass;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -55,6 +65,21 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
     Spinner spinner1;
 
+    private String custName;
+    private String custNo;
+    private String cMail;
+    private String cLn;
+    private String cAdd;
+    private String cAdd1;
+    private String cAdd2;
+    private String cAdd3;
+    private String custCompName;
+    private String gender;
+    private String cPro;
+    private String actId;
+
+
+
     public RadioGroup rdg;
     public RadioGroup compGroup;
     public  RadioButton male;
@@ -64,11 +89,15 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     public String selectedType="";
     Button done;
     Button cancel;
+    private ResponseStatus status;
+    public JSONArray array;
+
     RelativeLayout genderlayout;
 
     DataBaseAdapter dataBaseHelper;
     Customer customer;
-
+    Thread thread;
+    UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +141,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
         cnum.setText(num);
 
-        addItemsOnSpinner1();
-        onButtonClickDone();
-        onButtonClickCancel();
+
 
         cname.setOnTouchListener(this);
         cnum.setOnTouchListener(this);
@@ -135,6 +162,10 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cbadd3.setOnTouchListener(this);
         cbln.setOnTouchListener(this);
         cbmail.setOnTouchListener(this);
+
+        addItemsOnSpinner1();
+        onButtonClickDone();
+        onButtonClickCancel();
     }
 
 
@@ -157,7 +188,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                ScrollView sv=(ScrollView)findViewById(R.id.scrollview);
+                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
                 sv.fullScroll(view.getTop());
             }
 
@@ -199,10 +230,10 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
                         if (i == R.id.radioMale) {
-                            selectedType = male.getText().toString();
+                            selectedType = "Male";
 
                         } else if (i == R.id.radioFemale) {
-                            selectedType = female.getText().toString();
+                            selectedType = "Female";
                         }
                     }
                 });
@@ -210,11 +241,6 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
             }
         }
         });
-
-
-
-
-
         try {
             done = (Button) findViewById(R.id.button_done);
             done.setOnClickListener(new View.OnClickListener() {
@@ -226,32 +252,55 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     customer= FactoryModel.getInstanceCustomer();
 
 
-                    String custName = cname.getText().toString();
+                     custName = cname.getText().toString();
                     customer.setName(custName);
-                    String custNo = cnum.getText().toString();
+                     custNo = cnum.getText().toString();
                     customer.setMobileNumber(custNo);
-                    String custCompName = compName.getText().toString();
+                     custCompName = compName.getText().toString();
                     customer.setAge(custCompName);
-                    String gender = selectedType;
+                     gender = selectedType;
                     customer.setGender(gender);
-                    String cPro = spinner1.getSelectedItem().toString();
+                    cPro = spinner1.getSelectedItem().toString();
                     customer.setProfession(cPro);
-                    String cLn = cln.getText().toString();
+                     cLn = cln.getText().toString();
                     customer.setLandlineNumber(cLn);
-                    String cAdd = cadd.getText().toString();
+                    cAdd = cadd.getText().toString();
                     customer.setAddress(cAdd);
 
-                    String cAdd1 = cadd1.getText().toString();
-                    String cAdd2 = cadd2.getText().toString();
-                    String cAdd3 = cadd3.getText().toString();
+                     cAdd1 = cadd1.getText().toString();
+                      cAdd2 = cadd2.getText().toString();
+                     cAdd3 = cadd3.getText().toString();
 
-                    String cMail = cmail.getText().toString();
+                      cMail = cmail.getText().toString();
+
+                    int aactId=31;
 
                     customer.setEmail(cMail);
 
 
+                    userModel=new UserModel();
+                    userModel.setActID(new Integer(10));
+                    userModel.setActName(custName);
+                    userModel.setMobileNo(custNo);
+                    userModel.setAddress1(cAdd1);
+                    userModel.setPhone(cLn);
+                    userModel.setFlatNo(cAdd);
+                    userModel.setGender(gender);
+                    userModel.setCity(cAdd2);
+                    userModel.setCountry(cAdd3);
+                    userModel.setState("Ts");
+                    userModel.setStreet("gamma");
+                    userModel.setSurName("android");
+                    userModel.setTinNo("1452");
+                    userModel.setDistrict("gbn");
+                    userModel.setEmail(cMail);
+                    userModel.setIsPrimaryAct("12");
+                    userModel.setPin("012");
+                    userModel.setCompanyName(custCompName);
+                    userModel.setMandal("sdew");
 
-                    if (custName.length() == 0) {
+
+                if (custName.length() == 0) {
 
                         cname.setError("Please enter the required details");
 
@@ -263,67 +312,84 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     {
                         cadd.setError("Please enter Valid Address");
                     }
-                    else if(cMail.length()!=0) {
-                        if(!isEmailValid(cMail))
+                   // else if(cMail.length()!=0) {
+                      else if(!isEmailValid(cMail))
                         cmail.setError("please enter Valid email");
-                        else {
-                            long id=dataBaseHelper.insertCustomer(customer);
-                            Intent i = new Intent(AddCustomer.this, ReceiveDetails.class);
-                            i.putExtra("cname", custName);
-                            i.putExtra("cnum", custNo);
-                            i.putExtra("compName", custCompName);
-                            i.putExtra("cpro", cPro);
-                            i.putExtra("cln", cLn);
-                            i.putExtra("cadd", cAdd);
-                            i.putExtra("cadd1", cAdd1);
-                            i.putExtra("cadd2", cAdd2);
-                            i.putExtra("cadd3", cAdd3);
+                        else  {
+                            thread=new Thread() {
+                                public void run() {
+                                    WebServiceClass webServiceClass = new WebServiceClass();
+                                    {
+                                        try {
+                                            status = (ResponseStatus) webServiceClass.insertCustomerDetails(userModel);
+                                            if (status.getStatusCode() == 200) {
+                                                array = new JSONArray(status.getStatusResponse());
+                                                for (int index = 0; index < array.length(); index++) {
+                                                    try {
+                                                        JSONObject eachObject = (JSONObject) array.get(index);
+                                                        actId = eachObject.getString("ActID");
 
-                            i.putExtra("cmail", cMail);
-                            i.putExtra("rb", gender);
-                            startActivity(i);
-                        }
-                    }
-                    else {
+                                                        AddCustomer.this.runOnUiThread(new Thread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                Intent i = new Intent(AddCustomer.this, ReceiveDetails.class);
+                                                                i.putExtra("cname", custName);
+                                                                i.putExtra("cnum", custNo);
+                                                                i.putExtra("cpro", custCompName);
+                                                                i.putExtra("rb", gender);
+                                                                //   i.putExtra("compName", prof);
+                                                                i.putExtra("cmail", cMail);
+                                                                i.putExtra("cadd",cAdd);
+                                                                i.putExtra("cln", cLn);
+                                                                i.putExtra("cadd1", cAdd1);
+                                                                i.putExtra("cadd2", cAdd2);
+                                                                i.putExtra("cadd3", cAdd3);
+                                                                i.putExtra("actId",actId);
 
-                        long id=dataBaseHelper.insertCustomer(customer);
+                                                                startActivity(i);
+                                                            }
+                                                        }));
 
-                        Intent i = new Intent(AddCustomer.this, ReceiveDetails.class);
-                        i.putExtra("cname", custName);
-                        i.putExtra("cnum", custNo);
-                        i.putExtra("compName", custCompName);
-                        i.putExtra("cpro", cPro);
-                        i.putExtra("cln", cLn);
-                        i.putExtra("cadd", cAdd);
-                        i.putExtra("cadd1", cAdd1);
-                        i.putExtra("cadd2", cAdd2);
-                        i.putExtra("cadd3", cAdd3);
-                        i.putExtra("cmail", cMail);
-                        i.putExtra("rb", gender);
-                        startActivity(i);
-                    }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                }
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
 
 
-                }
-            });
+                                    }
+                                }
+
+                                         };
+                            thread.start();
+                                     }
+                            }
+
+     });
         }catch (Exception e)
         {
             e.printStackTrace();
         }
-
-
     }
 
-    public static boolean isEmailValid(String email) {
+    public  boolean isEmailValid(String email) {
         boolean isValid = false;
 
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$";
         CharSequence inputStr = email;
+        if(email.length()>0) {
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(inputStr);
+            if (matcher.matches()) {
+                isValid = true;
+            }
 
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
+        }else{
+            isValid=true;
         }
         return isValid;
     }
@@ -354,11 +420,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
         return true;
-
-
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -524,3 +586,5 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         return false;
     }
 }
+//custName, null, cMail, cAdd, custCompName,
+//null, cAdd1, cAdd2, null, cAdd3, null, custNo, cLn, null, gender, 76, 0, null

@@ -227,7 +227,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Address"
+            android:hint="Address  (House No.)"
             android:inputType="textMultiLine"
             android:textSize="15dp"
             android:layout_weight="1"
@@ -245,6 +245,90 @@
             android:visibility="invisible"
             />
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Street Name &amp; No"
+                android:inputType="textMultiLine"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:id="@+id/cadd1"
+                android:background="@drawable/edit_text_design"
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbadd1"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City &amp; Mandal"
+                android:inputType="textMultiLine"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:id="@+id/cadd2"
+                android:background="@drawable/edit_text_design"
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbadd2"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="District &amp; Pin code"
+                android:inputType="textMultiLine"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:id="@+id/cadd3"
+                android:background="@drawable/edit_text_design"
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbadd3"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

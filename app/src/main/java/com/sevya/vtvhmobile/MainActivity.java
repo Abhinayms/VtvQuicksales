@@ -41,6 +41,20 @@ public class MainActivity extends AppCompatActivity {
     public Context context;
     public Cursor cursor;
     private ResponseStatus status;
+    public JSONArray array;
+
+    private String actId;
+    private String companyName;
+    private String name;
+    private String address1;
+    private String gender;
+    private String mobileNo;
+    private String email;
+    private String street;
+    private String city;
+    private String district;
+    private String landline;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,24 +102,99 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!isValidNumber(numberr)) {
                     number.setError("Please enter 10 digit Mobile Number");
-
-                } else {
-                    /*Thread thread=new Thread() {
-
+                }
+                else {
+                    Thread thread = new Thread() {
                         public void run() {
                             WebServiceClass webServiceClass = new WebServiceClass();
                             try
 
                             {
                                 status = (ResponseStatus) webServiceClass.getDetailsByMobileNumber(numberr);
-                                JSONArray array = new JSONArray(status.getStatusResponse());
+                                if(status.getStatusCode() == 200 ) {
+                                    array = new JSONArray(status.getStatusResponse());
                                 for (int index = 0; index < array.length(); index++) {
                                     try {
                                         JSONObject eachObject = (JSONObject) array.get(index);
-                                        Log.d("check", "" + eachObject.get("ActID"));
+
+                                        actId=eachObject.getString("ActID");
+                                        name=eachObject.getString("ActName");
+                                        address1=eachObject.getString("Address1");
+                                        mobileNo=eachObject.getString("MobileNo");
+                                        companyName=eachObject.getString("CompanyName");
+                                        street=eachObject.getString("Street");
+                                        city=eachObject.getString("City");
+                                        email=eachObject.getString("Email");
+                                        gender=eachObject.getString("Gender");
+                                        district=eachObject.getString("District");
+                                        landline=eachObject.getString("Phone");
+
+
+                                        MainActivity.this.runOnUiThread(new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent i = new Intent(MainActivity.this, ReceiveDetails.class);
+                                                i.putExtra("cname", name);
+                                                i.putExtra("cnum", mobileNo);
+                                                i.putExtra("cpro", companyName);
+                                                i.putExtra("rb", gender);
+                                             //   i.putExtra("compName", prof);
+                                                i.putExtra("cmail", email);
+                                                i.putExtra("cadd", address1);
+                                                i.putExtra("cln", landline);
+                                                i.putExtra("cadd1", street);
+                                                i.putExtra("cadd2", city);
+                                                i.putExtra("cadd3", district);
+                                                i.putExtra("actId",actId);
+                                                startActivity(i);
+                                            }
+                                        }));
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+                                }
+                                }
+                                else if(status.getStatusCode()!=200)  {
+
+                                    MainActivity.this.runOnUiThread(new Runnable() {
+                                        public void run() {
+
+                                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                                    MainActivity.this);
+
+                                            // set title
+                                            alertDialogBuilder.setTitle("Alert");
+
+                                            // set dialog message
+                                            alertDialogBuilder
+                                                    .setMessage("Did not find any matches with this Number. \nCreate new?")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                            Intent i = new Intent(MainActivity.this, AddCustomer.class);
+                                                            i.putExtra("cnum", numberr);
+                                                            startActivity(i);
+
+                                                        }
+                                                    })
+                                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                            // if this button is clicked, just close
+                                                            // the dialog box and do nothing
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+
+
+                                            // create alert dialog
+                                            AlertDialog alertDialog = alertDialogBuilder.create();
+
+                                            // show it
+                                            alertDialog.show();
+
+                                        } });
+
                                 }
 
                             } catch (IOException e) {
@@ -121,16 +210,17 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     };
-                    thread.start();*/
-                    cursor = dataBaseHelper.getPerson(numberr);
+
+                    thread.start();
+                }
+                    /*cursor = dataBaseHelper.getPerson(numberr);
                     int length = cursor.getCount();
 
                     if (length > 1) {
                         Intent intent = new Intent(MainActivity.this, PopupActivity.class);
                         intent.putExtra("cnum", numberr);
                         startActivity(intent);
-                    }
-                    else {
+                    } else {
 
 
                         if (cursor != null && cursor.moveToFirst()) {
@@ -158,51 +248,15 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(i);
 
 
-                        }
-                        else {
-
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                                    MainActivity.this);
-
-                            // set title
-                            alertDialogBuilder.setTitle("Alert");
-
-                            // set dialog message
-                            alertDialogBuilder
-                                    .setMessage("Did not find any matches with this Number. \nCreate new?")
-                                    .setCancelable(false)
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            Intent i = new Intent(MainActivity.this, AddCustomer.class);
-                                            i.putExtra("cnum", numberr);
-                                            startActivity(i);
-
-                                        }
-                                    })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // if this button is clicked, just close
-                                            // the dialog box and do nothing
-                                            dialog.cancel();
-                                        }
-                                    });
+                        }*/
 
 
-                            // create alert dialog
-                            AlertDialog alertDialog = alertDialogBuilder.create();
 
-                            // show it
-                            alertDialog.show();
-
-
-                        }
-
-                    }
 
 
                 }
 
-            }
+
 
         });
 

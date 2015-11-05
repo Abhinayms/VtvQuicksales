@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <SOAPServices targetNameSpace="http://www.google.com/">
+        <SoapService>
+            <URL>ABC</URL>
+            <METHODNAME>method1</METHODNAME>
+        </SoapService>
+        <SoapService>
+            <URL>FFFF</URL>
+            <METHODNAME>method2</METHODNAME>
+        </SoapService>
+        <SoapService>
+            <URL>XYZ</URL>
+            <METHODNAME>method3</METHODNAME>
+        </SoapService>
+    </SOAPServices>

@@ -82,6 +82,7 @@ public class
     public Cursor getItem(String number,String date)
     {
 
+
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
         String[] columns={dataBaseHelper.Item_id,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,

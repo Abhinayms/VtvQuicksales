@@ -10,7 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/ksoap2-android-assembly-2.6.0-jar-with-dependencies" />
+            <option value="$PROJECT_DIR$/jaxb-api" />
+            <option value="$PROJECT_DIR$/ksoap2" />
           </set>
         </option>
       </GradleProjectSettings>

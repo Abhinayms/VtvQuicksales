@@ -21,13 +21,7 @@
         />
 
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/radio"
-        android:paddingRight="10dp"
-        android:onClick="onClickRadioButton"
-        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,3 +59,11 @@
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>
+
+    <!--<RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio"
+            android:paddingRight="10dp"
+            android:onClick="onClickRadioButton"
+            />-->

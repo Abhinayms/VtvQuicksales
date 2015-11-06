@@ -3,6 +3,7 @@ package com.sevya.vtvhmobile;
 /**
  * Created by abhinaym on 24/10/15.
  */
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +31,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
+import com.sevya.vtvhmobile.models.CartModel;
 import com.sevya.vtvhmobile.models.ProductsInfo;
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.UserModel;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class BuyProducts extends Activity  implements OnTouchListener {
 
@@ -48,6 +59,10 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     ImageButton modelimagebutton;
     ImageButton qtyimagebutton;
     ImageButton priceimagebutton;
+    Thread thread;
+    ResponseStatus status;
+    CartModel cartModel;
+    JSONArray array;
 
     DataBaseAdapter dataBaseHelper;
 
@@ -192,6 +207,17 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              productsInfo.setTotalPrice(tp);
 
 
+                                             cartModel.setActid(new Integer(10));
+                                             cartModel.setSalesmanId(new Integer(76));
+                                             cartModel.setModalId(new Integer(10125));
+                                             cartModel.setSalePrice(new Float(4000));
+                                             cartModel.setTotalPrice(new Float(2500));
+                                             cartModel.setSpId(new Integer(25));
+                                             cartModel.setQty(new Integer(5));
+                                             cartModel.setCartId(new Integer(2));
+                                             cartModel.setCartModelId(new Integer(6));
+
+
                                              if((autotv.getText().toString().length()==0))
                                                  autotv.setError("Please enter model no");
                                              else if(qty.getText().toString().length()==0)
@@ -200,18 +226,55 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                                  cprice.setError("Please enter UnitPrice");
                                              else {
 
-                                                 long id = dataBaseHelper.insertDataItems(productsInfo);
+                                                // long id = dataBaseHelper.insertDataItems(productsInfo);
+
+                                                 thread=new Thread() {
+                                                     public void run() {
+                                                         SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+                                                         ServiceParams modalParam = new ServiceParams(cartModel,"cartModel", CartModel.class);
+                                                        // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
+                                                         {
+                                                             try {
+                                                                 status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCartDetailsService"), modalParam);
+                                                                 if (status.getStatusCode() == 200) {
+                                                                     array = new JSONArray(status.getStatusResponse());
+                                                                     for (int index = 0; index < array.length(); index++) {
+                                                                         try {
+                                                                             JSONObject eachObject = (JSONObject) array.get(index);
+                                                                             //actId = eachObject.getString("ActID");
+
+                                                                             Intent intent = new Intent(BuyProducts.this, CartActivity.class);
+                                                                             intent.putExtra("cname", dname.getText().toString());
+                                                                             intent.putExtra("cnum", dnum.getText().toString());
+                                                                             intent.putExtra("Date", date);
+
+
+                                                                             startActivity(intent);
 
 
 
 
-                                                 Intent intent = new Intent(BuyProducts.this, CartActivity.class);
-                                                 intent.putExtra("cname", dname.getText().toString());
-                                                 intent.putExtra("cnum", dnum.getText().toString());
-                                                 intent.putExtra("Date", date);
+                                                                         } catch (JSONException e) {
+                                                                             e.printStackTrace();
+                                                                         }
+
+                                                                     }
+                                                                 }
+                                                             } catch (JSONException e) {
+                                                                 e.printStackTrace();
+                                                             }
 
 
-                                                 startActivity(intent);
+                                                         }
+                                                     }
+
+                                                 };
+                                                 thread.start();
+
+
+
+
+
                                              }
 
                                          }

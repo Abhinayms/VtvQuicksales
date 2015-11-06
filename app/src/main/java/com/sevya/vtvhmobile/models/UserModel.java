@@ -11,9 +11,9 @@ import java.util.Hashtable;
 /**
  * Created by abhinaym on 4/11/15.
  */
-public class UserModel implements Serializable {
+public class UserModel implements KvmSerializable {
 
-    private Integer ActID;
+    private int PrimaryActID;
     private String SurName;
     private String CompanyName;
     private String ActName;
@@ -32,13 +32,15 @@ public class UserModel implements Serializable {
     private String IsPrimaryAct;
     private String Email;
     private String FlatNo;
+    private String DuplicateIds;
 
-    public Integer getActID() {
-        return ActID;
+
+    public int getPrimaryActID() {
+        return PrimaryActID;
     }
 
-    public void setActID(Integer actID) {
-        ActID = actID;
+    public void setPrimaryActID(int primaryActID) {
+        PrimaryActID = primaryActID;
     }
 
     public String getSurName() {
@@ -185,11 +187,19 @@ public class UserModel implements Serializable {
         FlatNo = flatNo;
     }
 
-    /*@Override
+    public String getDuplicateIds() {
+        return DuplicateIds;
+    }
+
+    public void setDuplicateIds(String duplicateIds) {
+        DuplicateIds = duplicateIds;
+    }
+
+    @Override
     public Object getProperty(int i) {
         switch (i) {
             case 0:
-                return ActID;
+                return PrimaryActID;
             case 1:
                 return SurName;
             case 2:
@@ -226,20 +236,22 @@ public class UserModel implements Serializable {
                 return Email;
             case 18:
                 return FlatNo;
+            case 19:
+                return DuplicateIds;
         }
         return null;
      }
 
     @Override
     public int getPropertyCount() {
-        return 19;
+        return 20;
     }
 
     @Override
     public void setProperty(int i, Object o) {
         switch (i) {
             case 0:
-                ActID = Integer.parseInt(o.toString());
+                PrimaryActID = Integer.parseInt(o.toString());
                 break;
             case 1:
                 SurName = o.toString();
@@ -295,6 +307,9 @@ public class UserModel implements Serializable {
             case 18:
                 FlatNo = o.toString();
                 break;
+            case 19:
+                DuplicateIds = o.toString();
+                break;
             default:
                 break;
         }
@@ -305,7 +320,7 @@ public class UserModel implements Serializable {
         switch (i) {
             case 0:
                 propertyInfo.type = propertyInfo.INTEGER_CLASS;
-                propertyInfo.name = "ActID";
+                propertyInfo.name = "PrimaryActID";
                 break;
             case 1:
                 propertyInfo.type = propertyInfo.STRING_CLASS;
@@ -395,8 +410,12 @@ public class UserModel implements Serializable {
                 propertyInfo.type = propertyInfo.STRING_CLASS;
                 propertyInfo.name = "FlatNo";
                 break;
+            case 19:
+                propertyInfo.type = propertyInfo.STRING_CLASS;
+                propertyInfo.name = "DuplicateIds";
+                break;
             default:
                 break;
         }
-    }*/
+    }
 }

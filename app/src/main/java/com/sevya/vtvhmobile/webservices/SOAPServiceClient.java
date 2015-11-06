@@ -23,17 +23,18 @@ public class SOAPServiceClient {
     private String NAMESPACE = "";
     private final int SESSION_TIMEOUT = 750000;
 
-    public ResponseStatus callService(JSONObject soapService, Object params, Class cls, String paramName){
+    public ResponseStatus callService(JSONObject soapService, ServiceParams... params){
         try {
             NAMESPACE = soapService.get("targetNameSpace").toString();
             METHOD_NAME = soapService.get("method").toString();
             SOAP_ACTION = NAMESPACE+METHOD_NAME;
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-            request.addProperty(paramName,params);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet=true;
-            envelope.setOutputSoapObject(request);
-            envelope.addMapping(NAMESPACE, cls.getName(), cls);
+            for(ServiceParams param : params) {
+                request.addProperty(param.getParamAlias(), param.getParams());
+                envelope.addMapping(NAMESPACE, param.getParamType().getSimpleName(), param.getParamType());
+            }
             envelope.setOutputSoapObject(request);
 
             HttpTransportSE androidHttpTransport = new HttpTransportSE(soapService.get("soapURL").toString(), SESSION_TIMEOUT);
@@ -42,7 +43,7 @@ public class SOAPServiceClient {
             androidHttpTransport.call(SOAP_ACTION, envelope);
             // Get the response
             SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-            Log.d("", "" + response);
+            Log.d("response", "" + response);
             if(!response.toString().equals("null")){
                 status =  new ResponseStatus(200, response.toString());
             }else{

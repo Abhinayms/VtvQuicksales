@@ -24,6 +24,7 @@ import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
 import com.sevya.vtvhmobile.webservices.WebServiceClass;
 
 import org.json.JSONArray;
@@ -112,8 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             try
 
                             {
-                                status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"),numberr,
-                                        Integer.class, "MobileNo");
+                                status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"),new ServiceParams(numberr, "MobileNo", Integer.class));
                                 if(status.getStatusCode() == 200 ) {
                                     array = new JSONArray(status.getStatusResponse());
                                 for (int index = 0; index < array.length(); index++) {
@@ -208,48 +208,8 @@ public class MainActivity extends AppCompatActivity {
 
                     thread.start();
                 }
-                    /*cursor = dataBaseHelper.getPerson(numberr);
-                    int length = cursor.getCount();
 
-                    if (length > 1) {
-                        Intent intent = new Intent(MainActivity.this, PopupActivity.class);
-                        intent.putExtra("cnum", numberr);
-                        startActivity(intent);
-                    } else {
-
-
-                        if (cursor != null && cursor.moveToFirst()) {
-
-
-                            String name = cursor.getString(1);
-                            int mnum = cursor.getInt(2);
-                            String companyName = cursor.getString(3);
-                            String gender = cursor.getString(4);
-                            String prof = cursor.getString(5);
-                            String ln = cursor.getString(6);
-                            String add = cursor.getString(7);
-                            String email = cursor.getString(8);
-
-                            Intent i = new Intent(MainActivity.this, ReceiveDetails.class);
-                            i.putExtra("cname", name);
-                            i.putExtra("cnum", numberr);
-                            i.putExtra("cpro", companyName);
-                            i.putExtra("rb", gender);
-                            i.putExtra("compName", prof);
-                            i.putExtra("cmail", email);
-                            i.putExtra("cadd", add);
-                            i.putExtra("cln", ln);
-
-                            startActivity(i);
-
-
-                        }*/
-
-
-
-
-
-                }
+            }
 
 
 

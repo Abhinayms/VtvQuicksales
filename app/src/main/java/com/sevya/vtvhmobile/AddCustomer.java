@@ -6,12 +6,10 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,7 +20,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.FactoryModel;
@@ -30,14 +27,11 @@ import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
-import com.sevya.vtvhmobile.webservices.WebServiceClass;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -281,7 +275,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
                     userModel=new UserModel();
-                    userModel.setActID(0);
+                    userModel.setPrimaryActID(new Integer(60));
                     userModel.setActName(custName);
                     userModel.setMobileNo(custNo);
                     userModel.setAddress1(cAdd1);
@@ -300,6 +294,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     userModel.setPin("012");
                     userModel.setCompanyName(custCompName);
                     userModel.setMandal("sdew");
+                    userModel.setDuplicateIds("");
 
 
                 if (custName.length() == 0) {
@@ -318,13 +313,15 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                       else if(!isEmailValid(cMail))
                         cmail.setError("please enter Valid email");
                         else  {
+
                             thread=new Thread() {
                                 public void run() {
                                     SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+                                    ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
+                                    ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
                                     {
                                         try {
-                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), userModel,
-                                                    UserModel.class, "userModel");
+                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam, primitiveParam);
                                             if (status.getStatusCode() == 200) {
                                                 array = new JSONArray(status.getStatusResponse());
                                                 for (int index = 0; index < array.length(); index++) {

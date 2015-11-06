@@ -73,7 +73,7 @@ public class SalesList extends AppCompatActivity {
             textView.setVisibility(View.INVISIBLE);
 
             startManagingCursor(cursor);
-            String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.Item_id, DataBaseAdapter.DataBaseHelper.NAME, DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER,
+            String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.CART_ID, DataBaseAdapter.DataBaseHelper.NAME, DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER,
                     DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE};
             int[] toViewIDs = new int[]
                     {R.id.p_id, R.id.p_name, R.id.p_number, R.id.p_model, R.id.p_qty, R.id.p_price};

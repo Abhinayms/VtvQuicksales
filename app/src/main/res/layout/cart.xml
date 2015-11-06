@@ -212,7 +212,7 @@
             android:id="@+id/float_button_tick"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-
+            android:onClick="submit"
             />
 
     </RelativeLayout>

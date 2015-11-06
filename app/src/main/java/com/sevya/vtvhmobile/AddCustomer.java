@@ -6,6 +6,7 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -295,6 +296,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     userModel.setCompanyName(custCompName);
                     userModel.setMandal("sdew");
                     userModel.setDuplicateIds("");
+                    userModel.setUserId(new Integer(50));
 
 
                 if (custName.length() == 0) {
@@ -321,14 +323,13 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                   // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
                                     {
                                         try {
-                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertDetailsService"), modalParam);
+                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam);
                                             if (status.getStatusCode() == 200) {
                                                 array = new JSONArray(status.getStatusResponse());
                                                 for (int index = 0; index < array.length(); index++) {
                                                     try {
                                                         JSONObject eachObject = (JSONObject) array.get(index);
-                                                        actId = eachObject.getString("ActID");
-                                                        
+                                                        actId = eachObject.getString("PrimaryActID");
 
                                                         AddCustomer.this.runOnUiThread(new Thread(new Runnable() {
                                                             @Override

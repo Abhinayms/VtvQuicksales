@@ -3,7 +3,7 @@ package com.sevya.vtvhmobile.webservices;
 import android.util.Log;
 
 import com.sevya.vtvhmobile.models.ResponseStatus;
-import com.sevya.vtvhmobile.models.UserModel;
+
 
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
@@ -31,6 +31,7 @@ public class SOAPServiceClient {
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet=true;
+
             for(ServiceParams param : params) {
                 request.addProperty(param.getParamAlias(), param.getParams());
                 envelope.addMapping(NAMESPACE, param.getParamType().getSimpleName(), param.getParamType());
@@ -52,6 +53,7 @@ public class SOAPServiceClient {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("*****","Error Occured");
             status =  new ResponseStatus(500, "Error occured");
         }
         return status;

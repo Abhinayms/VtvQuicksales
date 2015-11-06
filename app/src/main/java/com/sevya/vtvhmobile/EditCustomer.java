@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.UserModel;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
 import com.sevya.vtvhmobile.webservices.WebServiceClass;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +78,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     ResponseStatus status;
     String actid;
     int acctId;
+    UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,13 +168,10 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
             String add3=intent.getStringExtra("cadd3");
             String gen=intent.getStringExtra("rb");
             String ln=intent.getStringExtra("cln");
-            String actid=intent.getStringExtra("actId");
-
+             actid=intent.getStringExtra("actId");
 
 
             acctId=Integer.parseInt(actid);
-
-
 
             cname.setText(name);
             cnum.setText(num);
@@ -200,6 +202,29 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cusGen=cgen.getText().toString();
         cusLn=cln.getText().toString();
 
+        userModel=new UserModel();
+        userModel.setPrimaryActID(acctId);
+        userModel.setActName(cusName);
+        userModel.setMobileNo(cusNum);
+        userModel.setAddress1(cusAdd1);
+        userModel.setPhone(cusLn);
+        userModel.setFlatNo(cusAdd);
+        userModel.setGender(cusGen);
+        //userModel.setCity(cAdd2);
+        //userModel.setCountry(cAdd3);
+        userModel.setState("Ts");
+        userModel.setStreet("gamma");
+        userModel.setSurName("android");
+        userModel.setTinNo("1452");
+        userModel.setDistrict("gbn");
+        userModel.setEmail(cusEmail);
+        userModel.setIsPrimaryAct("12");
+        userModel.setPin("012");
+        userModel.setCompanyName(cusCompNmae);
+        userModel.setMandal("sdew");
+        userModel.setDuplicateIds("");
+        userModel.setUserId(new Integer(50));
+
 
         if (cname.getText().toString().length() == 0) {
 
@@ -215,17 +240,18 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
             else {
                    Thread  thread=new Thread() {
                     public void run() {
-                        WebServiceClass webServiceClass = new WebServiceClass();
+                        SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+                        ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
                         {
                             try {
-                                status = (ResponseStatus) webServiceClass.updateCustomer(cusName,cusNum,cusCompNmae,cusGen,cusLn,cusAdd,cusAdd1,
-                                        cusEmail,acctId);
+                                status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("updateCustomerService"), modalParam);
+
                                 if (status.getStatusCode() == 200) {
                                     array = new JSONArray(status.getStatusResponse());
                                     for (int index = 0; index < array.length(); index++) {
                                         try {
                                             JSONObject eachObject = (JSONObject) array.get(index);
-                                          final String actid = eachObject.getString("ActID");
+                                         // final String actid = eachObject.getString("ActID");
 
                                             EditCustomer.this.runOnUiThread(new Thread(new Runnable() {
                                                 @Override

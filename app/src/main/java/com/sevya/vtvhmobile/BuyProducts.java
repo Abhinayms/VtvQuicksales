@@ -192,30 +192,11 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
                                              ButtonAnimation.animation(view);
                                              ProductsInfo productsInfo=new ProductsInfo();
-
-                                             int p=Integer.parseInt(cprice.getText().toString());
-                                             int q=Integer.parseInt(qty.getText().toString());
-
-                                             String tp=""+(p*q);
-
-
                                              productsInfo.setName(dname.getText().toString());
                                              productsInfo.setNumber(dnum.getText().toString());
                                              productsInfo.setModelNo(autotv.getText().toString());
                                              productsInfo.setPrice(cprice.getText().toString());
                                              productsInfo.setQty(qty.getText().toString());
-                                             productsInfo.setTotalPrice(tp);
-
-
-                                             cartModel.setActid(new Integer(10));
-                                             cartModel.setSalesmanId(new Integer(76));
-                                             cartModel.setModalId(new Integer(10125));
-                                             cartModel.setSalePrice(new Float(4000));
-                                             cartModel.setTotalPrice(new Float(2500));
-                                             cartModel.setSpId(new Integer(25));
-                                             cartModel.setQty(new Integer(5));
-                                             cartModel.setCartId(new Integer(2));
-                                             cartModel.setCartModelId(new Integer(6));
 
 
                                              if((autotv.getText().toString().length()==0))
@@ -225,54 +206,19 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              else if(cprice.getText().toString().length()==0)
                                                  cprice.setError("Please enter UnitPrice");
                                              else {
-
-                                                // long id = dataBaseHelper.insertDataItems(productsInfo);
-
-                                                 thread=new Thread() {
-                                                     public void run() {
-                                                         SOAPServiceClient soapServiceClient=new SOAPServiceClient();
-                                                         ServiceParams modalParam = new ServiceParams(cartModel,"cartModel", CartModel.class);
-                                                        // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
-                                                         {
-                                                             try {
-                                                                 status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCartDetailsService"), modalParam);
-                                                                 if (status.getStatusCode() == 200) {
-                                                                     array = new JSONArray(status.getStatusResponse());
-                                                                     for (int index = 0; index < array.length(); index++) {
-                                                                         try {
-                                                                             JSONObject eachObject = (JSONObject) array.get(index);
-                                                                             //actId = eachObject.getString("ActID");
-
-                                                                             Intent intent = new Intent(BuyProducts.this, CartActivity.class);
-                                                                             intent.putExtra("cname", dname.getText().toString());
-                                                                             intent.putExtra("cnum", dnum.getText().toString());
-                                                                             intent.putExtra("Date", date);
+                                                 int p=Integer.parseInt(cprice.getText().toString());
+                                                 int q=Integer.parseInt(qty.getText().toString());
+                                                 String tp=""+(p*q);
+                                                 productsInfo.setTotalPrice(tp);
 
 
-                                                                             startActivity(intent);
+                                                long id = dataBaseHelper.insertDataItems(productsInfo);
 
-
-
-
-                                                                         } catch (JSONException e) {
-                                                                             e.printStackTrace();
-                                                                         }
-
-                                                                     }
-                                                                 }
-                                                             } catch (JSONException e) {
-                                                                 e.printStackTrace();
-                                                             }
-
-
-                                                         }
-                                                     }
-
-                                                 };
-                                                 thread.start();
-
-
-
+                                                 Intent intent = new Intent(BuyProducts.this, CartActivity.class);
+                                                 intent.putExtra("cname", dname.getText().toString());
+                                                 intent.putExtra("cnum", dnum.getText().toString());
+                                                 intent.putExtra("Date", date);
+                                                 startActivity(intent);
 
 
                                              }

@@ -6,15 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
-import android.util.Log;
-
 import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.Message;
 import com.sevya.vtvhmobile.models.ProductsInfo;
-
-import java.net.ContentHandler;
-
 
 /**
  * Created by abhinaym on 28/9/15.
@@ -42,7 +36,7 @@ public class
         contentValues.put(dataBaseHelper.LANDLINE_NUMBER,customer.getLandlineNumber());
         contentValues.put(dataBaseHelper.ADDRESS,customer.getAddress());
         contentValues.put(dataBaseHelper.EMAIL,customer.getEmail());
-        long id=db.insert(dataBaseHelper.Table_NAME,null,contentValues);
+        long id=db.insert(dataBaseHelper.Table_CUSTOMER,null,contentValues);
         return id;
     }
 
@@ -60,7 +54,7 @@ public class
 
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
 
-        long id= db.insert(dataBaseHelper.Table_items,null,contentValues);
+        long id= db.insert(dataBaseHelper.Table_CART,null,contentValues);
 
 
         return id;
@@ -73,9 +67,9 @@ public class
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
         String[] args={date};
         String where=dataBaseHelper.CREATED_DATE+"=?";
-        String[] columns={dataBaseHelper.Item_id,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.CREATED_DATE};
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.CREATED_DATE};
         String groupBy=dataBaseHelper.NAME+","+dataBaseHelper.MOBILE_NUMBER+","+dataBaseHelper.CREATED_DATE;
-        cursor=db.query(dataBaseHelper.Table_items,columns,where,args,groupBy,null,null,null);
+        cursor=db.query(dataBaseHelper.Table_CART,columns,where,args,groupBy,null,null,null);
         return  cursor;
     }
 
@@ -85,15 +79,15 @@ public class
 
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
-        String[] columns={dataBaseHelper.Item_id,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
-                dataBaseHelper.MANUFACTURER,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
+                dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
 
         String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
 
 
         String[] args={number,date};
 
-         cursor =db.query(dataBaseHelper.Table_items, columns,where,args, null, null, null);
+         cursor =db.query(dataBaseHelper.Table_CART, columns,where,args, null, null, null);
 
 
         return cursor;
@@ -106,7 +100,7 @@ public class
         String[] columns={dataBaseHelper.UID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.COMPANY_NAME,dataBaseHelper.GENDER,dataBaseHelper.PROFESSION,
                 dataBaseHelper.LANDLINE_NUMBER,dataBaseHelper.ADDRESS,dataBaseHelper.EMAIL,dataBaseHelper.CREATED_DATE};
 
-        cursor=db.query(dataBaseHelper.Table_NAME, columns, null, null, null, null, null);
+        cursor=db.query(dataBaseHelper.Table_CUSTOMER, columns, null, null, null, null, null);
 
         return  cursor;
     }
@@ -121,7 +115,7 @@ public class
         String where=DataBaseHelper.MOBILE_NUMBER+"=?";
         String[] whereargs={number};
 
-        cursor=db.query(dataBaseHelper.Table_NAME, columns,where,whereargs,null, null, null, null);
+        cursor=db.query(dataBaseHelper.Table_CUSTOMER, columns,where,whereargs,null, null, null, null);
         return cursor;
 
     }
@@ -142,7 +136,7 @@ public class
         String where=dataBaseHelper.MOBILE_NUMBER+"=?";
         String[] whereargs={number};
 
-        int count=db.update(dataBaseHelper.Table_NAME,contentValues,where,whereargs);
+        int count=db.update(dataBaseHelper.Table_CUSTOMER,contentValues,where,whereargs);
         return count;
 
 
@@ -154,18 +148,29 @@ public class
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
         String where=DataBaseHelper.MOBILE_NUMBER+"=?";
         String[] whereArgs={number};
-        int count=db.delete(DataBaseHelper.Table_NAME,where,whereArgs);
+        int count=db.delete(DataBaseHelper.Table_CUSTOMER, where, whereArgs);
         db.close();
         return count;
 
 
     }
 
+    public int deleteItem(String cartId)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        String where=DataBaseHelper.CART_ID+"=?";
+        String[] whereArgs={cartId};
+        int count=db.delete(DataBaseHelper.Table_CART,where,whereArgs);
+        return count;
+    }
+
     public class DataBaseHelper extends SQLiteOpenHelper {
 
+        private Context context;
+        private static final int DATABASE_VERSION =26;
         private static final String DATABASE_NAME = "Vtvh_Database";
-        private static final String Table_NAME = "Vtvh_Customer";
-        private static final int DATABASE_VERSION =25;
+        private static final String Table_CUSTOMER = "Customer_table";
+        public static final String Table_CART="Cart_Table";
         public static final String UID = "_id";
         public static final String NAME = "NAME";
         public static final String MOBILE_NUMBER = "MOBILE_NUMBER";
@@ -177,33 +182,36 @@ public class
         public static final String EMAIL = "EMAIL";
         public static final String CREATED_DATE="CREATED_DATE";
 
+        public static final String MODEL_NAME="MODEL_NAME";
+        public static final String PRICE="PRICE";
+        public static final String TOTAL_PRICE="TOTALPRICE";
+        public static final String STOCKPOINT_ID="STOCKPOINT_ID";
+        public static final String MODEL_ID="MODEL_ID";
+        public static final String QUANTITY="QUANTITY";
+        public static final String CART_ID="_id";
 
 
-        private static final String CREATE_TABLE = "CREATE TABLE " + Table_NAME + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME + " VARCHAR(255)," +
+        private static final String DROP_TABLE_CUSTOMER = "DROP TABLE  IF EXISTS " + Table_CUSTOMER;
+        private static final String DROP_TABLE_CART= "DROP TABLE IF EXISTS " + Table_CART;
+
+
+
+        private static final String CREATE_TABLE_CUSTOMER = "CREATE TABLE " + Table_CUSTOMER + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME + " VARCHAR(255)," +
                 "" + MOBILE_NUMBER + " INT ," + COMPANY_NAME + " VARCHAR(3)," + GENDER + " VARCHAR(10)," + PROFESSION + " VARCHAR(30)," +
                 "" + LANDLINE_NUMBER + " VARCHAR(20)," + ADDRESS + " VARCHAR(255)," + EMAIL + " VARCHAR(30)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
-        private static final String DROP_TABLE = "DROP TABLE  IF EXISTS " + Table_NAME;
-        private Context context;
 
-        public static final String Table_items="vtvh_items";
-        public static final String Item_id="_id";
 
-        public static final String PRICE="PRICE";
-        public static final String TOTAL_PRICE="TOTALPRICE";
-        public static final String MANUFACTURER="MANUFACTURER";
-        public static final String MODEL_ID="MODEL_ID";
-        public static final String QUANTITY="QUANTITY";
+        private static final String CREATE_TABLE_CART = "CREATE TABLE " + Table_CART + " (" + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," +
+                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
-        private static final String CREATE_TABLE_ITEMs = "CREATE TABLE " + Table_items + " (" + Item_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," +
-                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +MANUFACTURER+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(100)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
-
-        private static final String DROP_TABLE_ITEMS= "DROP TABLE IF EXISTS " + Table_items;
 
 
         public DataBaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.context = context;
+
+
 
         }
 
@@ -211,8 +219,8 @@ public class
         public void onCreate(SQLiteDatabase db) {
             try {
 
-                db.execSQL(CREATE_TABLE);
-                db.execSQL(CREATE_TABLE_ITEMs);
+                db.execSQL(CREATE_TABLE_CUSTOMER);
+                db.execSQL(CREATE_TABLE_CART);
             } catch (SQLException e) {
                 Message.message(context, "" + e);
             }
@@ -224,8 +232,8 @@ public class
 
             try {
 
-                db.execSQL(DROP_TABLE);
-                db.execSQL(DROP_TABLE_ITEMS);
+                db.execSQL(DROP_TABLE_CUSTOMER);
+                db.execSQL(DROP_TABLE_CART);
                 onCreate(db);
             } catch (SQLException e) {
                 Message.message(context, "" + e);

@@ -23,6 +23,12 @@ public class CustomCartListViewAdapter extends CursorAdapter {
         super(context, cursor, 0);
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+    }
+
     private int[] colors = new int[] { 0x15527921, 0x6323595 };
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -52,6 +58,7 @@ public class CustomCartListViewAdapter extends CursorAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View view = super.getView(position, convertView, parent);
         int colorPos = position % colors.length;
         view.setBackgroundColor(colors[colorPos]);

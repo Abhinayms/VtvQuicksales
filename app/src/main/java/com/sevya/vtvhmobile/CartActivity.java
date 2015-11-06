@@ -21,8 +21,19 @@ import android.widget.TextView;
 
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
+import com.sevya.vtvhmobile.models.CartModel;
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.UserModel;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
@@ -38,10 +49,19 @@ public class CartActivity extends AppCompatActivity {
     TextView totalPrice;
     TextView textTotalPrice;
 
+    Thread thread;
+    ResponseStatus status;
+    JSONArray array;
+    CartModel cartModel;
+
     DataBaseAdapter dataBaseHelper;
     SimpleCursorAdapter simpleCursorAdapter;
     Cursor cursor;
     ListView listView;
+    String cartid;
+    int pstn;
+    CustomCartListViewAdapter customCartListViewAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +78,7 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         dataBaseHelper=new DataBaseAdapter(this);
-
-
-
-        cname=(TextView)findViewById(R.id.cname);
+         cname=(TextView)findViewById(R.id.cname);
         cnum=(TextView)findViewById(R.id.cnum);
         totalPrice=(TextView)findViewById(R.id.totalprice);
 
@@ -77,10 +94,13 @@ public class CartActivity extends AppCompatActivity {
         onTickButtonClick();
         onPlusButtonClick();
 
-        populateItemsListFromDB();
+       populateItemsListFromDB();
 
 
     }
+
+
+
     @SuppressWarnings("deprecation")
     private void populateItemsListFromDB()
     {   int sum=0;
@@ -126,44 +146,23 @@ public class CartActivity extends AppCompatActivity {
 
 
 
-            /*String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
-            int[] toViewIDs = new int[]
-                    {R.id.p_model, R.id.p_qty, R.id.p_price,R.id.p_totalprice};
 
-            simpleCursorAdapter = new SimpleCursorAdapter(
-
-                    this,
-                    R.layout.cartitemlayout,
-                    cursor,
-                    fromFieldsNames,
-                    toViewIDs,
-                    0
-            );
-
-
-            *//*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
-            lp.height = 300;
-            listView.setLayoutParams(lp);*//*
+            customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor,0);
             listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
-            listView.setAdapter(simpleCursorAdapter);
-
-
+            listView.setAdapter(customCartListViewAdapter);
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 // setting onItemLongClickListener and passing the position to the function
                 @Override
                 public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                                int position, long arg3) {
-                    removeItemFromList(position);
+                    Cursor selectedFromList = (Cursor) (listView.getItemAtPosition(position));//.toString();
+                    String cart_id = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.CART_ID));
+
+                    removeItemFromList(cart_id,position);
 
                     return true;
                 }
             });
-*/
-
-
-            CustomCartListViewAdapter customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor,0);
-            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
-            listView.setAdapter(customCartListViewAdapter);
 
 
 
@@ -181,33 +180,65 @@ public class CartActivity extends AppCompatActivity {
 
     }
     // method to remove list item
-    protected void removeItemFromList(final int position) {
-        final int deletePosition = position;
+    protected void removeItemFromList(String cart_id,int position) {
+        cartid=cart_id;
+        pstn=position;
 
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 CartActivity.this);
 
-        alert.setTitle("Delete");
+        alert.setTitle("Choose Action");
         alert.setMessage("Do you want delete this item?");
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TOD O Auto-generated method stub
 
-                // main code on after clicking yes
-                //dataBaseHelper.deleteItem(position);
-                simpleCursorAdapter.notifyDataSetChanged();
-                simpleCursorAdapter.notifyDataSetInvalidated();
+
+               // simpleCursorAdapter.notifyDataSetChanged();
+                //simpleCursorAdapter.notifyDataSetInvalidated();
 
             }
         });
-        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                dialog.dismiss();
+                // TOD O Auto-generated method stub
+                AlertDialog.Builder alert = new AlertDialog.Builder(
+                        CartActivity.this);
+
+                alert.setTitle("Delete this Item");
+                alert.setMessage("Do you want delete this item?");
+                alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TOD O Auto-generated method stub
+
+                        dataBaseHelper.deleteItem(cartid);
+
+                        customCartListViewAdapter.notifyDataSetChanged();
+                        customCartListViewAdapter.notifyDataSetInvalidated();
+                        listView.setAdapter(customCartListViewAdapter);
+
+
+
+
+
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TOD O Auto-generated method stub
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+
             }
-        });
+
+    });
 
         alert.show();
 
@@ -221,13 +252,60 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 ButtonAnimation.animation(v);
+
+                 cartModel = new CartModel();
+
+                final ArrayList<CartModel> cartModelArrayList=new ArrayList<CartModel>();
+                for(int i=0;i<cursor.getCount();i++)
+                {
+
+
+                }
+
+
+                thread = new Thread() {
+                    public void run() {
+                        SOAPServiceClient soapServiceClient = new SOAPServiceClient();
+                        ServiceParams modalParam = new ServiceParams(cartModelArrayList, "userModel", UserModel.class);
+                        // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
+
+                        try {
+                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam);
+                            if (status.getStatusCode() == 200) {
+                                array = new JSONArray(status.getStatusResponse());
+                                for (int index = 0; index < array.length(); index++) {
+                                    try {
+                                        JSONObject eachObject = (JSONObject) array.get(index);
+
+
+                                    }catch (Exception e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+
+                                    }
+                                }
+                                }catch (Exception e)
+                        {
+                            e.printStackTrace();;
+                        }
+
+
+
+                        }
+
+                };
+                thread.start();
+            }
+
+            });
+
                 Intent intent =new Intent(CartActivity.this,SurveyActivity.class);
-                startActivity(intent);
+        startActivity(intent);
 
 
             }
-        });
-    }
+
 
     public void onPlusButtonClick()
     {
@@ -281,3 +359,29 @@ public class CartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+            /*String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
+            int[] toViewIDs = new int[]
+                    {R.id.p_model, R.id.p_qty, R.id.p_price,R.id.p_totalprice};
+
+            simpleCursorAdapter = new SimpleCursorAdapter(
+
+                    this,
+                    R.layout.cartitemlayout,
+                    cursor,
+                    fromFieldsNames,
+                    toViewIDs,
+                    0
+            );
+
+
+            *//*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
+            lp.height = 300;
+            listView.setLayoutParams(lp);*//*
+            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
+            listView.setAdapter(simpleCursorAdapter);
+
+
+
+*/

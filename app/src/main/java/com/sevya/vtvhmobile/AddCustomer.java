@@ -318,16 +318,17 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                 public void run() {
                                     SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                                     ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
-                                    ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
+                                  // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
                                     {
                                         try {
-                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam, primitiveParam);
+                                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertDetailsService"), modalParam);
                                             if (status.getStatusCode() == 200) {
                                                 array = new JSONArray(status.getStatusResponse());
                                                 for (int index = 0; index < array.length(); index++) {
                                                     try {
                                                         JSONObject eachObject = (JSONObject) array.get(index);
                                                         actId = eachObject.getString("ActID");
+                                                        
 
                                                         AddCustomer.this.runOnUiThread(new Thread(new Runnable() {
                                                             @Override

@@ -13,7 +13,7 @@ import java.util.Hashtable;
  */
 public class UserModel implements KvmSerializable {
 
-    private int PrimaryActID;
+    private Integer PrimaryActID;
     private String SurName;
     private String CompanyName;
     private String ActName;
@@ -35,11 +35,11 @@ public class UserModel implements KvmSerializable {
     private String DuplicateIds;
 
 
-    public int getPrimaryActID() {
+    public Integer getPrimaryActID() {
         return PrimaryActID;
     }
 
-    public void setPrimaryActID(int primaryActID) {
+    public void setPrimaryActID(Integer primaryActID) {
         PrimaryActID = primaryActID;
     }
 

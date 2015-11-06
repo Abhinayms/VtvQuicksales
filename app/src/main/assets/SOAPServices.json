@@ -36,9 +36,14 @@
     {
       "soapServiceName":"updateCustomerService",
       "method":"UpdateCustomer"
+    },
+    {
+      "soapServiceName":"insertDetailsService",
+      "method":"insertdetails"
     }
+
   ],
 
-  "soapUrl":"http://192.168.1.19:2002/VTVHQuickSaleService.asmx",
+  "soapUrl":"http://192.168.1.19:2003/VTVHQuickSaleService.asmx",
   "targetNameSpace":"http://tempuri.org/"
 }

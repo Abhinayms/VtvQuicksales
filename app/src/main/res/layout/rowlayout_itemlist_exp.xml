@@ -28,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Model No  "
+                    android:textSize="15dp"
                     android:textColor="#00BCD4"
                     android:id="@+id/p_model"
                     />
@@ -44,6 +45,8 @@
                     android:layout_height="wrap_content"
                     android:text="("
                     android:id="@+id/brace"
+                    android:textSize="15dp"
+
                     />
             </LinearLayout>
             <LinearLayout
@@ -58,7 +61,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Quantity"
                     android:textColor="#263238"
-
+                    android:textSize="15dp"
                     android:id="@+id/p_qty"
                     />
             </LinearLayout>
@@ -72,6 +75,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=")"
+                    android:textSize="15dp"
+
                     android:layout_alignRight="@+id/p_qty"
                     />
             </LinearLayout>
@@ -88,7 +93,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Price"
                 android:textColor="#03A9F4"
-
+                android:textSize="15dp"
                 android:id="@+id/p_price"
                 />
 

@@ -63,6 +63,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     ResponseStatus status;
     CartModel cartModel;
     JSONArray array;
+    String actId;
 
     DataBaseAdapter dataBaseHelper;
 
@@ -78,9 +79,16 @@ public class BuyProducts extends Activity  implements OnTouchListener {
          date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
 
 
+        dataBaseHelper=new DataBaseAdapter(this);
 
+        Intent intent=getIntent();
 
+        String name=intent.getStringExtra("cname");
+        String num=intent.getStringExtra("cnum");
+        actId=intent.getStringExtra("actId");
+        i=intent.getIntExtra("listsize",0);
 
+        Log.d("bac",""+actId);
 
         dname=(TextView)findViewById(R.id.dname);
         dnum=(TextView)findViewById(R.id.dnum);
@@ -101,6 +109,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         cprice.setOnTouchListener(this);
 
 
+        dname.setText(name);
+        dnum.setText(num);
 
         String items[]={"CR1223","BR1226","AB19I4RT5","EB19RT5","R4S5UIA","D5TY6H","P0O9KHA","T78U7JK","X4RXFV","M87RU46","JH8I9","Q7UW3W","W39OS8","Y67UI9",
 
@@ -121,16 +131,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         });
 
 
-        dataBaseHelper=new DataBaseAdapter(this);
-
-        Intent intent=getIntent();
-
-        String name=intent.getStringExtra("cname");
-        String num=intent.getStringExtra("cnum");
-        i=intent.getIntExtra("listsize",0);
-
-        dname.setText(name);
-        dnum.setText(num);
 
 
 
@@ -218,6 +218,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                                  intent.putExtra("cname", dname.getText().toString());
                                                  intent.putExtra("cnum", dnum.getText().toString());
                                                  intent.putExtra("Date", date);
+                                                 intent.putExtra("actId",actId);
                                                  startActivity(intent);
 
 

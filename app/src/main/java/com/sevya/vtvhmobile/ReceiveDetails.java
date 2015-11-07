@@ -112,6 +112,7 @@ public class ReceiveDetails extends AppCompatActivity {
                 Intent in =new Intent(ReceiveDetails.this,BuyProducts.class);
                 in.putExtra("cname",name.getText().toString());
                 in.putExtra("cnum",numm.getText().toString());
+                in.putExtra("actId",actid);
                 startActivity(in);
             }
         });
@@ -142,6 +143,7 @@ public class ReceiveDetails extends AppCompatActivity {
             intent.putExtra("cname",name.getText().toString());
             intent.putExtra("cnum",numm.getText().toString());
             intent.putExtra("Date",date);
+            intent.putExtra("actId",actid);
             startActivity(intent);
 
         }

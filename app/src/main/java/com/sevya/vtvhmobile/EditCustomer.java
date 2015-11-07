@@ -171,7 +171,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
              actid=intent.getStringExtra("actId");
 
 
-            acctId=Integer.parseInt(actid);
+           acctId=Integer.parseInt(actid);
 
             cname.setText(name);
             cnum.setText(num);
@@ -247,11 +247,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                 status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("updateCustomerService"), modalParam);
 
                                 if (status.getStatusCode() == 200) {
-                                    array = new JSONArray(status.getStatusResponse());
-                                    for (int index = 0; index < array.length(); index++) {
-                                        try {
-                                            JSONObject eachObject = (JSONObject) array.get(index);
-                                         // final String actid = eachObject.getString("ActID");
+                                    JSONObject object = new JSONObject(status.getStatusResponse());
+
+
 
                                             EditCustomer.this.runOnUiThread(new Thread(new Runnable() {
                                                 @Override
@@ -268,17 +266,13 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                                     i.putExtra("cadd1", cusAdd1);
                                                     //i.putExtra("cadd2", cAdd2);
                                                     //i.putExtra("cadd3", cAdd3);
-                                                    i.putExtra("actId",acctId);
+                                                    i.putExtra("actId",actid);
 
                                                     startActivity(i);
                                                 }
                                             }));
 
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
 
-                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

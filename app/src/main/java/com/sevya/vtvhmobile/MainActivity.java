@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
                                         JSONObject eachObject = (JSONObject) array.get(index);
 
                                         actId=eachObject.getString("PrimaryActID");
+                                        Log.d("mac",""+actId);
+
                                         name=eachObject.getString("ActName");
                                         address1=eachObject.getString("Address1");
                                         mobileNo=eachObject.getString("MobileNo");

@@ -3,18 +3,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.example.abhinaym.crm.CartActivity">
 
-    <!--<item
-        android:id="@+id/ic_action_settings_01"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_action_settings_01"
-        app:showAsAction="ifRoom" >
-        <menu>
-            <item
-                android:id="@+id/settings"
-                android:title="Settings"/>.
-        </menu>
-    </item>-->
+
     <item
         android:id="@+id/homeicon"
         android:title="Home"

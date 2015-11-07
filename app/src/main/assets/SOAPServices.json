@@ -40,6 +40,10 @@
     {
       "soapServiceName":"insertDetailsService",
       "method":"insertdetails"
+    },
+    {
+      "soapServiceName":"GetSalesmanListByDateService",
+      "method":"GetSalesmanListByDate"
     }
 
   ],

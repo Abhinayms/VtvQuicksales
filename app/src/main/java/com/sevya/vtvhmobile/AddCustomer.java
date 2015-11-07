@@ -325,39 +325,32 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                         try {
                                             status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam);
                                             if (status.getStatusCode() == 200) {
-                                                array = new JSONArray(status.getStatusResponse());
-                                                for (int index = 0; index < array.length(); index++) {
-                                                    try {
-                                                        JSONObject eachObject = (JSONObject) array.get(index);
-                                                        actId = eachObject.getString("PrimaryActID");
+                                                JSONObject object = new JSONObject(status.getStatusResponse());
+                                                actId=object.getString("Actid");
 
-                                                        AddCustomer.this.runOnUiThread(new Thread(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                Intent i = new Intent(AddCustomer.this, ReceiveDetails.class);
-                                                                i.putExtra("cname", custName);
-                                                                i.putExtra("cnum", custNo);
-                                                                i.putExtra("cpro", custCompName);
-                                                                i.putExtra("rb", gender);
-                                                                //   i.putExtra("compName", prof);
-                                                                i.putExtra("cmail", cMail);
-                                                                i.putExtra("cadd",cAdd);
-                                                                i.putExtra("cln", cLn);
-                                                                i.putExtra("cadd1", cAdd1);
-                                                                i.putExtra("cadd2", cAdd2);
-                                                                i.putExtra("cadd3", cAdd3);
-                                                                i.putExtra("actId",actId);
+                                                AddCustomer.this.runOnUiThread(new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Intent i = new Intent(AddCustomer.this, ReceiveDetails.class);
+                                                        i.putExtra("cname", custName);
+                                                        i.putExtra("cnum", custNo);
+                                                        i.putExtra("cpro", custCompName);
+                                                        i.putExtra("rb", gender);
+                                                        //   i.putExtra("compName", prof);
+                                                        i.putExtra("cmail", cMail);
+                                                        i.putExtra("cadd", cAdd);
+                                                        i.putExtra("cln", cLn);
+                                                        i.putExtra("cadd1", cAdd1);
+                                                        i.putExtra("cadd2", cAdd2);
+                                                        i.putExtra("cadd3", cAdd3);
+                                                        i.putExtra("actId", actId);
 
-                                                                startActivity(i);
-                                                            }
-                                                        }));
-
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
+                                                        startActivity(i);
                                                     }
+                                                }));
 
-                                                }
                                             }
+
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }

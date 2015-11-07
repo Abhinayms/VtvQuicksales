@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.CartModel;
+import com.sevya.vtvhmobile.models.CartModelList;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
@@ -59,8 +62,22 @@ public class CartActivity extends AppCompatActivity {
     Cursor cursor;
     ListView listView;
     String cartid;
+    String accountId;
     int pstn;
     CustomCartListViewAdapter customCartListViewAdapter;
+    List<CartModel> cartModelList;
+    private Integer Actid;
+    private Integer SalesmanId;
+    private Integer ModalId;
+    private Float SalePrice;
+    private Float TotalPrice;
+    private Integer SpId;
+    private Integer Qty;
+    private Integer CartId;
+    private Integer CartModelId;
+    String number;
+    String date;
+
 
 
     @Override
@@ -86,34 +103,34 @@ public class CartActivity extends AppCompatActivity {
 
         String name=intent.getStringExtra("cname");
         String num=intent.getStringExtra("cnum");
+        accountId=intent.getStringExtra("actId");
+
+        Log.d("acct", "" + accountId);
+
+       Actid=Integer.parseInt(accountId);
 
         cname.setText(name);
         cnum.setText(num);
-
-
-        onTickButtonClick();
-        onPlusButtonClick();
-
        populateItemsListFromDB();
 
-
     }
-
-
-
     @SuppressWarnings("deprecation")
     private void populateItemsListFromDB()
     {   int sum=0;
-        String number=cnum.getText().toString();
+         number=cnum.getText().toString();
 
-        String date=intent.getStringExtra("Date");
+         date=intent.getStringExtra("Date");
         listView = (ListView) findViewById(R.id.cartitemview);
         cursor = dataBaseHelper.getItem(number, date);
+        tickButton=(Button)findViewById(R.id.float_button_tick);
+        plusButton=(ImageButton)findViewById(R.id.float_button_plus);
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
             textTotalPrice=(TextView)findViewById(R.id.texttotalprice);
             textTotalPrice.setVisibility(View.INVISIBLE);
+            TextView totalprice=(TextView)findViewById(R.id.totalprice);
+            totalprice.setVisibility(View.INVISIBLE);
             textView = (TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
@@ -121,6 +138,8 @@ public class CartActivity extends AppCompatActivity {
             continueshopping.setVisibility(View.VISIBLE);
             tickButton.setVisibility(View.INVISIBLE);
             plusButton.setVisibility(View.INVISIBLE);
+            LinearLayout cartHeader=(LinearLayout)findViewById(R.id.cart_header);
+            cartHeader.setVisibility(View.GONE);
 
 
             continueshopping.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +149,7 @@ public class CartActivity extends AppCompatActivity {
                                                         Intent intent=new Intent(CartActivity.this,BuyProducts.class);
                                                         intent.putExtra("cname",cname.getText().toString());
                                                         intent.putExtra("cnum",cnum.getText().toString());
+                                                        intent.putExtra("actId",accountId);
                                                         startActivity(intent);
                                                     }
                                                 }
@@ -143,12 +163,8 @@ public class CartActivity extends AppCompatActivity {
             continueshopping=(Button)findViewById(R.id.continueshopping);
             textView.setVisibility(View.INVISIBLE);
             continueshopping.setVisibility(View.INVISIBLE);
-
-
-
-
             customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor,0);
-            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
+            //listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
             listView.setAdapter(customCartListViewAdapter);
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 // setting onItemLongClickListener and passing the position to the function
@@ -187,16 +203,44 @@ public class CartActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 CartActivity.this);
 
-        alert.setTitle("Choose Action");
-        alert.setMessage("Do you want delete this item?");
+        alert.setTitle("Alert");
+        alert.setMessage("Choose Action");
         alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TOD O Auto-generated method stub
+                AlertDialog.Builder alert = new AlertDialog.Builder(
+                        CartActivity.this);
+
+                alert.setTitle("Edit this Item");
+                alert.setMessage("Do you want Edit this item?");
+                alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TOD O Auto-generated method stub
+
+                        dataBaseHelper.deleteItem(cartid);
+
+                        Intent intent=new Intent(CartActivity.this,BuyProducts.class);
+                        intent.putExtra("cname",cname.getText().toString());
+                        intent.putExtra("cnum",cnum.getText().toString());
+                        intent.putExtra("actId",accountId);
+                        intent.putExtra("listsize", listView.getCount());
+                        startActivity(intent);
 
 
-               // simpleCursorAdapter.notifyDataSetChanged();
-                //simpleCursorAdapter.notifyDataSetInvalidated();
+                    }
+                });
+
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TOD O Auto-generated method stub
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
 
             }
         });
@@ -215,17 +259,13 @@ public class CartActivity extends AppCompatActivity {
                         // TOD O Auto-generated method stub
 
                         dataBaseHelper.deleteItem(cartid);
-
+                        populateItemsListFromDB();
                         customCartListViewAdapter.notifyDataSetChanged();
                         customCartListViewAdapter.notifyDataSetInvalidated();
-                        listView.setAdapter(customCartListViewAdapter);
-
-
-
-
 
                     }
                 });
+
                 alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -238,39 +278,49 @@ public class CartActivity extends AppCompatActivity {
 
             }
 
-    });
-
-        alert.show();
+        });
+       alert.show();
 
     }
 
-    public void onTickButtonClick()
+    public void submit(View v)
     {
-        tickButton=(Button) findViewById(R.id.float_button_tick);
-        tickButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
                 ButtonAnimation.animation(v);
 
-                 cartModel = new CartModel();
 
-                final ArrayList<CartModel> cartModelArrayList=new ArrayList<CartModel>();
-                for(int i=0;i<cursor.getCount();i++)
-                {
 
+               final ArrayList<CartModel> cartModelArrayList = new ArrayList<CartModel>();
+               cartModelList=new CartModelList<CartModel>();
+                cursor.moveToFirst();
+               for (int i = 0; i < cursor.getCount(); i++) {
+                   cartModel = new CartModel();
+                    cartModel.setActid(Actid);
+                    cartModel.setSalesmanId(new Integer(76));
+
+
+                    String unitPrice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE));
+                    cartModel.setSalePrice(unitPrice);
+                    String totalPrice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE));
+                    cartModel.setTotalPrice(totalPrice);
+                    cartModel.setModalId(new Integer(1570));
+                    cartModel.setCartModelId(new Integer(0));
+                    cartModel.setCartId(new Integer(0));
+                    String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
+                    cartModel.setQty(Integer.parseInt(qty));
+                    cartModel.setSpId(new Integer(49));
+
+                   cartModelArrayList.add(cartModel);
+                   cartModelList.add(cartModel);
+                   cursor.moveToNext();
 
                 }
-
 
                 thread = new Thread() {
                     public void run() {
                         SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                        ServiceParams modalParam = new ServiceParams(cartModelArrayList, "userModel", UserModel.class);
-                        // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
-
+                        ServiceParams modalParam = new ServiceParams(cartModelList, "cartModelList", CartModelList.class);
                         try {
-                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam);
+                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCartDetailsService"), modalParam);
                             if (status.getStatusCode() == 200) {
                                 array = new JSONArray(status.getStatusResponse());
                                 for (int index = 0; index < array.length(); index++) {
@@ -278,52 +328,43 @@ public class CartActivity extends AppCompatActivity {
                                         JSONObject eachObject = (JSONObject) array.get(index);
 
 
-                                    }catch (Exception e)
-                                    {
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
 
-                                    }
                                 }
-                                }catch (Exception e)
-                        {
-                            e.printStackTrace();;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ;
                         }
 
 
-
-                        }
+                    }
 
                 };
                 thread.start();
-            }
-
-            });
-
-                Intent intent =new Intent(CartActivity.this,SurveyActivity.class);
-        startActivity(intent);
 
 
-            }
+        Intent i=new Intent(CartActivity.this,SurveyActivity.class);
+        startActivity(i);
+
+    }
 
 
-    public void onPlusButtonClick()
+    public void plusButton(View v)
     {
-        plusButton=(ImageButton) findViewById(R.id.float_button_plus);
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
                 ButtonAnimation.animation(v);
 
                 Intent intent=new Intent(CartActivity.this,BuyProducts.class);
-                intent.putExtra("cname",cname.getText().toString());
-                intent.putExtra("cnum",cnum.getText().toString());
-                //intent.putExtra("listsize",((Integer)listView.getScrollBarSize()).toString());
+                intent.putExtra("cname", cname.getText().toString());
+                intent.putExtra("cnum", cnum.getText().toString());
+                intent.putExtra("actId",accountId);
+                        //intent.putExtra("listsize",((Integer)listView.getScrollBarSize()).toString());
                 intent.putExtra("listsize", listView.getCount());
                 startActivity(intent);
-            }
-        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -360,28 +401,3 @@ public class CartActivity extends AppCompatActivity {
     }
 }
 
-
-            /*String[] fromFieldsNames = new String[]{DataBaseAdapter.DataBaseHelper.MODEL_ID, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
-            int[] toViewIDs = new int[]
-                    {R.id.p_model, R.id.p_qty, R.id.p_price,R.id.p_totalprice};
-
-            simpleCursorAdapter = new SimpleCursorAdapter(
-
-                    this,
-                    R.layout.cartitemlayout,
-                    cursor,
-                    fromFieldsNames,
-                    toViewIDs,
-                    0
-            );
-
-
-            *//*ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) listView.getLayoutParams();
-            lp.height = 300;
-            listView.setLayoutParams(lp);*//*
-            listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
-            listView.setAdapter(simpleCursorAdapter);
-
-
-
-*/

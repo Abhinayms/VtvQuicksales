@@ -14,14 +14,14 @@ public class CartModel implements KvmSerializable {
     private Integer Actid;
     private Integer SalesmanId;
     private Integer ModalId;
-    private Float SalePrice;
-    private Float TotalPrice;
+    private String SalePrice;
+    private String TotalPrice;
     private Integer SpId;
     private Integer Qty;
     private Integer CartId;
     private Integer CartModelId;
 
-    public Integer getActid() {
+    public Integer getActid()  {
         return Actid;
     }
 
@@ -45,19 +45,19 @@ public class CartModel implements KvmSerializable {
         ModalId = modalId;
     }
 
-    public Float getSalePrice() {
+    public String getSalePrice() {
         return SalePrice;
     }
 
-    public void setSalePrice(Float salePrice) {
+    public void setSalePrice(String salePrice) {
         SalePrice = salePrice;
     }
 
-    public Float getTotalPrice() {
+    public String getTotalPrice() {
         return TotalPrice;
     }
 
-    public void setTotalPrice(Float totalPrice) {
+    public void setTotalPrice(String totalPrice) {
         TotalPrice = totalPrice;
     }
 
@@ -138,10 +138,10 @@ public class CartModel implements KvmSerializable {
                 ModalId = Integer.parseInt(o.toString());
                 break;
             case 3:
-                SalePrice = Float.parseFloat(o.toString());
+                SalePrice = o.toString();
                 break;
             case 4:
-                TotalPrice = Float.parseFloat(o.toString());
+                TotalPrice =o.toString();
                 break;
             case 5:
                 SpId = Integer.parseInt(o.toString());
@@ -179,12 +179,12 @@ public class CartModel implements KvmSerializable {
 
                 break;
             case 3:
-                propertyInfo.type = propertyInfo.INTEGER_CLASS;
+                propertyInfo.type = propertyInfo.STRING_CLASS;
                 propertyInfo.name = "SalePrice";
 
                 break;
             case 4:
-                propertyInfo.type = propertyInfo.INTEGER_CLASS;
+                propertyInfo.type = propertyInfo.STRING_CLASS;
                 propertyInfo.name = "TotalPrice";
 
                 break;

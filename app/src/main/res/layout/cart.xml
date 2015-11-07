@@ -108,6 +108,54 @@
             />
 
     </LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cart_header"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="6dip"
+        android:paddingTop="8dip"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        >
+
+        <TextView
+            android:layout_width="90dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Model No"
+            android:textColor="#03A9F4"
+            android:paddingLeft="5dp"
+            />
+
+        <TextView
+            android:layout_width="90dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quantity"
+            android:textColor="#03A9F4"
+            android:paddingLeft="10dp"
+            />
+
+        <TextView
+            android:layout_width="90dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Unit Price"
+            android:textColor="#03A9F4"
+            android:paddingLeft="10dp"
+            />
+        <TextView
+            android:layout_width="90dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Total Price"
+            android:textColor="#03A9F4"
+
+            />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
@@ -138,6 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
             android:text="There are no items in the Cart "
             android:textColor="#00BCD4"
             android:textSize="25dp"
@@ -201,6 +250,7 @@
         android:background="@drawable/fb"
         android:src="@drawable/fbplus"
         android:layout_alignParentBottom="true"
+        android:onClick="plusButton"
         />
 
         <Button

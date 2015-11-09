@@ -113,18 +113,41 @@
         android:background="@drawable/edit_text_design"
          />
 </LinearLayout>
-    <Button
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Authenticate"
-        android:textColor="#ffffff"
-        android:background="@drawable/buttonshape"
-        android:onClick="authenticate"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Authenticate"
+            android:textColor="#ffffff"
+            android:background="@drawable/buttonshape"
+            android:onClick="authenticate"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
 
 
-        />
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test"
+            android:textColor="#ffffff"
+            android:background="@drawable/buttonshape"
+            android:onClick="test"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
 
 
 </LinearLayout>

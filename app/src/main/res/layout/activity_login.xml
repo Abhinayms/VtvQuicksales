@@ -16,7 +16,7 @@
     android:layout_marginRight="20dp"
     android:orientation="vertical"
     >
-    <EditText
+    <!--<EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText2"
@@ -43,15 +43,15 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/edit_text_design"
         />
-
+-->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SIGN IN"
+        android:text="Login "
         android:onClick="signIn"
         android:id="@+id/button3"
-        android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
         android:background="@drawable/buttonshape"
         android:textColor="#ffffff" />
 </LinearLayout>

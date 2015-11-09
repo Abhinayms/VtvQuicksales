@@ -44,6 +44,10 @@
     {
       "soapServiceName":"getSalesmanListByDateService",
       "method":"GetSalesmanListByDate"
+    },
+    {
+      "soapServiceName":"testConnectionService",
+      "method":"TestConnection"
     }
 
   ],

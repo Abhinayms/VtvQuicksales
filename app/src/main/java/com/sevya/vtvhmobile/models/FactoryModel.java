@@ -7,6 +7,7 @@ public class FactoryModel {
 
     public static Customer customer;
     public static ProductsInfo productsInfo;
+    public static SalesListResponseModel salesListResponseModel;
 
     public static Customer getInstanceCustomer()
     {
@@ -20,6 +21,14 @@ public class FactoryModel {
     {
         if(productsInfo == null)
             return  new ProductsInfo();
+        else
+            return null;
+
+    }
+    public static SalesListResponseModel getInstanceSalesListResponseModel()
+    {
+        if(salesListResponseModel == null)
+            return  new SalesListResponseModel();
         else
             return null;
 

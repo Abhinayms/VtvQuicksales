@@ -9,6 +9,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.SalesmanCart;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by abhinaym on 8/10/15.
  */
@@ -17,6 +26,8 @@ public class SettingsActivity extends AppCompatActivity{
     Toolbar mToolbar;
     TextView textView;
     EditText portNum;
+    ResponseStatus status;
+    Thread thread;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,5 +112,42 @@ public class SettingsActivity extends AppCompatActivity{
 
     }
 
+    public void test(View v){
+        ButtonAnimation.animation(v);
 
+        thread=new Thread() {
+            public void run() {
+                SalesmanCart salesmanCart=new SalesmanCart();
+                salesmanCart.setSalesmanId(new Integer(10));
+                salesmanCart.setDate("2015-11-09");
+                SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+                //ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
+                 ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
+                {
+                    try {
+                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("testConnectionService"), primitiveParam);
+                        if (status.getStatusCode() == 200) {
+                            JSONObject object = new JSONObject(status.getStatusResponse());
+
+
+                            SettingsActivity.this.runOnUiThread(new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                }
+                            }));
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+        };
+        thread.start();
+    }
 }

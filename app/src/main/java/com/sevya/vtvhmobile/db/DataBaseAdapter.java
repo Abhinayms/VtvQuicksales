@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.Message;
 import com.sevya.vtvhmobile.models.ProductsInfo;
+import com.sevya.vtvhmobile.models.SalesListResponseModel;
 
 /**
  * Created by abhinaym on 28/9/15.
@@ -40,6 +43,25 @@ public class
         return id;
     }
 
+    public long insertSalesListResponse(SalesListResponseModel salesListResponseModel)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(dataBaseHelper.CART_ID,salesListResponseModel.getCartId());
+        contentValues.put(dataBaseHelper.CARTMODEL_ID,salesListResponseModel.getCartModelId());
+        contentValues.put(dataBaseHelper.QUANTITY,salesListResponseModel.getQty());
+        contentValues.put(dataBaseHelper.MODEL_ID,salesListResponseModel.getModelId());
+        contentValues.put(dataBaseHelper.MODEL_NAME,salesListResponseModel.getModelName());
+        contentValues.put(dataBaseHelper.TOTAL_PRICE,salesListResponseModel.getTotalPrice());
+        contentValues.put(dataBaseHelper.PRICE,salesListResponseModel.getSalePrice());
+        contentValues.put(dataBaseHelper.NAME,salesListResponseModel.getName());
+        contentValues.put(dataBaseHelper.MOBILE_NUMBER,salesListResponseModel.getMobileNumber());
+        contentValues.put(dataBaseHelper.SALESMAN_ID,salesListResponseModel.getSalesManId());
+        long id=db.insert(dataBaseHelper.Table_SALES_LIST,null,contentValues);
+
+        return id;
+    }
+
 
     public long insertDataItems(ProductsInfo productsInfo)
     {
@@ -59,9 +81,6 @@ public class
 
         return id;
     }
-
-
-
     public Cursor getALLItems(String date)
     {
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
@@ -72,6 +91,7 @@ public class
         cursor=db.query(dataBaseHelper.Table_CART,columns,where,args,groupBy,null,null,null);
         return  cursor;
     }
+
 
     public Cursor getItem(String number,String date)
     {
@@ -91,6 +111,20 @@ public class
 
 
         return cursor;
+    }
+
+    public Cursor getAllSalesList(String date,String salesmanId)
+    {
+
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        String where=dataBaseHelper.CREATED_DATE + "+?" + " AND " + dataBaseHelper.SALESMAN_ID + "=?" ;
+        String[] args={date,salesmanId};
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.CARTMODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.MODEL_ID,dataBaseHelper.MODEL_NAME,
+                            dataBaseHelper.TOTAL_PRICE,dataBaseHelper.PRICE,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.SALESMAN_ID};
+        String groupBy=dataBaseHelper.NAME+","+dataBaseHelper.MOBILE_NUMBER+","+dataBaseHelper.CREATED_DATE;
+        cursor=db.query(dataBaseHelper.Table_SALES_LIST,columns,where,args,groupBy,null,null);
+        return cursor;
+
     }
     public Cursor getAllData()
     {
@@ -167,11 +201,11 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =26;
+        private static final int DATABASE_VERSION =29;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
-        public static final String Table_Sales_List="Sales_List";
+        public static final String Table_SALES_LIST="Sales_List";
         public static final String UID = "_id";
         public static final String NAME = "NAME";
         public static final String MOBILE_NUMBER = "MOBILE_NUMBER";
@@ -200,7 +234,7 @@ public class
 
         private static final String DROP_TABLE_CUSTOMER = "DROP TABLE  IF EXISTS " + Table_CUSTOMER;
         private static final String DROP_TABLE_CART= "DROP TABLE IF EXISTS " + Table_CART;
-        private static final String DROP_TABLE_SALES_LIST= "DROP TABLE IF EXISTS " + Table_Sales_List;
+        private static final String DROP_TABLE_SALES_LIST= "DROP TABLE IF EXISTS " + Table_SALES_LIST;
 
 
 
@@ -214,15 +248,14 @@ public class
                 "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
 
-        private static final String CREATE_TABLE_SALES_LIST="CREATE TABLE " + Table_Sales_List + " (" + SALES_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + CART_ID + " INTEGER PRIMARY KEY VARCHAR(100)," +NAME+ " VARCHAR(255)," +
-                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
+        private static final String CREATE_TABLE_SALES_LIST="CREATE TABLE " + Table_SALES_LIST + " (" + SALES_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + CART_ID + " INTEGER PRIMARY KEY VARCHAR(100)," +NAME+ " VARCHAR(255)," +
+                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255),"+ SALESMAN_ID + "VARCHAR(100),"+ MODEL_NAME +" VARCHAR(100)," +
+                ""+ CARTMODEL_ID + "VARCHAR(100)" +QUANTITY+ " VARCHAR(100)," +
+                "" + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
         public DataBaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.context = context;
-
-
-
         }
 
         @Override
@@ -231,7 +264,7 @@ public class
 
                 db.execSQL(CREATE_TABLE_CUSTOMER);
                 db.execSQL(CREATE_TABLE_CART);
-
+                db.execSQL(CREATE_TABLE_SALES_LIST);
             } catch (SQLException e) {
                 Message.message(context, "" + e);
             }

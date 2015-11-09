@@ -1,16 +1,20 @@
 package com.sevya.vtvhmobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
     Toolbar mToolbar;
+    String IMEI="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,11 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent i=new Intent(LoginActivity.this,MainActivity.class);
         startActivity(i);
+
+        /*IMEI=((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+
+        Toast t=Toast.makeText(this,""+IMEI,Toast.LENGTH_LONG);
+        t.show();*/
 
     }
     @Override

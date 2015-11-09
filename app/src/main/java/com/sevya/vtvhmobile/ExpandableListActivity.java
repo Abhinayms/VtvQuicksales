@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +18,14 @@ import android.widget.TextView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.SalesListResponseModel;
+import com.sevya.vtvhmobile.models.SalesmanCart;
 import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,31 +38,62 @@ public class ExpandableListActivity extends AppCompatActivity{
     Cursor mGroupsCursor;
     Thread thread;
     ResponseStatus status;
+    JSONArray array;
+    SalesmanCart salesmanCart;
 
     private ExpandableListView expandableListView;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        dataBaseHelper=new DataBaseAdapter(this);
+        i=getIntent();
+        String mDate=i.getStringExtra("Date");
+          salesmanCart=new SalesmanCart();
+        salesmanCart.setDate(mDate);
+        salesmanCart.setSalesmanId(new Integer(76));
         thread=new Thread() {
             public void run() {
+
+                dataBaseHelper=new DataBaseAdapter(ExpandableListActivity.this);
+
                 SOAPServiceClient soapServiceClient=new SOAPServiceClient();
-               // ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
+                ServiceParams modalParam = new ServiceParams(salesmanCart,"salesmanCart", SalesmanCart.class);
                 // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
                 {
                     try {
-                   //     status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getSalesmanListByDateService"), modalParam);
-                        if (status.getStatusCode() == 200) {
-                            JSONObject object = new JSONObject(status.getStatusResponse());
+                        status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getSalesmanListByDateService"),modalParam);
+                        if(status.getStatusCode() == 200 ) {
+                            array = new JSONArray(status.getStatusResponse());
+                            for (int index = 0; index < array.length(); index++) {
+                                try {
+                                    JSONObject eachObject = (JSONObject) array.get(index);
+
+                                    SalesListResponseModel salesListResponseModel=new SalesListResponseModel();
+
+                                    salesListResponseModel.setCartId(eachObject.getInt("CartId"));
+                                    salesListResponseModel.setCartModelId(eachObject.getInt("CartModelId"));
+                                    salesListResponseModel.setQty(eachObject.getInt("Qty"));
+                                    salesListResponseModel.setModelId(eachObject.getInt("ModalId"));
+                                    salesListResponseModel.setModelName(eachObject.getString("Modal"));
+                                    salesListResponseModel.setTotalPrice(eachObject.getString("TotalPrice"));
+                                    salesListResponseModel.setSalePrice(eachObject.getString("SalePrice"));
+                                    salesListResponseModel.setName(eachObject.getString("ActName"));
+                                    salesListResponseModel.setMobileNumber(eachObject.getInt("MobileNo"));
+                                    salesListResponseModel.setSalesManId(76);
 
 
-                            ExpandableListActivity.this.runOnUiThread(new Thread(new Runnable() {
-                                @Override
-                                public void run() {
+                                    Long id=dataBaseHelper.insertSalesListResponse(salesListResponseModel);
 
+
+                                }catch (Exception e)
+                                {
+                                    e.printStackTrace();
                                 }
-                            }));
+
+
+                            }
+
 
                         }
 
@@ -75,7 +110,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
         expandableListView = new ExpandableListView(this);
         setContentView(R.layout.activity_expandable_list);
-        dataBaseHelper=new DataBaseAdapter(this);
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -96,11 +131,11 @@ public class ExpandableListActivity extends AppCompatActivity{
     @SuppressWarnings("deprecation")
     private void fillData()
     {
+
         i=getIntent();
-
         String mDate=i.getStringExtra("Date");
-
-        mGroupsCursor = dataBaseHelper.getALLItems(mDate);
+        String salesmenId="76";
+        mGroupsCursor = dataBaseHelper.getAllSalesList(mDate,salesmenId );
         this.startManagingCursor(mGroupsCursor);
         mGroupsCursor.moveToFirst();
 

@@ -81,24 +81,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--<activity
-            android:name=".CustomerDeatils"
-            android:label="@string/title_activity_customer_deatils" >
-            <intent-filter>
-                <action android:name="com.sevya.vtvhmobile.CustomerDeatils" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".SelectItems"
-            android:label="@string/title_activity_select_items" >
-            <intent-filter>
-                <action android:name="com.sevya.vtvhmobile.SelectItems" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>-->
         <activity
             android:name=".CartActivity"
             android:label="@string/title_activity_cart"

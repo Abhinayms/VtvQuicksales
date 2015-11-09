@@ -171,6 +171,7 @@ public class
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
+        public static final String Table_Sales_List="Sales_List";
         public static final String UID = "_id";
         public static final String NAME = "NAME";
         public static final String MOBILE_NUMBER = "MOBILE_NUMBER";
@@ -189,10 +190,17 @@ public class
         public static final String MODEL_ID="MODEL_ID";
         public static final String QUANTITY="QUANTITY";
         public static final String CART_ID="_id";
+        public static final String SALES_LIST_ID="_id";
+
+        public static final String SALESMAN_ID="SALESMAN_ID";
+        public static final String CARTMODEL_ID="CARTMODEL_ID";
+
+
 
 
         private static final String DROP_TABLE_CUSTOMER = "DROP TABLE  IF EXISTS " + Table_CUSTOMER;
         private static final String DROP_TABLE_CART= "DROP TABLE IF EXISTS " + Table_CART;
+        private static final String DROP_TABLE_SALES_LIST= "DROP TABLE IF EXISTS " + Table_Sales_List;
 
 
 
@@ -206,6 +214,8 @@ public class
                 "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
 
+        private static final String CREATE_TABLE_SALES_LIST="CREATE TABLE " + Table_Sales_List + " (" + SALES_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + CART_ID + " INTEGER PRIMARY KEY VARCHAR(100)," +NAME+ " VARCHAR(255)," +
+                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
         public DataBaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -221,6 +231,7 @@ public class
 
                 db.execSQL(CREATE_TABLE_CUSTOMER);
                 db.execSQL(CREATE_TABLE_CART);
+
             } catch (SQLException e) {
                 Message.message(context, "" + e);
             }
@@ -234,6 +245,7 @@ public class
 
                 db.execSQL(DROP_TABLE_CUSTOMER);
                 db.execSQL(DROP_TABLE_CART);
+                db.execSQL(DROP_TABLE_SALES_LIST);
                 onCreate(db);
             } catch (SQLException e) {
                 Message.message(context, "" + e);

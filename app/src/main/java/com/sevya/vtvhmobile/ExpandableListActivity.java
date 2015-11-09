@@ -16,6 +16,14 @@ import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.UserModel;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ExpandableListActivity extends AppCompatActivity{
@@ -24,12 +32,47 @@ public class ExpandableListActivity extends AppCompatActivity{
     TextView textView;
     Toolbar mToolbar;
     Cursor mGroupsCursor;
+    Thread thread;
+    ResponseStatus status;
 
     private ExpandableListView expandableListView;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        thread=new Thread() {
+            public void run() {
+                SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+               // ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
+                // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
+                {
+                    try {
+                   //     status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getSalesmanListByDateService"), modalParam);
+                        if (status.getStatusCode() == 200) {
+                            JSONObject object = new JSONObject(status.getStatusResponse());
+
+
+                            ExpandableListActivity.this.runOnUiThread(new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                }
+                            }));
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+        };
+        thread.start();
+
         expandableListView = new ExpandableListView(this);
         setContentView(R.layout.activity_expandable_list);
         dataBaseHelper=new DataBaseAdapter(this);

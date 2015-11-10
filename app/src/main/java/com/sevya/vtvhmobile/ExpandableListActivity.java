@@ -40,15 +40,31 @@ public class ExpandableListActivity extends AppCompatActivity{
     ResponseStatus status;
     JSONArray array;
     SalesmanCart salesmanCart;
+    String mDate;
 
     private ExpandableListView expandableListView;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        expandableListView = new ExpandableListView(this);
+        setContentView(R.layout.activity_expandable_list);
+
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        mToolbar.setTitle("");
+
+
+        setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         dataBaseHelper=new DataBaseAdapter(this);
         i=getIntent();
-        String mDate=i.getStringExtra("Date");
+          mDate=i.getStringExtra("Date");
           salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);
         salesmanCart.setSalesmanId(new Integer(76));
@@ -79,15 +95,20 @@ public class ExpandableListActivity extends AppCompatActivity{
                                     salesListResponseModel.setTotalPrice(eachObject.getString("TotalPrice"));
                                     salesListResponseModel.setSalePrice(eachObject.getString("SalePrice"));
                                     salesListResponseModel.setName(eachObject.getString("ActName"));
-                                    salesListResponseModel.setMobileNumber(eachObject.getInt("MobileNo"));
+                                    salesListResponseModel.setMobileNumber(eachObject.getString("MobileNo"));
                                     salesListResponseModel.setSalesManId(76);
+                                    salesListResponseModel.setDate(mDate);
+
+                                    Log.d("date",""+mDate);
 
 
-                                    Long id=dataBaseHelper.insertSalesListResponse(salesListResponseModel);
-
+                                    long id=dataBaseHelper.insertSalesListResponse(salesListResponseModel);
 
                                 }catch (Exception e)
                                 {
+                                    // Long id=dataBaseHelper.insertSaleslist(eachObject.getString("MobileNo"), eachObject.getInt("ModalId"),eachObject.getInt("Qty"),eachObject.getString("ActName"),
+                                    //      eachObject.getString("SalePrice"),eachObject.getInt("CartId"),eachObject.getString("Modal"),eachObject.getString("TotalPrice"),76,eachObject.getInt("CartModelId"));
+
                                     e.printStackTrace();
                                 }
 
@@ -108,23 +129,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         };
         thread.start();
 
-        expandableListView = new ExpandableListView(this);
-        setContentView(R.layout.activity_expandable_list);
 
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        mToolbar.setTitle("");
-
-       /* AppCompatActivity appCompatActivity=new AppCompatActivity();
-        Log.d("Object", "onCreate "+appCompatActivity);*/
-
-        setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         fillData();
     }
@@ -135,10 +140,9 @@ public class ExpandableListActivity extends AppCompatActivity{
         i=getIntent();
         String mDate=i.getStringExtra("Date");
         String salesmenId="76";
-        mGroupsCursor = dataBaseHelper.getAllSalesList(mDate,salesmenId );
+        mGroupsCursor = dataBaseHelper.getAllSalesList(mDate );
         this.startManagingCursor(mGroupsCursor);
         mGroupsCursor.moveToFirst();
-
         if(mGroupsCursor.getCount()==0)
         {
             textView=(TextView)findViewById(R.id.saletextview);
@@ -202,7 +206,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         @Override
         protected Cursor getChildrenCursor(Cursor groupCursor) {
             String number=groupCursor.getString(groupCursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
-            String date=groupCursor.getString(groupCursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.CREATED_DATE));
+            String date=groupCursor.getString(groupCursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DATE_SALESLIST));
             Cursor childCursor = dataBaseHelper.getItem(number,date);
             ExpandableListActivity.this.startManagingCursor(childCursor);
             childCursor.moveToFirst();

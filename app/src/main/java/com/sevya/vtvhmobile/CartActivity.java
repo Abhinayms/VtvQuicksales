@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
@@ -77,6 +78,7 @@ public class CartActivity extends AppCompatActivity {
     private Integer CartModelId;
     String number;
     String date;
+    String num;
 
 
 
@@ -102,7 +104,7 @@ public class CartActivity extends AppCompatActivity {
         intent=getIntent();
 
         String name=intent.getStringExtra("cname");
-        String num=intent.getStringExtra("cnum");
+         num=intent.getStringExtra("cnum");
         accountId=intent.getStringExtra("actId");
 
         Log.d("acct", "" + accountId);
@@ -390,6 +392,47 @@ public class CartActivity extends AppCompatActivity {
             intent.putExtra("cname",cname.getText().toString());
             intent.putExtra("cnum",cnum.getText().toString());
             startActivity(intent);
+        }
+        if(id==R.id.trash)
+        {
+
+            if(listView.getCount()==0){
+                Toast.makeText(CartActivity.this," There are no Items in the Cart to delete ",Toast.LENGTH_LONG).show();
+            }
+            else {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                        CartActivity.this);
+
+                // set title
+                alertDialogBuilder.setTitle("Alert");
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Do you want to delete entire cart ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                int i = dataBaseHelper.deleteAllCartItems(num);
+                                populateItemsListFromDB();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+
+                // create alert dialog
+                android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+
         }
         if(id==R.id.homeicon)
         {

@@ -13,8 +13,17 @@ public class SalesListResponseModel {
     private String totalPrice;
     private String salePrice;
     private String name;
-    private int mobileNumber;
+    private String mobileNumber;
     private int salesManId;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getCartId() {
         return cartId;
@@ -80,11 +89,11 @@ public class SalesListResponseModel {
         this.name = name;
     }
 
-    public int getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 
-    public void setMobileNumber(int mobileNumber) {
+    public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
 

@@ -15,6 +15,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.CartModel;
+import com.sevya.vtvhmobile.models.GetModelsForList;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
@@ -45,9 +48,7 @@ import org.json.JSONObject;
 
 public class BuyProducts extends Activity  implements OnTouchListener {
 
-    private Spinner spinner1, spinner2,spinner3;
-    private Button btnSubmit;
-
+    private Spinner spinner1;
     TextView dname;
     TextView dnum;
     EditText qty;
@@ -64,21 +65,20 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     CartModel cartModel;
     JSONArray array;
     String actId;
-
+    String prefix;
     DataBaseAdapter dataBaseHelper;
-
+    GetModelsForList getModelsForList;
+    String modelName;
+    List<String> modelList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dropdown);
         addItemsOnSpinner1();
-        addListenerOnButton();
 
 
         Date pdate=new Date();
          date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
-
-
         dataBaseHelper=new DataBaseAdapter(this);
 
         Intent intent=getIntent();
@@ -129,16 +129,59 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                 qty.requestFocus();
             }
         });
-
-
-
-
-
-        onButtonClick();
+     //   modelSelection();
 
     }
 
 
+   /* protected void modelSelection() {
+
+
+        prefix=autotv.getText().toString();
+
+         getModelsForList=new GetModelsForList();
+        getModelsForList.setPrefix(prefix);
+
+        modelList=new ArrayList<String>();
+
+        thread=new Thread() {
+            public void run() {
+                SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+                ServiceParams modalParam = new ServiceParams(getModelsForList,"GetModelsForList", GetModelsForList.class);
+                // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
+
+                    try {
+                        status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getModelsForListService"),modalParam);
+                        if(status.getStatusCode() == 200 ) {
+                            array = new JSONArray(status.getStatusResponse());
+                            for (int index = 0; index < array.length(); index++) {
+                                try {
+                                    JSONObject eachObject = (JSONObject) array.get(index);
+
+                                    modelName = eachObject.getString("ModelName");
+                                    modelList.add(modelName);
+
+                                }catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+                                }
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
+                    }
+        };
+        thread.start();
+
+
+    }
+*/
     public void cancel(View v)
     {
         ButtonAnimation.animation(v);
@@ -185,12 +228,10 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
 
     }
-    public void onButtonClick() {
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View view) {
+    public void doneClick(View v) {
 
-                                             ButtonAnimation.animation(view);
+
+                                             ButtonAnimation.animation(v);
                                              ProductsInfo productsInfo=new ProductsInfo();
                                              productsInfo.setName(dname.getText().toString());
                                              productsInfo.setNumber(dnum.getText().toString());
@@ -224,11 +265,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
                                              }
 
-                                         }
-                                     }
-        );
-
-
     }
 
     public void addItemsOnSpinner1() {
@@ -250,30 +286,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
     }
 
-    // get the selected dropdown list value
-    public void addListenerOnButton() {
 
-
-        btnSubmit = (Button) findViewById(R.id.button_done);
-        qty=(EditText) findViewById(R.id.edit_text);
-
-        btnSubmit.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(BuyProducts.this,
-                        "Items Selected : " +
-                                "\nCategory : "+ String.valueOf(spinner1.getSelectedItem()) +
-                                "\nManufacturer : "+ String.valueOf(spinner2.getSelectedItem()) +
-                                "\nModel ID: " + String.valueOf(spinner3.getSelectedItem()) +
-                                "\nQty: "+ qty.getText().toString() ,
-
-                        Toast.LENGTH_LONG).show();
-            }
-
-        });
-    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

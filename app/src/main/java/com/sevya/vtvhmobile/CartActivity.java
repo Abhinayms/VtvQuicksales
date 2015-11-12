@@ -79,6 +79,7 @@ public class CartActivity extends AppCompatActivity {
     String number;
     String date;
     String num;
+    int count;
 
 
 
@@ -288,9 +289,6 @@ public class CartActivity extends AppCompatActivity {
     public void submit(View v)
     {
                 ButtonAnimation.animation(v);
-
-
-
                final ArrayList<CartModel> cartModelArrayList = new ArrayList<CartModel>();
                cartModelList=new CartModelList<CartModel>();
                 cursor.moveToFirst();
@@ -396,7 +394,8 @@ public class CartActivity extends AppCompatActivity {
         if(id==R.id.trash)
         {
 
-            if(listView.getCount()==0){
+             count=listView.getCount();
+            if(count==0){
                 Log.d("second time ",""+listView.getCount());
                 Toast.makeText(CartActivity.this," There are no Items in the Cart to delete ",Toast.LENGTH_LONG).show();
             }
@@ -415,6 +414,8 @@ public class CartActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 int i = dataBaseHelper.deleteAllCartItems(num);
                                 populateItemsListFromDB();
+
+
 
                             }
                         })

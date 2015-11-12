@@ -22,6 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/mod"
+
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/mod"
                 android:id="@+id/model"
-                android:paddingTop="2dp"
+
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/model"
                 android:id="@+id/qty"
+
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/qty"
-                android:paddingTop="2dp"
+
                 >
                 <TextView
                     android:layout_width="wrap_content"

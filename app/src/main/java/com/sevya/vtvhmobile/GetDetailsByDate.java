@@ -62,7 +62,7 @@ public class GetDetailsByDate extends AppCompatActivity {
         if(mDay < 10){
 
             day  = "0" + mDay ;
-        }
+        }else{day=""+mDay;}
         date ="" + mYear + "-" + "" + month + "-" + ""+ day;
 
 

@@ -76,7 +76,7 @@ public class NavigationDrawerFragment extends android.support.v4.app.Fragment im
             public void onClick(View view, int position) {
                 if(position == 0 )
                 {
-                    startActivity(new Intent(NavigationDrawerFragment.this.getActivity(), ViewAllCustomers.class));
+                    startActivity(new Intent(NavigationDrawerFragment.this.getActivity(), GetDetailsByDate.class));
                 }
                 if(position == 1)
                 {

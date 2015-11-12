@@ -47,6 +47,7 @@ public class ExpandableListActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         expandableListView = new ExpandableListView(this);
         setContentView(R.layout.activity_expandable_list);
 
@@ -65,6 +66,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         dataBaseHelper=new DataBaseAdapter(this);
         i=getIntent();
           mDate=i.getStringExtra("Date");
+
           salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);
         salesmanCart.setSalesmanId(new Integer(76));
@@ -101,6 +103,8 @@ public class ExpandableListActivity extends AppCompatActivity{
 
                                     long id=dataBaseHelper.insertSalesListResponse(salesListResponseModel);
 
+
+
                                 }catch (Exception e)
                                 {
                                     // Long id=dataBaseHelper.insertSaleslist(eachObject.getString("MobileNo"), eachObject.getInt("ModalId"),eachObject.getInt("Qty"),eachObject.getString("ActName"),
@@ -111,6 +115,12 @@ public class ExpandableListActivity extends AppCompatActivity{
 
 
                             }
+                            ExpandableListActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fillData();
+                                }
+                            });
 
 
                         }
@@ -126,10 +136,10 @@ public class ExpandableListActivity extends AppCompatActivity{
         };
         thread.start();
 
-
-
-        fillData();
     }
+
+
+
     @SuppressWarnings("deprecation")
     private void fillData()
     {
@@ -213,4 +223,15 @@ public class ExpandableListActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dataBaseHelper.deleteSalesTable();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataBaseHelper.deleteSalesTable();
+    }
 }

@@ -248,7 +248,6 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
                     customer= FactoryModel.getInstanceCustomer();
 
-
                      custName = cname.getText().toString();
                     customer.setName(custName);
                      custNo = cnum.getText().toString();
@@ -276,7 +275,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
                     userModel=new UserModel();
-                    userModel.setPrimaryActID(new Integer(60));
+                    userModel.setPrimaryActID(new Integer(0));
                     userModel.setActName(custName);
                     userModel.setMobileNo(custNo);
                     userModel.setAddress1(cAdd1);
@@ -296,7 +295,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     userModel.setCompanyName(custCompName);
                     userModel.setMandal("sdew");
                     userModel.setDuplicateIds("");
-                    userModel.setUserId(new Integer(50));
+                    userModel.setUserId(new Integer(76));
 
 
                 if (custName.length() == 0) {

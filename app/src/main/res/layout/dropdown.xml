@@ -46,7 +46,7 @@
                     android:id="@+id/button_done"
                     android:background="#2196f3"
                     android:text="Done"
-                    android:onClick="showMessage"
+                    android:onClick="doneClick"
                     android:textColor="#ffffff"
 
                     />

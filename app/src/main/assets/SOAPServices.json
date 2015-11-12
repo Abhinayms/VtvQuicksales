@@ -48,6 +48,10 @@
     {
       "soapServiceName":"testConnectionService",
       "method":"TestConnection"
+    },
+    {
+      "soapServiceName":"getModelsForListService",
+      "method":"GetModelsForList"
     }
 
   ],

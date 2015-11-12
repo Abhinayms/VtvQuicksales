@@ -227,6 +227,14 @@ public class
         return  count;
     }
 
+    public void deleteSalesTable()
+    {
+        SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM Sales_Table"); //delete all rows in a table
+        db.close();
+    }
+
+
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;

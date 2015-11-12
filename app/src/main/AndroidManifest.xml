@@ -184,7 +184,7 @@
         <activity
             android:name=".GetDetailsByDate"
             android:label="@string/title_activity_get_details_by_date"
-            android:parentActivityName=".ViewAllCustomers" >
+            android:parentActivityName=".MainActivity" >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.GetDetailsByDate" />
 

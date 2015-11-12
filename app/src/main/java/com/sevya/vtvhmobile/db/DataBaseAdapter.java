@@ -92,14 +92,47 @@ public class
         cursor=db.query(dataBaseHelper.Table_CART,columns,where,args,groupBy,null,null,null);
         return  cursor;
     }
+    public Cursor getAllSalesList(String date)
+    {
 
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        String[] columns={dataBaseHelper.SALES_LIST_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.SALESMAN_ID,dataBaseHelper.DATE_SALESLIST};
+        String where=dataBaseHelper.DATE_SALESLIST +  "=?"; //+ " AND " + dataBaseHelper.SALESMAN_ID + "=?" ;
+        String[] args={date};
+        String groupBy=dataBaseHelper.NAME+","+dataBaseHelper.MOBILE_NUMBER+","+dataBaseHelper.DATE_SALESLIST;
+        cursor=db.query(dataBaseHelper.Table_SALES,columns,where,args,groupBy,null,null);
+        return cursor;
+
+    }
 
     public Cursor getItem(String number,String date)
     {
+
+
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
-        String[] columns={dataBaseHelper.CART_SALE_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
-                dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
+                dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
+
+        String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
+
+
+        String[] args={number,date};
+
+        cursor =db.query(dataBaseHelper.Table_CART, columns,where,args, null, null, null);
+
+
+        return cursor;
+    }
+
+
+    public Cursor getItemSales(String number,String date)
+    {
+
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+
+        String[] columns={dataBaseHelper.SALES_LIST_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
+                dataBaseHelper.MODEL_NAME,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
 
         String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.DATE_SALESLIST +"=?" ;
 
@@ -112,19 +145,7 @@ public class
         return cursor;
     }
 
-    public Cursor getAllSalesList(String date)
-    {
 
-        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
-        String[] columns={dataBaseHelper.CART_SALE_ID,dataBaseHelper.CARTMODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.MODEL_ID,dataBaseHelper.MODEL_NAME,
-                            dataBaseHelper.TOTAL_PRICE,dataBaseHelper.PRICE,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.SALESMAN_ID};
-        String where=dataBaseHelper.DATE_SALESLIST +  "=?"; //+ " AND " + dataBaseHelper.SALESMAN_ID + "=?" ;
-        String[] args={date};
-        String groupBy=dataBaseHelper.NAME+","+dataBaseHelper.MOBILE_NUMBER+","+dataBaseHelper.DATE_SALESLIST;
-        cursor=db.query(dataBaseHelper.Table_SALES,columns,where,args,groupBy,null,null);
-        return cursor;
-
-    }
     public Cursor getAllData()
     {
 

@@ -397,6 +397,7 @@ public class CartActivity extends AppCompatActivity {
         {
 
             if(listView.getCount()==0){
+                Log.d("second time ",""+listView.getCount());
                 Toast.makeText(CartActivity.this," There are no Items in the Cart to delete ",Toast.LENGTH_LONG).show();
             }
             else {
@@ -408,7 +409,7 @@ public class CartActivity extends AppCompatActivity {
 
                 // set dialog message
                 alertDialogBuilder
-                        .setMessage("Do you want to delete entire cart ?")
+                        .setMessage("Do you want to delete the entire cart ?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -424,8 +425,6 @@ public class CartActivity extends AppCompatActivity {
                                 dialog.cancel();
                             }
                         });
-
-
                 // create alert dialog
                 android.app.AlertDialog alertDialog = alertDialogBuilder.create();
 

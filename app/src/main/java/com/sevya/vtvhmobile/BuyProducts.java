@@ -3,47 +3,38 @@ package com.sevya.vtvhmobile;
 /**
  * Created by abhinaym on 24/10/15.
  */
-import java.math.BigDecimal;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
-import com.sevya.vtvhmobile.models.CartModel;
 import com.sevya.vtvhmobile.models.GetModelsForList;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 import com.sevya.vtvhmobile.models.ResponseStatus;
-import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BuyProducts extends Activity  implements OnTouchListener {
@@ -62,7 +53,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     ImageButton priceimagebutton;
     Thread thread;
     ResponseStatus status;
-    CartModel cartModel;
     JSONArray array;
     String actId;
     String prefix;
@@ -70,6 +60,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     GetModelsForList getModelsForList;
     String modelName;
     List<String> modelList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +103,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         dname.setText(name);
         dnum.setText(num);
 
-        String items[]={"CR1223","BR1226","AB19I4RT5","EB19RT5","R4S5UIA","D5TY6H","P0O9KHA","T78U7JK","X4RXFV","M87RU46","JH8I9","Q7UW3W","W39OS8","Y67UI9",
+       /* String items[]={"CR1223","BR1226","AB19I4RT5","EB19RT5","R4S5UIA","D5TY6H","P0O9KHA","T78U7JK","X4RXFV","M87RU46","JH8I9","Q7UW3W","W39OS8","Y67UI9",
 
                 "H78UIA","S67Y6U","O9REFR","PKIOE34","U56YYH","VUHY76","ZXVF6","L90O8SS","IK6Y3W","GHT67S","NR5T7W","BT6YDJDK","kT9YI5","FTFYI44"};
 
@@ -128,8 +119,79 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                 qty.setFocusableInTouchMode(true);
                 qty.requestFocus();
             }
-        });
+        });*/
      //   modelSelection();
+
+       /* autotv = (AutoCompleteTextView) findViewById(R.id.autoTv);
+        adapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
+        autotv.setAdapter(adapter);*/
+
+     autotv.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2,int arg3) {
+
+                prefix = cs.toString();
+               /* getModelsForList = new GetModelsForList();
+                getModelsForList.setModelPrefix(prefix);*/
+
+                modelList = new ArrayList<String>();
+
+
+                thread = new Thread() {
+                    public void run() {
+                        SOAPServiceClient soapServiceClient = new SOAPServiceClient();
+                      //  ServiceParams modalParam = new ServiceParams(prefix, "ModelPrefix", String.class);
+                        // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
+                        try {
+
+                            status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelsForListService"), new ServiceParams(prefix, "ModelPrefix", String.class));
+
+                            if (status.getStatusCode() == 200) {
+                                array = new JSONArray(status.getStatusResponse());
+                                for (int index = 0; index < array.length(); index++) {
+                                    try {
+                                        JSONObject eachObject = (JSONObject) array.get(index);
+
+                                        modelName = eachObject.getString("ModelName");
+                                        modelList.add(modelName);
+
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        BuyProducts.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Log.d("models list",""+modelList.toString());
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(BuyProducts.this, android.R.layout.simple_dropdown_item_1line, modelList);
+                                autotv.setAdapter(adapter);
+                            }
+                        });
+
+                    }
+                };
+                thread.start();
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int arg1, int arg2,
+                                          int arg3) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable arg0) {
+
+
+            }
+        });
+
+
 
     }
 

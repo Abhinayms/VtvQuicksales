@@ -78,11 +78,6 @@ public class NavigationDrawerFragment extends android.support.v4.app.Fragment im
                 {
                     startActivity(new Intent(NavigationDrawerFragment.this.getActivity(), GetDetailsByDate.class));
                 }
-                if(position == 1)
-                {
-                    startActivity(new Intent(NavigationDrawerFragment.this.getActivity(), DeleteCustomer.class));
-                }
-
 
             }
 
@@ -111,8 +106,8 @@ public class NavigationDrawerFragment extends android.support.v4.app.Fragment im
     public static List<Information> getData()
     {
         List<Information> data=new ArrayList<>();
-        int icons[]={R.drawable.navigation_tickets,R.drawable.navigation_delete};
-        String[] titles={"View Sales Details","Delete Customer"};
+        int icons[]={R.drawable.navigation_tickets};
+        String[] titles={"View Sales Details"};
         for(int i=0;i<titles.length && i<icons.length;i++)
         {
             Information current=new Information();

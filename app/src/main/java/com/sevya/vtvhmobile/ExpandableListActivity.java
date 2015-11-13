@@ -138,8 +138,6 @@ public class ExpandableListActivity extends AppCompatActivity{
 
     }
 
-
-
     @SuppressWarnings("deprecation")
     private void fillData()
     {

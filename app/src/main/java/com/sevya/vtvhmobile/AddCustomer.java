@@ -314,7 +314,6 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                       else if(!isEmailValid(cMail))
                         cmail.setError("please enter Valid email");
                         else  {
-
                             thread=new Thread() {
                                 public void run() {
                                     SOAPServiceClient soapServiceClient=new SOAPServiceClient();

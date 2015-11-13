@@ -12,14 +12,13 @@ public class GetModelsForList implements KvmSerializable {
 
     private String ModelPrefix;
 
-    public String getPrefix() {
+    public String getModelPrefix() {
         return ModelPrefix;
     }
 
-    public void setPrefix(String prefix) {
-        this.ModelPrefix = prefix;
+    public void setModelPrefix(String modelPrefix) {
+        ModelPrefix = modelPrefix;
     }
-
 
     @Override
     public Object getProperty(int i) {

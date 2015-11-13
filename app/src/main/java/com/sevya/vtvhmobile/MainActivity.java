@@ -1,6 +1,7 @@
 package com.sevya.vtvhmobile;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private String city;
     private String district;
     private String landline;
-
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +102,21 @@ public class MainActivity extends AppCompatActivity {
 
                 ButtonAnimation.animation(view);
 
+
                 final String numberr = number.getText().toString();
 
                 if (!isValidNumber(numberr)) {
                     number.setError("Please enter 10 digit Mobile Number");
                 }
                 else {
+                    final ProgressDialog progress;
+
+                    progress = new ProgressDialog(MainActivity.this);
+                    progress.setTitle("Please Wait");
+                    progress.setMessage("Searching....");
+                    progress.setCancelable(true);
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.show();
                     Thread thread = new Thread() {
                         public void run() {
                             SOAPServiceClient soapServiceClient=new SOAPServiceClient();
@@ -161,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 }
                                 else if(status.getStatusCode()!=200)  {
+
+                                    progress.dismiss();
 
                                     MainActivity.this.runOnUiThread(new Runnable() {
                                         public void run() {

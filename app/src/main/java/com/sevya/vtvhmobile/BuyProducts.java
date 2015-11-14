@@ -7,7 +7,12 @@ package com.sevya.vtvhmobile;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +23,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,11 +36,13 @@ import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.GetModelsForList;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BuyProducts extends Activity  implements OnTouchListener {
@@ -59,13 +67,21 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     DataBaseAdapter dataBaseHelper;
     GetModelsForList getModelsForList;
     String modelName;
+    String modelId;
+    String modelDescription;
     List<String> modelList;
+    HashMap<String,String> modelMap;
+    String selectedModelName;
+    String selectedModelId;
+    List<String> stockPointList;
+    HashMap<String,String> stockpointMap;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dropdown);
-        addItemsOnSpinner1();
+
 
 
         Date pdate=new Date();
@@ -103,80 +119,75 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         dname.setText(name);
         dnum.setText(num);
 
-       /* String items[]={"CR1223","BR1226","AB19I4RT5","EB19RT5","R4S5UIA","D5TY6H","P0O9KHA","T78U7JK","X4RXFV","M87RU46","JH8I9","Q7UW3W","W39OS8","Y67UI9",
-
-                "H78UIA","S67Y6U","O9REFR","PKIOE34","U56YYH","VUHY76","ZXVF6","L90O8SS","IK6Y3W","GHT67S","NR5T7W","BT6YDJDK","kT9YI5","FTFYI44"};
-
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(BuyProducts.this,android.R.layout.simple_list_item_1,items);
-        autotv.setAdapter(adapter);
-
-
-        autotv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> p, View v, int pos, long id) {
-                //TODO: set focus on next view
-
-                qty.setFocusableInTouchMode(true);
-                qty.requestFocus();
-            }
-        });*/
-     //   modelSelection();
-
-       /* autotv = (AutoCompleteTextView) findViewById(R.id.autoTv);
-        adapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
-        autotv.setAdapter(adapter);*/
-
      autotv.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2,int arg3) {
+         @Override
+         public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 
-                prefix = cs.toString();
-               /* getModelsForList = new GetModelsForList();
-                getModelsForList.setModelPrefix(prefix);*/
+             prefix = cs.toString();
 
-                modelList = new ArrayList<String>();
-
-
-                thread = new Thread() {
-                    public void run() {
-                        SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                      //  ServiceParams modalParam = new ServiceParams(prefix, "ModelPrefix", String.class);
-                        // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
-                        try {
-
-                            status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelsForListService"), new ServiceParams(prefix, "ModelPrefix", String.class));
-
-                            if (status.getStatusCode() == 200) {
-                                array = new JSONArray(status.getStatusResponse());
-                                for (int index = 0; index < array.length(); index++) {
-                                    try {
-                                        JSONObject eachObject = (JSONObject) array.get(index);
-
-                                        modelName = eachObject.getString("ModelName");
-                                        modelList.add(modelName);
+             modelList = new ArrayList<String>();
+             modelMap=new HashMap<String, String>();
 
 
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        BuyProducts.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+             thread = new Thread() {
+                 public void run() {
+                     SOAPServiceClient soapServiceClient = new SOAPServiceClient();
 
-                                Log.d("models list",""+modelList.toString());
-                                ArrayAdapter<String> adapter = new ArrayAdapter<>(BuyProducts.this, android.R.layout.simple_dropdown_item_1line, modelList);
-                                autotv.setAdapter(adapter);
-                            }
-                        });
+                     try {
 
-                    }
-                };
+                         status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelsForListService"), new ServiceParams(prefix, "ModelPrefix", String.class));
+
+                         if (status.getStatusCode() == 200) {
+                             array = new JSONArray(status.getStatusResponse());
+                             for (int index = 0; index < array.length(); index++) {
+                                 try {
+                                     JSONObject eachObject = (JSONObject) array.get(index);
+
+                                     modelName = eachObject.getString("ModelName");
+                                     modelId=eachObject.getString("ModelId");
+                                     modelList.add(modelName);
+                                     modelMap.put(modelName,modelId);
+
+                                 } catch (Exception e) {
+                                     e.printStackTrace();
+                                 }
+                             }
+                         }
+                     } catch (Exception e) {
+                         e.printStackTrace();
+                     }
+                     BuyProducts.this.runOnUiThread(new Runnable() {
+                         @Override
+                         public void run() {
+
+
+                             ArrayAdapter<String> adapter = new ArrayAdapter<>(BuyProducts.this, android.R.layout.simple_dropdown_item_1line, modelList);
+                             autotv.setAdapter(adapter);
+                             autotv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                 Map mp=new HashMap(modelMap);
+
+                                 @Override
+                                 public void onItemClick(AdapterView<?> p, View v, int pos, long id) {
+
+                                     selectedModelName=autotv.getText().toString();
+                                      selectedModelId=(String)mp.get(selectedModelName);
+
+
+                                     qty.setFocusableInTouchMode(true);
+                                     qty.requestFocus();
+
+                                     addItemsOnSpinner1();
+
+                                 }
+
+                             });
+                         }
+                     });
+
+                 }
+             };
                 thread.start();
             }
             @Override
@@ -195,55 +206,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
     }
 
-
-   /* protected void modelSelection() {
-
-
-        prefix=autotv.getText().toString();
-
-         getModelsForList=new GetModelsForList();
-        getModelsForList.setPrefix(prefix);
-
-        modelList=new ArrayList<String>();
-
-        thread=new Thread() {
-            public void run() {
-                SOAPServiceClient soapServiceClient=new SOAPServiceClient();
-                ServiceParams modalParam = new ServiceParams(getModelsForList,"GetModelsForList", GetModelsForList.class);
-                // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
-
-                    try {
-                        status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getModelsForListService"),modalParam);
-                        if(status.getStatusCode() == 200 ) {
-                            array = new JSONArray(status.getStatusResponse());
-                            for (int index = 0; index < array.length(); index++) {
-                                try {
-                                    JSONObject eachObject = (JSONObject) array.get(index);
-
-                                    modelName = eachObject.getString("ModelName");
-                                    modelList.add(modelName);
-
-                                }catch (Exception e)
-                                {
-                                    e.printStackTrace();
-                                }
-                            }
-
-
-                                }
-                    }catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-
-
-                    }
-        };
-        thread.start();
-
-
-    }
-*/
     public void cancel(View v)
     {
         ButtonAnimation.animation(v);
@@ -251,10 +213,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 BuyProducts.this);
 
-        // set title
         alertDialogBuilder.setTitle("Alert");
 
-        // set dialog message
         alertDialogBuilder
                 .setMessage("Do you want to cancel ?")
                 .setCancelable(false)
@@ -275,24 +235,70 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
+
                         dialog.cancel();
                     }
                 });
-
-
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
 
 
     }
+
+    public void addItemsOnSpinner1() {
+        spinner1 = (Spinner) findViewById(R.id.stock_spinner);
+    stockPointList=new ArrayList<String>();
+        stockPointList.add("--Select StockPoint--");
+        stockpointMap=new HashMap<>();
+
+        thread=new Thread() {
+            public void run() {
+                SOAPServiceClient soapServiceClient=new SOAPServiceClient();
+
+                {
+                    try {
+                        status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelDetailsService"), new ServiceParams(new Integer(100), "UserId", Integer.class), new ServiceParams(Integer.parseInt(selectedModelId), "ModelId", Integer.class));
+                        if (status.getStatusCode() == 200) {
+                            array = new JSONArray(status.getStatusResponse());
+                            for (int index = 0; index < array.length(); index++) {
+                                try {
+                                    JSONObject eachObject = (JSONObject) array.get(index);
+                                    String spid=eachObject.getString("SPID");
+                                    String spName=eachObject.getString("SpName");
+
+                                    stockPointList.add(spName);
+                                    stockpointMap.put(spName,spid);
+
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    BuyProducts.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(BuyProducts.this,
+                                    android.R.layout.simple_spinner_item, stockPointList);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinner1.setAdapter(dataAdapter);
+
+                        }
+                    });
+
+
+                }
+            }
+
+        };
+        thread.start();
+
+    }
     public void doneClick(View v) {
-
-
                                              ButtonAnimation.animation(v);
                                              ProductsInfo productsInfo=new ProductsInfo();
                                              productsInfo.setName(dname.getText().toString());
@@ -328,27 +334,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              }
 
     }
-
-    public void addItemsOnSpinner1() {
-
-        spinner1 = (Spinner) findViewById(R.id.stock_spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("Select Stock Point");
-        list.add("sp 1");
-        list.add("sp 2");
-        list.add("sp 3");
-        list.add("sp 4");
-        list.add("sp 5");
-        list.add("sp 6");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
-
-
-    }
-
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

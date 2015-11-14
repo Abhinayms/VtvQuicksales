@@ -52,6 +52,10 @@
     {
       "soapServiceName":"getModelsForListService",
       "method":"GetModelsForList"
+    },
+    {
+      "soapServiceName":"getModelDetailsService",
+      "method":"GetModelDetails"
     }
 
   ],

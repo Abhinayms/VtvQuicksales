@@ -212,18 +212,18 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         userModel.setGender(cusGen);
         //userModel.setCity(cAdd2);
         //userModel.setCountry(cAdd3);
-        userModel.setState("Ts");
-        userModel.setStreet("gamma");
-        userModel.setSurName("android");
-        userModel.setTinNo("1452");
-        userModel.setDistrict("gbn");
+        userModel.setState("");
+        userModel.setStreet("");
+        userModel.setSurName("");
+        userModel.setTinNo("");
+        userModel.setDistrict("");
         userModel.setEmail(cusEmail);
-        userModel.setIsPrimaryAct("12");
-        userModel.setPin("012");
+        userModel.setIsPrimaryAct("");
+        userModel.setPin("");
         userModel.setCompanyName(cusCompNmae);
-        userModel.setMandal("sdew");
+        userModel.setMandal("");
         userModel.setDuplicateIds("");
-        userModel.setUserId(new Integer(50));
+        userModel.setUserId(new Integer(76));
 
 
         if (cname.getText().toString().length() == 0) {

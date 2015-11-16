@@ -167,7 +167,7 @@ public class CartActivity extends AppCompatActivity {
             textView.setVisibility(View.INVISIBLE);
             continueshopping.setVisibility(View.INVISIBLE);
             customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor,0);
-            //listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
+
             listView.setAdapter(customCartListViewAdapter);
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 // setting onItemLongClickListener and passing the position to the function

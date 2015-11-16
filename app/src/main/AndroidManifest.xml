@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sevya.vtvhmobile" >
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +13,7 @@
         android:theme="@style/MyMaterialTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -38,6 +40,16 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.ThankyouScreen" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PurchaseInfo"
+            android:label="@string/title_activity_purchase_info"
+            android:parentActivityName=".GetDetailsByDate" >
+            <intent-filter>
+                <action android:name="com.sevya.vtvhmobile.PurchaseInfo" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -74,15 +86,13 @@
         <activity
             android:name=".ReceiveDetails"
             android:label="@string/title_activity_receive_details"
-            android:parentActivityName=".MainActivity"
-            >
+            android:parentActivityName=".MainActivity" >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.ReceiveDetails" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CartActivity"
             android:label="@string/title_activity_cart"
@@ -204,14 +214,14 @@
         <activity
             android:name=".ExpandableListActivity"
             android:label="@string/title_activity_expandable_list"
-            android:parentActivityName=".GetDetailsByDate"
-            >
+            android:parentActivityName=".GetDetailsByDate" >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.ExpandableListActivity" />
 
                 <category android:name="android.intent.category.Default" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

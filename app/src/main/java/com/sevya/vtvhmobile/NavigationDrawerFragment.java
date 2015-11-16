@@ -47,7 +47,6 @@ public class NavigationDrawerFragment extends android.support.v4.app.Fragment im
     public NavigationDrawerFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

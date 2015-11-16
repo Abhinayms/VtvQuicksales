@@ -257,7 +257,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                                     Intent i = new Intent(EditCustomer.this, ReceiveDetails.class);
                                                     i.putExtra("cname", cusName);
                                                     i.putExtra("cnum", cusNum);
-                                                    i.putExtra("cpro", cusCompNmae);
+                                                    i.putExtra("compName", cusCompNmae);
                                                     i.putExtra("rb", cusGen);
                                                     //   i.putExtra("compName", prof);
                                                     i.putExtra("cmail", cusEmail);

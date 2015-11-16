@@ -36,7 +36,7 @@ public class PopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-        dataBaseHelper=new DataBaseAdapter(this);
+      //  dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -47,11 +47,11 @@ public class PopupActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        Intent i=getIntent();
+        //Intent i=getIntent();
 
-        num=i.getStringExtra("cnum");
+       // num=i.getStringExtra("cnum");
 
-        populateSameCustomersList();
+       // populateSameCustomersList();
     }
 
 

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sevya.vtvhmobile.MainActivity"
+    android:id="@+id/mainLinearLayout"
     >
     <include
         android:id="@+id/toolbar"
@@ -73,6 +74,7 @@
                     />
 
             </LinearLayout>
+
         </RelativeLayout>
         <fragment
             android:id="@+id/fragment_navigation_drawer"

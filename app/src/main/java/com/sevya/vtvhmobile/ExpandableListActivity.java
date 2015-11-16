@@ -1,21 +1,21 @@
 package com.sevya.vtvhmobile;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.support.v7.widget.Toolbar;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.SimpleCursorTreeAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sevya.vtvhmobile.Adapters.CustomSaleListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.SalesListResponseModel;
@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 public class ExpandableListActivity extends AppCompatActivity{
     DataBaseAdapter dataBaseHelper;
-    MyExpandableListAdapter mAdapter;
+    CustomSaleListViewAdapter customSaleListViewAdapter;
     TextView textView;
     Toolbar mToolbar;
     Cursor mGroupsCursor;
@@ -41,6 +41,7 @@ public class ExpandableListActivity extends AppCompatActivity{
     JSONArray array;
     SalesmanCart salesmanCart;
     String mDate;
+    ListView lv;
 
     private ExpandableListView expandableListView;
     Intent i;
@@ -69,7 +70,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
           salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);
-        salesmanCart.setSalesmanId(new Integer(76));
+        salesmanCart.setSalesmanId(new Integer(100));
         thread=new Thread() {
             public void run() {
 
@@ -77,7 +78,6 @@ public class ExpandableListActivity extends AppCompatActivity{
 
                 SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                 ServiceParams modalParam = new ServiceParams(salesmanCart,"salesmanCart", SalesmanCart.class);
-                // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
                 {
                     try {
                         status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getSalesmanListByDateService"),modalParam);
@@ -107,9 +107,6 @@ public class ExpandableListActivity extends AppCompatActivity{
 
                                 }catch (Exception e)
                                 {
-                                    // Long id=dataBaseHelper.insertSaleslist(eachObject.getString("MobileNo"), eachObject.getInt("ModalId"),eachObject.getInt("Qty"),eachObject.getString("ActName"),
-                                    //      eachObject.getString("SalePrice"),eachObject.getInt("CartId"),eachObject.getString("Modal"),eachObject.getString("TotalPrice"),76,eachObject.getInt("CartModelId"));
-
                                     e.printStackTrace();
                                 }
 
@@ -143,8 +140,8 @@ public class ExpandableListActivity extends AppCompatActivity{
     {
 
         i=getIntent();
-        String mDate=i.getStringExtra("Date");
-        String salesmenId="76";
+         mDate=i.getStringExtra("Date");
+        String salesmenId="100";
         mGroupsCursor = dataBaseHelper.getAllSalesList(mDate );
         this.startManagingCursor(mGroupsCursor);
         mGroupsCursor.moveToFirst();
@@ -159,19 +156,45 @@ public class ExpandableListActivity extends AppCompatActivity{
             textView=(TextView)findViewById(R.id.saletextview);
             textView.setVisibility(View.INVISIBLE);
 
-            ExpandableListView elv = (ExpandableListView)this.findViewById(android.R.id.list);
+            lv = (ListView)this.findViewById(android.R.id.list);
 
-            mAdapter = new MyExpandableListAdapter(mGroupsCursor, this,
-                    R.layout.rowlayout_expgroup,                     // Your row layout for a group
-                    R.layout.rowlayout_itemlist_exp,                 // Your row layout for a child
-                    new String[]{DataBaseAdapter.DataBaseHelper.NAME, DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER},          // Field(s) to use from group cursor
-                    new int[]{R.id.p_name, R.id.p_number},                 // Widget ids to put group data into
-                    new String[]{DataBaseAdapter.DataBaseHelper.MODEL_NAME, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE},  // Field(s) to use from child cursors
-                    new int[]{R.id.p_model, R.id.p_qty, R.id.p_price});          // Widget ids to put child data into
+            customSaleListViewAdapter=new CustomSaleListViewAdapter(this,mGroupsCursor,0);
 
 
-            elv.addHeaderView(getLayoutInflater().inflate(R.layout.saleslistheader, null, false));
-            elv.setAdapter(mAdapter);                         // set the list adapter.
+            lv.addHeaderView(getLayoutInflater().inflate(R.layout.saleslistheader, null, false));
+            lv.setAdapter(customSaleListViewAdapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1,
+                                        int position, long arg3) {
+                    Cursor selectedFromList = (Cursor) (lv.getItemAtPosition(position));//.toString();
+                    String name = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
+                    String mobile = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
+                    Log.d("num",""+name+mobile);
+
+                   /* String unitPrice = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE));
+                    String totalPrice = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE));
+                    String modelId = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID));
+                    String modelName = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_NAME));
+                    String qty = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));*/
+
+                    Intent intent = new Intent(ExpandableListActivity.this, PurchaseInfo.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("mobile", mobile);
+                    intent.putExtra("date",mDate);
+                    /*intent.putExtra("totalprice", totalPrice);
+                    intent.putExtra("unitPrice", unitPrice);
+                    intent.putExtra("modelId", modelId);
+                    intent.putExtra("modelName", modelName);
+                    intent.putExtra("qty", qty);*/
+                    intent.putExtra("status", "not purchased");
+                    startActivity(intent);
+
+
+                }
+            });
+// set the list adapter.
 
         }
     }
@@ -197,29 +220,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public class MyExpandableListAdapter extends SimpleCursorTreeAdapter {
-        public MyExpandableListAdapter(Cursor cursor, Context context,int groupLayout,
-                                       int childLayout, String[] groupFrom, int[] groupTo, String[] childrenFrom,
-                                       int[] childrenTo) {
-            super(context, cursor, groupLayout, groupFrom, groupTo,
-                    childLayout, childrenFrom, childrenTo);
-        }
 
-
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected Cursor getChildrenCursor(Cursor groupCursor) {
-            String number=groupCursor.getString(groupCursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
-            String date=groupCursor.getString(groupCursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DATE_SALESLIST));
-            Cursor childCursor = dataBaseHelper.getItemSales(number, date);
-            childCursor.moveToFirst();
-            ExpandableListActivity.this.startManagingCursor(childCursor);
-            childCursor.moveToFirst();
-            return childCursor;
-        }
-
-    }
 
     @Override
     protected void onStop() {

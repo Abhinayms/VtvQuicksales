@@ -71,7 +71,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     private String cAdd2;
     private String cAdd3;
     private String custCompName;
-    private String gender;
+
     private String cPro;
     private String actId;
 
@@ -83,7 +83,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     public RadioButton female;
     public  RadioButton yes;
     public RadioButton no;
-    public String selectedType="";
+    public String selectedType="Male";
     Button done;
     Button cancel;
     private ResponseStatus status;
@@ -221,16 +221,19 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 male = (RadioButton) findViewById(R.id.radioMale);
                 female = (RadioButton) findViewById(R.id.radioFemale);
 
-                selectedType="Male";
                 male.setChecked(true);
+
                 rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
                         if (i == R.id.radioMale) {
                             selectedType = "Male";
 
+
                         } else if (i == R.id.radioFemale) {
                             selectedType = "Female";
+
                         }
                     }
                 });
@@ -246,32 +249,19 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
                     ButtonAnimation.animation(v);
 
-                    customer= FactoryModel.getInstanceCustomer();
-
                      custName = cname.getText().toString();
-                    customer.setName(custName);
                      custNo = cnum.getText().toString();
-                    customer.setMobileNumber(custNo);
                      custCompName = compName.getText().toString();
-                    customer.setAge(custCompName);
-                     gender = selectedType;
-                    customer.setGender(gender);
-                    cPro = spinner1.getSelectedItem().toString();
-                    customer.setProfession(cPro);
+                     cPro = spinner1.getSelectedItem().toString();
                      cLn = cln.getText().toString();
-                    customer.setLandlineNumber(cLn);
-                    cAdd = cadd.getText().toString();
-                    customer.setAddress(cAdd);
-
+                     cAdd = cadd.getText().toString();
                      cAdd1 = cadd1.getText().toString();
-                      cAdd2 = cadd2.getText().toString();
+                     cAdd2 = cadd2.getText().toString();
                      cAdd3 = cadd3.getText().toString();
-
-                      cMail = cmail.getText().toString();
+                     cMail = cmail.getText().toString();
 
                     int aactId=31;
 
-                    customer.setEmail(cMail);
 
 
                     userModel=new UserModel();
@@ -281,7 +271,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     userModel.setAddress1(cAdd1);
                     userModel.setPhone(cLn);
                     userModel.setFlatNo(cAdd);
-                    userModel.setGender(gender);
+                    userModel.setGender(selectedType);
                     userModel.setCity(cAdd2);
                     userModel.setCountry(cAdd3);
                     userModel.setState("");
@@ -318,7 +308,6 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                 public void run() {
                                     SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                                     ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
-                                  // ServiceParams primitiveParam = new ServiceParams(new Integer(76), "UserId", Integer.class);
                                     {
                                         try {
                                             status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCustomerDetailsService"), modalParam);
@@ -332,9 +321,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                                         Intent i = new Intent(AddCustomer.this, ReceiveDetails.class);
                                                         i.putExtra("cname", custName);
                                                         i.putExtra("cnum", custNo);
-                                                        i.putExtra("cpro", custCompName);
-                                                        i.putExtra("rb", gender);
-                                                        //   i.putExtra("compName", prof);
+                                                        i.putExtra("compName", custCompName);
+                                                        i.putExtra("rb", selectedType);
+                                                        i.putExtra("cpro", spinner1.getSelectedItem().toString());
                                                         i.putExtra("cmail", cMail);
                                                         i.putExtra("cadd", cAdd);
                                                         i.putExtra("cln", cLn);

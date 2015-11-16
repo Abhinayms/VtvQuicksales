@@ -39,6 +39,7 @@
     <string name="title_activity_sales_list">SalesList</string>
     <string name="title_activity_list_of_models">ListOfModels</string>
     <string name="title_activity_expandable_list">ExpandableListActivity</string>
+    <string name="title_activity_purchase_info">PurchaseInfo</string>
 
 
 

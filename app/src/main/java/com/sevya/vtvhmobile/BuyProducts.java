@@ -82,10 +82,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dropdown);
 
-
-
         Date pdate=new Date();
-         date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
+        date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
         dataBaseHelper=new DataBaseAdapter(this);
 
         Intent intent=getIntent();
@@ -370,10 +368,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
 
         }
-
-
-
-        return false;
+      return false;
 
     }
 }

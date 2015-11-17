@@ -197,19 +197,7 @@
                     android:visibility="invisible"
                     />
             </LinearLayout>
-            <!--<Spinner
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/spinner3"
-                android:background="#e0e0e0"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                />-->
-
-
         </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -338,32 +326,66 @@
 
 
         </LinearLayout>
-        <!--<RelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Price  :"
+                android:text="Demo Required :"
                 android:textColor="#000"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 />
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/switchDemo"
+                android:textColor="#000000"
+                android:textOn="Yes"
+                android:textOff="No"
+                android:showText="true"
+                android:paddingRight="20dp"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:switchTextAppearance="@style/SwitchTextAppearance"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/totalprice"
-                android:textColor="#009688"
-                android:textSize="20dp"
-                android:layout_alignParentRight="true"
+                android:text="Installation Required :"
+                android:textColor="#000"
+                android:textSize="15dp"
                 />
-        </RelativeLayout>-->
-
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/switchInstallation"
+                android:textColor="#000000"
+                android:textOn="Yes"
+                android:textOff="No"
+                android:showText="true"
+                android:paddingRight="20dp"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:switchTextAppearance="@style/SwitchTextAppearance"/>
+        </RelativeLayout>
 
     </LinearLayout>
 </ScrollView>

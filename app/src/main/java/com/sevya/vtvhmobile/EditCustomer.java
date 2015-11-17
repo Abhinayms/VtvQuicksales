@@ -70,6 +70,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     String cusEmail;
     String cusCompNmae;
     String cusActid;
+    String cPro;
 
 
 
@@ -201,6 +202,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cusCompNmae=compName.getText().toString();
         cusGen=cgen.getText().toString();
         cusLn=cln.getText().toString();
+        cPro=cpro.getText().toString();
 
         userModel=new UserModel();
         userModel.setPrimaryActID(acctId);
@@ -224,6 +226,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         userModel.setMandal("");
         userModel.setDuplicateIds("");
         userModel.setUserId(new Integer(76));
+        userModel.setProfession(cPro);
 
 
         if (cname.getText().toString().length() == 0) {
@@ -259,7 +262,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                                     i.putExtra("cnum", cusNum);
                                                     i.putExtra("compName", cusCompNmae);
                                                     i.putExtra("rb", cusGen);
-                                                    //   i.putExtra("compName", prof);
+                                                      i.putExtra("cpro", cPro);
                                                     i.putExtra("cmail", cusEmail);
                                                     i.putExtra("cadd",cusAdd);
                                                     i.putExtra("cln", cusLn);

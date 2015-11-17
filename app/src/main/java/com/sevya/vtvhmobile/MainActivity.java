@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
+import com.sevya.vtvhmobile.models.MergeCustomer;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private String city;
     private String district;
     private String landline;
+    private String prof;
     ProgressDialog progress;
 
     @Override
@@ -116,8 +118,56 @@ public class MainActivity extends AppCompatActivity {
                                 if (status.getStatusCode() == 200) {
                                     array = new JSONArray(status.getStatusResponse());
                                     if (array.length() > 1) {
-                                        Intent i = new Intent(MainActivity.this, PopupActivity.class);
-                                        startActivity(i);
+                                        for (int index = 0; index < array.length(); index++) {
+                                            try {
+                                                MergeCustomer mergeCustomer=new MergeCustomer();
+
+                                                JSONObject eachObject = (JSONObject) array.get(index);
+
+                                                actId = eachObject.getString("PrimaryActID");
+                                                Log.d("mac", "" + actId);
+                                                mergeCustomer.setActid(actId);
+                                                name = eachObject.getString("ActName");
+                                                mergeCustomer.setName(name);
+                                                address1 = eachObject.getString("Address1");
+                                                mergeCustomer.setAddress(address1);
+                                                mobileNo = eachObject.getString("MobileNo");
+                                                mergeCustomer.setMobileNumber(mobileNo);
+                                                companyName = eachObject.getString("CompanyName");
+                                                mergeCustomer.setCompany(companyName);
+                                                prof=eachObject.getString("Profession");
+                                                mergeCustomer.setProfession(prof);
+                                                street = eachObject.getString("Street");
+                                                mergeCustomer.setStreet(street);
+                                                city = eachObject.getString("City");
+                                                mergeCustomer.setCity(city);
+                                                email = eachObject.getString("Email");
+                                                mergeCustomer.setEmail(email);
+                                                gender = eachObject.getString("Gender");
+                                                mergeCustomer.setGender(gender);
+                                                district = eachObject.getString("District");
+                                                mergeCustomer.setDistrict(district);
+                                                landline = eachObject.getString("Phone");
+                                                mergeCustomer.setLandlineNumber(landline);
+                                                mergeCustomer.setMandal(eachObject.getString("Mandal"));
+
+                                                dataBaseHelper.insertMergeDetails(mergeCustomer);
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            MainActivity.this.runOnUiThread(new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Intent i = new Intent(MainActivity.this, PopupActivity.class);
+                                                    i.putExtra("cnum",mobileNo);
+                                                    startActivity(i);
+
+                                                }
+                                            }));
+                                        }
+
                                     } else if (array.length() == 1) {
                                         for (int index = 0; index < array.length(); index++) {
                                             try {
@@ -137,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                                                 gender = eachObject.getString("Gender");
                                                 district = eachObject.getString("District");
                                                 landline = eachObject.getString("Phone");
+                                                prof=eachObject.getString("Profession");
 
 
                                                 MainActivity.this.runOnUiThread(new Thread(new Runnable() {
@@ -145,9 +196,9 @@ public class MainActivity extends AppCompatActivity {
                                                         Intent i = new Intent(MainActivity.this, ReceiveDetails.class);
                                                         i.putExtra("cname", name);
                                                         i.putExtra("cnum", mobileNo);
-                                                        i.putExtra("cpro", companyName);
+                                                        i.putExtra("compName", companyName);
                                                         i.putExtra("rb", gender);
-                                                        //   i.putExtra("compName", prof);
+                                                        i.putExtra("cpro", prof);
                                                         i.putExtra("cmail", email);
                                                         i.putExtra("cadd", address1);
                                                         i.putExtra("cln", landline);

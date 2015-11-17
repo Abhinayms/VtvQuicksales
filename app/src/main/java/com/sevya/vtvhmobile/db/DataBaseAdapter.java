@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.sevya.vtvhmobile.models.Customer;
+import com.sevya.vtvhmobile.models.MergeCustomer;
 import com.sevya.vtvhmobile.models.Message;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 import com.sevya.vtvhmobile.models.SalesListResponseModel;
@@ -43,6 +44,28 @@ public class
         return id;
     }
 
+    public void insertMergeDetails(MergeCustomer mergeCustomer)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(dataBaseHelper.NAME,mergeCustomer.getName());
+        contentValues.put(dataBaseHelper.MOBILE_NUMBER,mergeCustomer.getMobileNumber());
+        contentValues.put(dataBaseHelper.COMPANY_NAME,mergeCustomer.getCompany());
+        contentValues.put(dataBaseHelper.GENDER,mergeCustomer.getGender());
+        contentValues.put(dataBaseHelper.PROFESSION,mergeCustomer.getProfession());
+        contentValues.put(dataBaseHelper.LANDLINE_NUMBER,mergeCustomer.getLandlineNumber());
+        contentValues.put(dataBaseHelper.ADDRESS,mergeCustomer.getAddress());
+        contentValues.put(dataBaseHelper.EMAIL,mergeCustomer.getEmail());
+        contentValues.put(dataBaseHelper.PRIMARYACT,mergeCustomer.getActid());
+        contentValues.put(dataBaseHelper.CITY,mergeCustomer.getCity());
+        contentValues.put(dataBaseHelper.STREET,mergeCustomer.getStreet());
+        contentValues.put(dataBaseHelper.MANDAL,mergeCustomer.getMandal());
+        contentValues.put(dataBaseHelper.DISTRICT,mergeCustomer.getDistrict());
+
+        db.insert(dataBaseHelper.Table_MERGE,null,contentValues);
+
+    }
+
     public long insertSalesListResponse(SalesListResponseModel salesListResponseModel)
     {
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
@@ -73,6 +96,9 @@ public class
         contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModelNo());
         contentValues.put(dataBaseHelper.PRICE, productsInfo.getPrice());
         contentValues.put(dataBaseHelper.TOTAL_PRICE, productsInfo.getTotalPrice());
+        contentValues.put(dataBaseHelper.DEMO,productsInfo.isDemo());
+        contentValues.put(dataBaseHelper.INSTALL,productsInfo.isInstall());
+
 
 
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
@@ -82,6 +108,8 @@ public class
 
         return id;
     }
+
+
     public Cursor getALLItems(String date)
     {
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
@@ -169,7 +197,7 @@ public class
         String where=DataBaseHelper.MOBILE_NUMBER+"=?";
         String[] whereargs={number};
 
-        cursor=db.query(dataBaseHelper.Table_CUSTOMER, columns,where,whereargs,null, null, null, null);
+        cursor=db.query(dataBaseHelper.Table_MERGE, columns,where,whereargs,null, null, null, null);
         return cursor;
 
     }
@@ -230,7 +258,14 @@ public class
     public void deleteSalesTable()
     {
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM Sales_Table"); //delete all rows in a table
+        db.execSQL("DELETE FROM Merge_Table"); //delete all rows in a table
+        db.close();
+    }
+
+    public void deleteMergeTable()
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM Merge_Table");
         db.close();
     }
 
@@ -238,11 +273,12 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =44;
+        private static final int DATABASE_VERSION =46;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
         public static final String Table_SALES="Sales_Table";
+        public static final String Table_MERGE="Merge_Table";
         public static final String UID = "_id";
         public static final String NAME = "NAME";
         public static final String MOBILE_NUMBER = "MOBILE_NUMBER";
@@ -252,6 +288,8 @@ public class
         public static final String LANDLINE_NUMBER = "LANDLINE_NUMBER";
         public static final String ADDRESS = "ADDRESS";
         public static final String EMAIL = "EMAIL";
+        public static final String DEMO="DEMO";
+        public static final String INSTALL="INSTALL";
         public static final String CREATED_DATE="CREATED_DATE";
 
         public static final String MODEL_NAME="MODEL_NAME";
@@ -266,6 +304,14 @@ public class
         public static final String SALESMAN_ID="SALESMAN_ID";
         public static final String CARTMODEL_ID="CARTMODEL_ID";
         public static final String DATE_SALESLIST="DATE";
+        public static final String STATUS="STATUS";
+        public static final String PRIMARYACT="PRIMARYACT";
+        public static final String STREET="STREET";
+        public static final String CITY="CITY";
+        public static final String DISTRICT="DISTRICT";
+        public static final String MANDAL="MANDAL";
+
+
 
 
 
@@ -273,6 +319,7 @@ public class
         private static final String DROP_TABLE_CUSTOMER = "DROP TABLE  IF EXISTS " + Table_CUSTOMER;
         private static final String DROP_TABLE_CART = "DROP TABLE IF EXISTS " + Table_CART;
         private static final String DROP_TABLE_SALES_LIST = "DROP TABLE IF EXISTS " + Table_SALES;
+        private static final String DROP_TABLE_MERGE = "DROP TABLE IF EXISTS " + Table_MERGE;
 
 
 
@@ -283,11 +330,17 @@ public class
 
 
         private static final String CREATE_TABLE_CART = "CREATE TABLE " + Table_CART + " (" + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," +
-                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
+                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100),"+ DEMO + " VARCHAR(100),"+ INSTALL + " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
 
         private static final String CREATE_TABLE_SALES_LIST = " CREATE TABLE " + Table_SALES + " (" + SALES_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + MOBILE_NUMBER + " VARCHAR(100)," + MODEL_ID + " VARCHAR(255)," + QUANTITY + " VARCHAR(100)," + NAME + " VARCHAR(255)," + PRICE + " VARCHAR(100), " + CART_SALE_ID + " VARCHAR(100)," + MODEL_NAME + " VARCHAR(255)," +
-                "" + TOTAL_PRICE + " VARCHAR(255)," + SALESMAN_ID + " VARCHAR(100)," + CARTMODEL_ID + " VARCHAR(100)," + DATE_SALESLIST + " VARCHAR(100));";
+                "" + TOTAL_PRICE + " VARCHAR(255)," + SALESMAN_ID + " VARCHAR(100)," + CARTMODEL_ID + " VARCHAR(100)," + STATUS + " VARCHAR(100)," + DATE_SALESLIST + " VARCHAR(100));";
+
+
+        private static final String CREATE_TABLE_MERGE = "CREATE TABLE " + Table_MERGE + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME + " VARCHAR(255)," +
+                "" + MOBILE_NUMBER + " VARCHAR(100)," + COMPANY_NAME + " VARCHAR(100)," + GENDER + " VARCHAR(10)," + PROFESSION + " VARCHAR(30)," +
+                "" + LANDLINE_NUMBER + " VARCHAR(20)," + PRIMARYACT + " VARCHAR(255)," + ADDRESS + " VARCHAR(255)," + STREET + " VARCHAR(255)," + CITY + " VARCHAR(255)," + MANDAL + " VARCHAR(255)," + DISTRICT + " VARCHAR(255)," +
+                "" + EMAIL + " VARCHAR(30));";
 
         public DataBaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -300,6 +353,7 @@ public class
                 db.execSQL(CREATE_TABLE_SALES_LIST);
                 db.execSQL(CREATE_TABLE_CUSTOMER);
                 db.execSQL(CREATE_TABLE_CART);
+                db.execSQL(CREATE_TABLE_MERGE);
 
             } catch (SQLException e) {
                 Message.message(context, "" + e);
@@ -315,6 +369,7 @@ public class
                 db.execSQL(DROP_TABLE_CUSTOMER);
                 db.execSQL(DROP_TABLE_CART);
                 db.execSQL(DROP_TABLE_SALES_LIST);
+                db.execSQL(DROP_TABLE_MERGE);
                 onCreate(db);
             } catch (SQLException e) {
                 Message.message(context, "" + e);

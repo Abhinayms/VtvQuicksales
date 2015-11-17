@@ -60,7 +60,21 @@ public class ProductsInfo {
     public void setTotalPrice(String totalPrice) {
         this.totalPrice = totalPrice;
     }
+    public boolean isInstall() {
+        return install;
+    }
 
+    public void setInstall(boolean install) {
+        this.install = install;
+    }
+
+    public boolean isDemo() {
+        return demo;
+    }
+
+    public void setDemo(boolean demo) {
+        this.demo = demo;
+    }
     public String totalPrice;
 
     private String name;
@@ -69,4 +83,6 @@ public class ProductsInfo {
     private String stockPoint;
     private String qty;
     private String price;
+    private boolean install;
+    private boolean demo;
 }

@@ -286,6 +286,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     userModel.setMandal("");
                     userModel.setDuplicateIds("");
                     userModel.setUserId(new Integer(76));
+                    userModel.setProfession(cPro);
 
 
                 if (custName.length() == 0) {

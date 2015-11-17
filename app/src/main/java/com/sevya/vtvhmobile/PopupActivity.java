@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +37,7 @@ public class PopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-      //  dataBaseHelper=new DataBaseAdapter(this);
+        dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -47,11 +48,11 @@ public class PopupActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        //Intent i=getIntent();
+        Intent i=getIntent();
 
-       // num=i.getStringExtra("cnum");
+        num=i.getStringExtra("cnum");
 
-       // populateSameCustomersList();
+       populateSameCustomersList();
     }
 
 
@@ -76,7 +77,7 @@ public class PopupActivity extends AppCompatActivity {
         );
 
         final ListView listView = (ListView) findViewById(R.id.listViewPersons);
-        /*listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));*/
+        listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
         listView.setAdapter(simpleCursorAdapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -91,8 +92,11 @@ public class PopupActivity extends AppCompatActivity {
 
                 if (cb.isChecked()) {
 
-                    String selectedFromList =(String) (listView.getItemAtPosition(position));
-                    checkedPositions.add(selectedFromList);
+                    Cursor selectedFromList =(Cursor) (listView.getItemAtPosition(position));
+                    String name=selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
+                    Log.d("merge name",""+name);
+                    String mobile=selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
+                    checkedPositions.add(name);
                     // add position of the row
                     // when checkbox is checked
                 }
@@ -102,6 +106,7 @@ public class PopupActivity extends AppCompatActivity {
     }
     public void merge(View v)
     {
+        Log.d("checkedpositions",""+checkedPositions.toString());
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(PopupActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View convertView = (View) inflater.inflate(R.layout.popupdialoglayout, null);
@@ -112,7 +117,7 @@ public class PopupActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
         alertDialog.show();
 
-        RadioButton rb=(RadioButton)convertView.findViewById(R.id.rbdialog);
+        /*RadioButton rb=(RadioButton)convertView.findViewById(R.id.rbdialog);
         rb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +125,7 @@ public class PopupActivity extends AppCompatActivity {
 
             }
         });
-
+*/
 
 
     }
@@ -174,5 +179,16 @@ public class PopupActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dataBaseHelper.deleteMergeTable();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataBaseHelper.deleteMergeTable();
     }
 }

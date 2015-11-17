@@ -27,9 +27,11 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -75,6 +77,10 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     String selectedModelId;
     List<String> stockPointList;
     HashMap<String,String> stockpointMap;
+    Switch sInstall;
+    Switch sDemo;
+    boolean demoReq;
+    boolean installReq;
 
 
     @Override
@@ -91,7 +97,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         String name=intent.getStringExtra("cname");
         String num=intent.getStringExtra("cnum");
         actId=intent.getStringExtra("actId");
-        i=intent.getIntExtra("listsize",0);
+        i=intent.getIntExtra("listsize", 0);
 
         Log.d("bac",""+actId);
 
@@ -105,6 +111,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
         qtyimagebutton=(ImageButton)findViewById(R.id.cbqty);
         priceimagebutton=(ImageButton)findViewById(R.id.cbup);
+        sInstall=(Switch)findViewById(R.id.switchInstallation);
+        sDemo=(Switch)findViewById(R.id.switchDemo);
 
         modelimagebutton.setOnTouchListener(this);
         qtyimagebutton.setOnTouchListener(this);
@@ -305,6 +313,28 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              productsInfo.setPrice(cprice.getText().toString());
                                              productsInfo.setQty(qty.getText().toString());
 
+                                            sDemo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                @Override
+                                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                                                    demoReq = isChecked;
+
+                                                }
+                                            });
+                                            sInstall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                             @Override
+                                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                                             installReq=isChecked;
+
+                                                }
+                                               });
+
+                                            productsInfo.setDemo(demoReq);
+                                            productsInfo.setInstall(installReq);
+
+
+
 
                                              if((autotv.getText().toString().length()==0))
                                                  autotv.setError("Please enter model no");
@@ -317,7 +347,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                                  int q=Integer.parseInt(qty.getText().toString());
                                                  String tp=""+(p*q);
                                                  productsInfo.setTotalPrice(tp);
-
 
                                                 long id = dataBaseHelper.insertDataItems(productsInfo);
 

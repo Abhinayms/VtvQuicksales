@@ -20,6 +20,9 @@ public class CartModel implements KvmSerializable {
     private Integer Qty;
     private Integer CartId;
     private Integer CartModelId;
+    private Boolean IsDemoReq;
+    private Boolean IsInstallationReq;
+    private String DeliveryCharges;
 
     public Integer getActid()  {
         return Actid;
@@ -93,6 +96,30 @@ public class CartModel implements KvmSerializable {
         CartModelId = cartModelId;
     }
 
+    public Boolean getIsDemoReq() {
+        return IsDemoReq;
+    }
+
+    public void setIsDemoReq(Boolean isDemoReq) {
+        IsDemoReq = isDemoReq;
+    }
+
+    public Boolean getIsInstallationReq() {
+        return IsInstallationReq;
+    }
+
+    public void setIsInstallationReq(Boolean isInstallationReq) {
+        IsInstallationReq = isInstallationReq;
+    }
+
+    public String getDeliveryCharges() {
+        return DeliveryCharges;
+    }
+
+    public void setDeliveryCharges(String deliveryCharges) {
+        DeliveryCharges = deliveryCharges;
+    }
+
     @Override
     public Object getProperty(int i) {
 
@@ -115,13 +142,19 @@ public class CartModel implements KvmSerializable {
                 return CartId;
             case 8:
                 return CartModelId;
+            case 9:
+                return IsDemoReq;
+            case 10:
+                return IsInstallationReq;
+            case 11:
+                return DeliveryCharges;
         }
         return null;
     }
 
     @Override
     public int getPropertyCount() {
-        return 9;
+        return 12;
     }
 
     @Override
@@ -155,6 +188,14 @@ public class CartModel implements KvmSerializable {
             case 8:
                 CartModelId = Integer.parseInt(o.toString());
                 break;
+            case 9:
+                IsDemoReq=Boolean.parseBoolean(o.toString());
+                break;
+            case 10:
+                IsInstallationReq=Boolean.parseBoolean(o.toString());
+                break;
+            case 11:
+                DeliveryCharges=o.toString();
             default:
                 break;
         }
@@ -186,7 +227,6 @@ public class CartModel implements KvmSerializable {
             case 4:
                 propertyInfo.type = propertyInfo.STRING_CLASS;
                 propertyInfo.name = "TotalPrice";
-
                 break;
             case 5:
                 propertyInfo.type = propertyInfo.INTEGER_CLASS;
@@ -206,6 +246,18 @@ public class CartModel implements KvmSerializable {
             case 8:
                 propertyInfo.type = propertyInfo.INTEGER_CLASS;
                 propertyInfo.name = "CartModelId";
+                break;
+            case 9:
+                propertyInfo.type = propertyInfo.BOOLEAN_CLASS;
+                propertyInfo.name = "IsDemoReq";
+                break;
+            case 10:
+                propertyInfo.type = propertyInfo.BOOLEAN_CLASS;
+                propertyInfo.name = "IsInstallationReq";
+                break;
+            case 11:
+                propertyInfo.type = propertyInfo.STRING_CLASS;
+                propertyInfo.name = "DeliveryCharges";
                 break;
             default:
                 break;

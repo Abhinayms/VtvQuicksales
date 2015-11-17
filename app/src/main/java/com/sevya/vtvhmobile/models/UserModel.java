@@ -34,6 +34,7 @@ public class UserModel implements KvmSerializable {
     private String FlatNo;
     private String DuplicateIds;
     private Integer UserId;
+    private String Profession;
 
 
     public Integer getPrimaryActID() {
@@ -204,6 +205,14 @@ public class UserModel implements KvmSerializable {
         UserId = userId;
     }
 
+    public String getProfession() {
+        return Profession;
+    }
+
+    public void setProfession(String profession) {
+        Profession = profession;
+    }
+
     @Override
     public Object getProperty(int i) {
         switch (i) {
@@ -249,13 +258,15 @@ public class UserModel implements KvmSerializable {
                 return DuplicateIds;
             case 20:
                 return UserId;
+            case 21:
+                return Profession;
         }
         return null;
      }
 
     @Override
     public int getPropertyCount() {
-        return 21;
+        return 22;
     }
 
     @Override
@@ -323,6 +334,9 @@ public class UserModel implements KvmSerializable {
                 break;
             case 20:
                 UserId = Integer.parseInt(o.toString());
+                break;
+            case 21:
+                Profession =o.toString();
                 break;
             default:
                 break;
@@ -431,6 +445,10 @@ public class UserModel implements KvmSerializable {
             case 20:
                 propertyInfo.type = propertyInfo.INTEGER_CLASS;
                 propertyInfo.name = "UserId";
+                break;
+            case 21:
+                propertyInfo.type = propertyInfo.STRING_CLASS;
+                propertyInfo.name = "Profession";
                 break;
             default:
                 break;

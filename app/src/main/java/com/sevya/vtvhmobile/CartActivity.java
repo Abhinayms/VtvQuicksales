@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -289,6 +290,7 @@ public class CartActivity extends AppCompatActivity {
     public void submit(View v)
     {
                 ButtonAnimation.animation(v);
+        EditText deliveryCharges=(EditText)findViewById(R.id.textdeliverycharges);
                final ArrayList<CartModel> cartModelArrayList = new ArrayList<CartModel>();
                cartModelList=new CartModelList<CartModel>();
                 cursor.moveToFirst();
@@ -308,7 +310,7 @@ public class CartActivity extends AppCompatActivity {
                     String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
                     cartModel.setQty(Integer.parseInt(qty));
                     cartModel.setSpId(new Integer(49));
-
+                    cartModel.setDeliveryCharges(deliveryCharges.getText().toString());
                    cartModelArrayList.add(cartModel);
                    cartModelList.add(cartModel);
                    cursor.moveToNext();

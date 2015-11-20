@@ -12,6 +12,8 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.Objects;
 
 /**
@@ -33,6 +35,23 @@ public class SOAPServiceClient {
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet=true;
+
+            /*HttpURLConnection connection = new HttpURLConnection() {
+                @Override
+                public void disconnect() {
+
+                }
+
+                @Override
+                public boolean usingProxy() {
+                    return false;
+                }
+
+                @Override
+                public void connect() throws IOException {
+
+                }
+            }*/
 
             for(ServiceParams param : params) {
                 request.addProperty(param.getParamAlias(), param.getParams());

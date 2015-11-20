@@ -126,6 +126,7 @@ public class CartActivity extends AppCompatActivity {
          date=intent.getStringExtra("Date");
         listView = (ListView) findViewById(R.id.cartitemview);
         cursor = dataBaseHelper.getItem(number, date);
+
         tickButton=(Button)findViewById(R.id.float_button_tick);
         plusButton=(ImageButton)findViewById(R.id.float_button_plus);
         startManagingCursor(cursor);
@@ -138,6 +139,9 @@ public class CartActivity extends AppCompatActivity {
             textView = (TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
+            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.deliverychargelayout);
+            linearLayout.setVisibility(View.GONE);
+
             continueshopping=(Button)findViewById(R.id.continueshopping);
             continueshopping.setVisibility(View.VISIBLE);
             tickButton.setVisibility(View.INVISIBLE);
@@ -291,8 +295,8 @@ public class CartActivity extends AppCompatActivity {
     {
                 ButtonAnimation.animation(v);
         EditText deliveryCharges=(EditText)findViewById(R.id.textdeliverycharges);
-               final ArrayList<CartModel> cartModelArrayList = new ArrayList<CartModel>();
-               cartModelList=new CartModelList<CartModel>();
+               final List<CartModel> cartModelArrayList = new ArrayList<CartModel>();
+               //cartModelList=new CartModelList<CartModel>();
                 cursor.moveToFirst();
                for (int i = 0; i < cursor.getCount(); i++) {
                    cartModel = new CartModel();
@@ -311,8 +315,14 @@ public class CartActivity extends AppCompatActivity {
                     cartModel.setQty(Integer.parseInt(qty));
                     cartModel.setSpId(new Integer(49));
                     cartModel.setDeliveryCharges(deliveryCharges.getText().toString());
+                   String isDemoReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO));
+                   String isInstallReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.INSTALL));
+                   cartModel.setIsDemoReq(Boolean.parseBoolean(isDemoReq));
+                   cartModel.setIsInstallationReq(Boolean.parseBoolean(isInstallReq));
+
                    cartModelArrayList.add(cartModel);
-                   cartModelList.add(cartModel);
+
+                  // cartModelList.add(cartModel);
                    cursor.moveToNext();
 
                 }
@@ -320,7 +330,7 @@ public class CartActivity extends AppCompatActivity {
                 thread = new Thread() {
                     public void run() {
                         SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                        ServiceParams modalParam = new ServiceParams(cartModelList, "cartModelList", CartModelList.class);
+                        ServiceParams modalParam = new ServiceParams(cartModelArrayList, "cartModelList", cartModelArrayList.getClass());
                         try {
                             status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCartDetailsService"), modalParam);
                             if (status.getStatusCode() == 200) {

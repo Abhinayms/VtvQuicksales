@@ -1,43 +1,47 @@
 package com.sevya.vtvhmobile;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AlertDialog;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.RadioButton;
-
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PopupActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
     DataBaseAdapter dataBaseHelper;
     String num;
-    private RadioButton listRadioButton = null;
-    int listIndex = -1;
+    TableLayout tl;
+    TableRow tbrow;
     CheckBox checkBox;
-    ArrayList<String> checkedPositions;
+    String name;
+    private Map<Integer, String> viewIdentifier = null;
+    private  List<Map<String, String>> selectedList = null;
+    Map<String, String> mergeMap = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-        dataBaseHelper=new DataBaseAdapter(this);
+        dataBaseHelper = new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -48,116 +52,141 @@ public class PopupActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        Intent i=getIntent();
+        Intent i = getIntent();
 
-        num=i.getStringExtra("cnum");
+        num = i.getStringExtra("cnum");
+      tl = (TableLayout) findViewById(R.id.mergetable);
 
-       populateSameCustomersList();
+        populateSameCustomersList();
     }
 
 
     @SuppressWarnings("deprecation")
-    public void populateSameCustomersList()
-    {
-        Cursor cursor =dataBaseHelper.getPerson(num);
+    public void populateSameCustomersList() {
+        Cursor cursor = dataBaseHelper.getPerson(num);
         startManagingCursor(cursor);
-
-        String[] fromFieldsNames = new String[]{ DataBaseAdapter.DataBaseHelper.NAME,  DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER,DataBaseAdapter.DataBaseHelper.ADDRESS,};
-        int[] toViewIDs = new int[]
-                {R.id.name,R.id.number,R.id.address };
-
-        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(
-
-                this,
-                R.layout.custwithsamemobile,
-                cursor,
-                fromFieldsNames,
-                toViewIDs,
-                0
-        );
-
-        final ListView listView = (ListView) findViewById(R.id.listViewPersons);
-        listView.addHeaderView(getLayoutInflater().inflate(R.layout.header, null, false));
-        listView.setAdapter(simpleCursorAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        cursor.moveToFirst();
 
 
-        checkedPositions = new ArrayList<String>();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        viewIdentifier = new HashMap<Integer, String>();
+        viewIdentifier.put(0, "checkbox");
+        viewIdentifier.put(1, "primaryAcc");
+        viewIdentifier.put(2, "name");
+        viewIdentifier.put(3, "number");
+        viewIdentifier.put(4, "address");
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view,
-                                    int position, long arg3) {
-                CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox);
+        int count = cursor.getCount();
+        for (int i = 0; i < count; i++) {
 
-                if (cb.isChecked()) {
+            tbrow = new TableRow(this);
+            checkBox = new CheckBox(this);
+            checkBox.setId(0);
+            tbrow.addView(checkBox);
 
-                    Cursor selectedFromList =(Cursor) (listView.getItemAtPosition(position));
-                    String name=selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
-                    Log.d("merge name",""+name);
-                    String mobile=selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
-                    checkedPositions.add(name);
-                    // add position of the row
-                    // when checkbox is checked
+
+            TextView t1v = new TextView(this);
+            t1v.setText("" + i);
+            t1v.setId(1);
+            t1v.setTextColor(Color.BLACK);
+            t1v.setGravity(Gravity.CENTER);
+            tbrow.addView(t1v);
+
+            TextView t2v = new TextView(this);
+            t2v.setText("Product " + i);
+            t2v.setId(2);
+            t2v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME)));
+            t2v.setTextColor(Color.BLACK);
+            t2v.setGravity(Gravity.CENTER);
+            tbrow.addView(t2v);
+
+            TextView t3v = new TextView(this);
+            t3v.setId(3);
+            t3v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER)));
+            t3v.setTextColor(Color.BLACK);
+            t3v.setGravity(Gravity.CENTER);
+            tbrow.addView(t3v);
+
+            TextView t4v = new TextView(this);
+            t4v.setId(4);
+            t4v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.ADDRESS)));
+            t4v.setTextColor(Color.BLACK);
+            t4v.setGravity(Gravity.CENTER);
+            tbrow.addView(t4v);
+            tl.addView(tbrow);
+            cursor.moveToNext();
+        }
+
+
+    }
+    public void merge(View v) {
+
+        selectedList = new ArrayList<Map<String, String>>();
+        for(int i = 0; i < tl.getChildCount(); i++) {
+            TableRow row = (TableRow) tl.getChildAt(i);
+
+                CheckBox c = (CheckBox) row.getChildAt(0);
+                if (c.isChecked()) {
+                    mergeMap = new HashMap<String, String>();
+                    int[] a = new int[]{row.getId()};
+                    Log.d("id", "" + a.toString());
+                    for(int j=1;j<row.getChildCount();j++)
+                    {
+                        TextView view = ((TextView)row.getChildAt(j));
+                        mergeMap.put(viewIdentifier.get(view.getId()), view.getText().toString());
+
+                    }
+                    selectedList.add(mergeMap);
+
                 }
-            }
-        });
+        }
+
+
+        Dialog dialog=new Dialog(PopupActivity.this);
+        dialog.setContentView(R.layout.popupdialoglayout);
+        TableLayout tableLayout = (TableLayout)dialog.findViewById(R.id.dialogTable);
+
+
+        for(int l=0;l<selectedList.size();l++) {
+
+            TableRow tbrow2 = new TableRow(this);
+            mergeMap = selectedList.get(l);
+            checkBox = new CheckBox(this);
+            tbrow2.addView(checkBox);
+
+
+            TextView t1v = new TextView(this);
+            t1v.setText(mergeMap.get("primaryAcc"));
+            t1v.setTextColor(Color.BLACK);
+            t1v.setGravity(Gravity.CENTER);
+            tbrow2.addView(t1v);
+
+            TextView t2v = new TextView(this);
+            t2v.setText(mergeMap.get("name"));
+            t2v.setTextColor(Color.BLACK);
+            t2v.setGravity(Gravity.CENTER);
+            tbrow2.addView(t2v);
+
+            TextView t3v = new TextView(this);
+            t3v.setText(mergeMap.get("number"));
+            t3v.setTextColor(Color.BLACK);
+            t3v.setGravity(Gravity.CENTER);
+            tbrow2.addView(t3v);
+
+            TextView t4v = new TextView(this);
+            t4v.setText(mergeMap.get("address"));
+            t4v.setTextColor(Color.BLACK);
+            t4v.setGravity(Gravity.CENTER);
+            tbrow2.addView(t4v);
+            tableLayout.addView(tbrow2);
+        }
+
+        dialog.setTitle("List");
+        dialog.show();
+
+
+
 
     }
-    public void merge(View v)
-    {
-        Log.d("checkedpositions",""+checkedPositions.toString());
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PopupActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View convertView = (View) inflater.inflate(R.layout.popupdialoglayout, null);
-        alertDialog.setView(convertView);
-        alertDialog.setTitle("List");
-        ListView lv = (ListView) convertView.findViewById(R.id.popuplistview);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.dialoglist,checkedPositions);
-        lv.setAdapter(adapter);
-        alertDialog.show();
-
-        /*RadioButton rb=(RadioButton)convertView.findViewById(R.id.rbdialog);
-        rb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
-*/
-
-
-    }
-
-
-
-
-   /* public void onClickRadioButton(View v) {
-        View vMain = ((View) v.getParent());
-        // getParent() must be added 'n' times,
-        // where 'n' is the number of RadioButtons' nested parents
-        // in your case is one.
-
-        CheckBox cb=(CheckBox)v.findViewById(R.id.checkBox);
-
-
-
-                   // uncheck previous checked button.
-            if (listRadioButton != null)
-                listRadioButton.setChecked(false);
-            // assign to the variable the new one
-            listRadioButton = (RadioButton) v;
-            // find if the new one is checked or not, and set "listIndex"
-            if (listRadioButton.isChecked()) {
-                listIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
-            } else {
-                listRadioButton = null;
-                listIndex = -1;
-            }
-
-    }*/
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -180,6 +209,13 @@ public class PopupActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dataBaseHelper.deleteMergeTable();
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -191,4 +227,7 @@ public class PopupActivity extends AppCompatActivity {
         super.onDestroy();
         dataBaseHelper.deleteMergeTable();
     }
+
+
+
 }

@@ -176,7 +176,7 @@
         >
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="175dp"
             android:id="@+id/cartitemview"
             >
         </ListView>
@@ -214,13 +214,14 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:orientation="horizontal"
+        android:id="@+id/deliverychargelayout"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delivery Charges :"
             android:textColor="#000"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:layout_weight="1"
             />
         <EditText
@@ -228,8 +229,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/textdeliverycharges"
             android:textColor="#009688"
-            android:textSize="20dp"
-            android:layout_weight="3"
+            android:textSize="15dp"
+            android:layout_weight="4"
             android:background="@drawable/edit_text_design"
             />
     </LinearLayout>

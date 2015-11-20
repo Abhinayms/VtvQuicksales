@@ -154,7 +154,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
     public void getDetails() {
 
-        //ButtonAnimation.animation(view);
+
 
         try {
                 Intent intent=getIntent();

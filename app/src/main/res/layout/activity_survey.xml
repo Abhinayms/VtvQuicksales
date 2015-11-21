@@ -9,7 +9,7 @@
 
         />
 
-    <Button
+    <!--<Button
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="Survey 1"
@@ -51,53 +51,47 @@
         android:layout_marginTop="20dp"
         android:onClick="survey4"
 
-        />
+        />-->
 
-    <!--<RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
+        android:layout_marginTop="100dp"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Survey :"
+            android:text="Survey :"
             android:textSize="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_weight="2"
+
             />
         <Spinner
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/spinner1"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:id="@+id/survey_spinner"
             style="@style/spinner_style"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="140dp"
-            />
-    </RelativeLayout>-->
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="150dp"
-        >
+            android:spinnerMode="dropdown"
+            android:layout_marginRight="25dp"
+            >
+
+        </Spinner>
+
+
+    </LinearLayout>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
+        android:text="Submit"
         android:background="@drawable/buttonshape"
-        android:text="Send Survey"
-        android:id="@+id/sgs"
-        android:textColor="#ffffff"
+        android:textColor="#fff"
         android:layout_gravity="center_horizontal"
-
+        android:layout_marginTop="50dp"
+        android:onClick="sumbit"
         />
-        </LinearLayout>-->
-
-
-
 
 </LinearLayout>

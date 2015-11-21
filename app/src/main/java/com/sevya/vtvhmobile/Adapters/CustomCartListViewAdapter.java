@@ -24,17 +24,11 @@ public class CustomCartListViewAdapter extends CursorAdapter {
     String tPrice;
 
 
-    public CustomCartListViewAdapter(Context context, Cursor cursor, int flags) {
-        super(context, cursor, 0);
+    public CustomCartListViewAdapter(Context context, Cursor cursor) {
+        super(context, cursor);
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
 
-    }
-
-    private int[] colors = new int[] { 0x15527921, 0x6323595 };
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.cartitemlayout, parent, false);
@@ -62,6 +56,13 @@ public class CustomCartListViewAdapter extends CursorAdapter {
 
 
     }
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+    }
+
+    private int[] colors = new int[] { 0x15527921, 0x6323595 };
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

@@ -92,13 +92,13 @@ public class CartActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         dataBaseHelper=new DataBaseAdapter(this);
+
          cname=(TextView)findViewById(R.id.cname);
         cnum=(TextView)findViewById(R.id.cnum);
         totalPrice=(TextView)findViewById(R.id.totalprice);
@@ -108,8 +108,11 @@ public class CartActivity extends AppCompatActivity {
         String name=intent.getStringExtra("cname");
          num=intent.getStringExtra("cnum");
         accountId=intent.getStringExtra("actId");
+        date=intent.getStringExtra("Date");
+
 
         Log.d("acct", "" + accountId);
+
 
        Actid=Integer.parseInt(accountId);
 
@@ -120,15 +123,18 @@ public class CartActivity extends AppCompatActivity {
     }
     @SuppressWarnings("deprecation")
     private void populateItemsListFromDB()
-    {   int sum=0;
-         number=cnum.getText().toString();
-
-         date=intent.getStringExtra("Date");
+    {
         listView = (ListView) findViewById(R.id.cartitemview);
-        cursor = dataBaseHelper.getItem(number, date);
 
         tickButton=(Button)findViewById(R.id.float_button_tick);
         plusButton=(ImageButton)findViewById(R.id.float_button_plus);
+
+        int sum=0;
+        number=cnum.getText().toString();
+
+
+        cursor = dataBaseHelper.getItem(number, date);
+        Log.d("count",""+cursor.getCount());
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
@@ -171,11 +177,11 @@ public class CartActivity extends AppCompatActivity {
             continueshopping=(Button)findViewById(R.id.continueshopping);
             textView.setVisibility(View.INVISIBLE);
             continueshopping.setVisibility(View.INVISIBLE);
-            customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor,0);
+
+            customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor);
 
             listView.setAdapter(customCartListViewAdapter);
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                // setting onItemLongClickListener and passing the position to the function
                 @Override
                 public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                                int position, long arg3) {

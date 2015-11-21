@@ -86,6 +86,7 @@ public class ReceiveDetails extends AppCompatActivity {
         int year = c.get(Calendar.YEAR);
         date ="" + year + "-" + "" + month + "-" + ""+ day;
 
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
@@ -142,6 +143,8 @@ public class ReceiveDetails extends AppCompatActivity {
             Intent intent=new Intent(this,CartActivity.class);
             intent.putExtra("cname",name.getText().toString());
             intent.putExtra("cnum",numm.getText().toString());
+
+
             intent.putExtra("Date",date);
             intent.putExtra("actId",actid);
             startActivity(intent);
@@ -150,17 +153,7 @@ public class ReceiveDetails extends AppCompatActivity {
         if(id==R.id.action_edit)
         {
             Intent i=new Intent(this,EditCustomer.class);
-            /*String cname=intent.getStringExtra("cname");
-            String cage=intent.getStringExtra("compName");
-            String cnum=intent.getStringExtra("cnum");
-            String cpro=intent.getStringExtra("cpro");
-            String cmail=intent.getStringExtra("cmail");
-            String cadd=intent.getStringExtra("cadd");
-            String cadd1=intent.getStringExtra("cadd1");
-            String cadd2=intent.getStringExtra("cadd2");
-            String cadd3=intent.getStringExtra("cadd3");
-            String cgen=intent.getStringExtra("rb");
-            String cln=intent.getStringExtra("cln");*/
+
 
             i.putExtra("cname", name.getText().toString());
             i.putExtra("cnum", numm.getText().toString());

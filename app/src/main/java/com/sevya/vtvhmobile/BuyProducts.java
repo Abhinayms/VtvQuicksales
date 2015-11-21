@@ -333,9 +333,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                             productsInfo.setDemo(demoReq);
                                             productsInfo.setInstall(installReq);
 
-
-
-
                                              if((autotv.getText().toString().length()==0))
                                                  autotv.setError("Please enter model no");
                                              else if(qty.getText().toString().length()==0)

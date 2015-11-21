@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -35,6 +36,10 @@ public class PopupActivity extends AppCompatActivity {
     private Map<Integer, String> viewIdentifier = null;
     private  List<Map<String, String>> selectedList = null;
     Map<String, String> mergeMap = null;
+
+    private  List<Map<String, String>> selectedListMain = null;
+    Map<String, String> mergeMapMain = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +118,11 @@ public class PopupActivity extends AppCompatActivity {
             t4v.setGravity(Gravity.CENTER);
             tbrow.addView(t4v);
             tl.addView(tbrow);
+
+
+
+
+
             cursor.moveToNext();
         }
 
@@ -121,30 +131,30 @@ public class PopupActivity extends AppCompatActivity {
     public void merge(View v) {
 
         selectedList = new ArrayList<Map<String, String>>();
-        for(int i = 0; i < tl.getChildCount(); i++) {
+        for (int i = 0; i < tl.getChildCount(); i++) {
             TableRow row = (TableRow) tl.getChildAt(i);
 
-                CheckBox c = (CheckBox) row.getChildAt(0);
-                if (c.isChecked()) {
-                    mergeMap = new HashMap<String, String>();
-                    int[] a = new int[]{row.getId()};
-                    Log.d("id", "" + a.toString());
-                    for(int j=1;j<row.getChildCount();j++)
-                    {
-                        TextView view = ((TextView)row.getChildAt(j));
-                        mergeMap.put(viewIdentifier.get(view.getId()), view.getText().toString());
-
-                    }
-                    selectedList.add(mergeMap);
+            CheckBox c = (CheckBox) row.getChildAt(0);
+            if (c.isChecked()) {
+                mergeMap = new HashMap<String, String>();
+                int[] a = new int[]{row.getId()};
+                Log.d("id", "" + a.toString());
+                for (int j = 1; j < row.getChildCount(); j++) {
+                    TextView view = ((TextView) row.getChildAt(j));
+                    mergeMap.put(viewIdentifier.get(view.getId()), view.getText().toString());
 
                 }
+                selectedList.add(mergeMap);
+
+            }
         }
 
 
         Dialog dialog=new Dialog(PopupActivity.this);
         dialog.setContentView(R.layout.popupdialoglayout);
-        TableLayout tableLayout = (TableLayout)dialog.findViewById(R.id.dialogTable);
+        final TableLayout tableLayout1 = (TableLayout)dialog.findViewById(R.id.dialogTable);
 
+        Button submit=(Button)dialog.findViewById(R.id.mergesubmit);
 
         for(int l=0;l<selectedList.size();l++) {
 
@@ -155,38 +165,77 @@ public class PopupActivity extends AppCompatActivity {
 
 
             TextView t1v = new TextView(this);
+            t1v.setId(1);
             t1v.setText(mergeMap.get("primaryAcc"));
             t1v.setTextColor(Color.BLACK);
             t1v.setGravity(Gravity.CENTER);
             tbrow2.addView(t1v);
 
             TextView t2v = new TextView(this);
+            t2v.setId(2);
             t2v.setText(mergeMap.get("name"));
             t2v.setTextColor(Color.BLACK);
             t2v.setGravity(Gravity.CENTER);
             tbrow2.addView(t2v);
 
             TextView t3v = new TextView(this);
+            t3v.setId(3);
             t3v.setText(mergeMap.get("number"));
             t3v.setTextColor(Color.BLACK);
             t3v.setGravity(Gravity.CENTER);
             tbrow2.addView(t3v);
 
             TextView t4v = new TextView(this);
+            t4v.setId(4);
             t4v.setText(mergeMap.get("address"));
             t4v.setTextColor(Color.BLACK);
             t4v.setGravity(Gravity.CENTER);
             tbrow2.addView(t4v);
-            tableLayout.addView(tbrow2);
+            tableLayout1.addView(tbrow2);
         }
 
-        dialog.setTitle("List");
+        dialog.setTitle("Select Main Account");
         dialog.show();
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                selectedListMain = new ArrayList<Map<String, String>>();
+                for (int i = 0; i < tableLayout1.getChildCount(); i++) {
+                    TableRow row1 = (TableRow) tableLayout1.getChildAt(i);
+
+                    CheckBox c = (CheckBox) row1.getChildAt(0);
+                    if (c.isChecked()) {
+
+                        mergeMapMain = new HashMap<String, String>();
+                        int[] a = new int[]{row1.getId()};
+                        Log.d("id", "" + a.toString());
+                        Log.d("child count",""+row1.getChildCount());
+                        for (int j = 1; j < row1.getChildCount(); j++) {
+                            TextView view = ((TextView) row1.getChildAt(j));
+                            mergeMapMain.put(viewIdentifier.get(view.getId()), view.getText().toString());
+                                Log.d("id",""+view.getId());
+                        }
+                        selectedListMain.add(mergeMapMain);
+
+                    }
+
+                }
+
+                String Name=mergeMapMain.get("name");
+                String number=mergeMapMain.get("number");
+                String actId=mergeMapMain.get("primaryAcc");
+                String add=mergeMapMain.get("address");
+            }
+        });
 
 
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,11 +259,6 @@ public class PopupActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        dataBaseHelper.deleteMergeTable();
-    }
 
     @Override
     protected void onStop() {

@@ -41,6 +41,19 @@ public class SurveyActivity extends AppCompatActivity {
 
         i=new Intent(SurveyActivity.this,MainActivity.class);
 
+        spinner1 = (Spinner) findViewById(R.id.survey_spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("--Select Survey--");
+        list.add("Survey 1");
+        list.add("Survey 2");
+        list.add("Survey 3");
+        list.add("Survey 4");
+        list.add("Survey 5");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(dataAdapter);
+
 
     }
 
@@ -68,14 +81,14 @@ public class SurveyActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void survey1(View v)
+    public void submit(View v)
     {
         ButtonAnimation.animation(v);
 
         startActivity(i);
 
     }
-    public void survey2(View v)
+   /* public void survey2(View v)
     {
         ButtonAnimation.animation(v);
 
@@ -96,5 +109,5 @@ public class SurveyActivity extends AppCompatActivity {
         startActivity(i);
 
     }
-
+*/
 }

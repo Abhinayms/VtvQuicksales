@@ -39,7 +39,7 @@ public class PopupActivity extends AppCompatActivity {
 
     private  List<Map<String, String>> selectedListMain = null;
     Map<String, String> mergeMapMain = null;
-
+    List<String> actList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +75,36 @@ public class PopupActivity extends AppCompatActivity {
 
         viewIdentifier = new HashMap<Integer, String>();
         viewIdentifier.put(0, "checkbox");
-        viewIdentifier.put(1, "primaryAcc");
+        viewIdentifier.put(1, "actId");
         viewIdentifier.put(2, "name");
         viewIdentifier.put(3, "number");
         viewIdentifier.put(4, "address");
+        /*viewIdentifier.put(5, "salesmanid");
+        viewIdentifier.put(6, "gender");
+        viewIdentifier.put(7, "city");
+        viewIdentifier.put(8, "state");
+        viewIdentifier.put(9, "country");
+        viewIdentifier.put(10, "district");
+        viewIdentifier.put(11, "primaryact");
+        viewIdentifier.put(12, "duplicateid");
+        viewIdentifier.put(13, "pin");
+        viewIdentifier.put(14, "tinno");
+        viewIdentifier.put(15, "mandal");
+        viewIdentifier.put(16, "street");
+        viewIdentifier.put(17, "company");
+        viewIdentifier.put(18, "profession");
+        viewIdentifier.put(19, "landline");
+        viewIdentifier.put(20, "email");*/
+
+
+
+
+
+
+
+
+
+
 
         int count = cursor.getCount();
         for (int i = 0; i < count; i++) {
@@ -90,14 +116,13 @@ public class PopupActivity extends AppCompatActivity {
 
 
             TextView t1v = new TextView(this);
-            t1v.setText("" + i);
+            t1v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.ACTID)));
             t1v.setId(1);
             t1v.setTextColor(Color.BLACK);
             t1v.setGravity(Gravity.CENTER);
             tbrow.addView(t1v);
 
             TextView t2v = new TextView(this);
-            t2v.setText("Product " + i);
             t2v.setId(2);
             t2v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME)));
             t2v.setTextColor(Color.BLACK);
@@ -117,11 +142,8 @@ public class PopupActivity extends AppCompatActivity {
             t4v.setTextColor(Color.BLACK);
             t4v.setGravity(Gravity.CENTER);
             tbrow.addView(t4v);
+
             tl.addView(tbrow);
-
-
-
-
 
             cursor.moveToNext();
         }
@@ -149,7 +171,6 @@ public class PopupActivity extends AppCompatActivity {
             }
         }
 
-
         Dialog dialog=new Dialog(PopupActivity.this);
         dialog.setContentView(R.layout.popupdialoglayout);
         final TableLayout tableLayout1 = (TableLayout)dialog.findViewById(R.id.dialogTable);
@@ -160,13 +181,16 @@ public class PopupActivity extends AppCompatActivity {
 
             TableRow tbrow2 = new TableRow(this);
             mergeMap = selectedList.get(l);
+
+
+
             checkBox = new CheckBox(this);
             tbrow2.addView(checkBox);
 
 
             TextView t1v = new TextView(this);
             t1v.setId(1);
-            t1v.setText(mergeMap.get("primaryAcc"));
+            t1v.setText(mergeMap.get("actId"));
             t1v.setTextColor(Color.BLACK);
             t1v.setGravity(Gravity.CENTER);
             tbrow2.addView(t1v);
@@ -191,6 +215,8 @@ public class PopupActivity extends AppCompatActivity {
             t4v.setTextColor(Color.BLACK);
             t4v.setGravity(Gravity.CENTER);
             tbrow2.addView(t4v);
+
+
             tableLayout1.addView(tbrow2);
         }
 
@@ -202,31 +228,37 @@ public class PopupActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 selectedListMain = new ArrayList<Map<String, String>>();
+                actList=new ArrayList<String>();
                 for (int i = 0; i < tableLayout1.getChildCount(); i++) {
                     TableRow row1 = (TableRow) tableLayout1.getChildAt(i);
+                    TextView view1 = ((TextView) row1.getChildAt(1));
+
+                    actList.add(view1.getText().toString());
 
                     CheckBox c = (CheckBox) row1.getChildAt(0);
                     if (c.isChecked()) {
 
                         mergeMapMain = new HashMap<String, String>();
                         int[] a = new int[]{row1.getId()};
-                        Log.d("id", "" + a.toString());
-                        Log.d("child count",""+row1.getChildCount());
+
                         for (int j = 1; j < row1.getChildCount(); j++) {
                             TextView view = ((TextView) row1.getChildAt(j));
                             mergeMapMain.put(viewIdentifier.get(view.getId()), view.getText().toString());
-                                Log.d("id",""+view.getId());
+
                         }
                         selectedListMain.add(mergeMapMain);
 
                     }
 
                 }
+                String actId=mergeMapMain.get("actId");
+                Cursor datacursor=dataBaseHelper.getAllData(actId);
+                datacursor.moveToFirst();
+                String name=datacursor.getString(datacursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
+                Log.d("name from database",""+name);
+                Log.d("list",""+actList.toString());
 
-                String Name=mergeMapMain.get("name");
-                String number=mergeMapMain.get("number");
-                String actId=mergeMapMain.get("primaryAcc");
-                String add=mergeMapMain.get("address");
+
             }
         });
 

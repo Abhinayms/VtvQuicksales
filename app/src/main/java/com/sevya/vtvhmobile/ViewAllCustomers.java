@@ -46,7 +46,7 @@ public class ViewAllCustomers extends AppCompatActivity {
             {
                 ButtonAnimation.animation(view);
 
-                populateListViewFromDB();
+              //  populateListViewFromDB();
 
             }
 
@@ -68,7 +68,7 @@ public class ViewAllCustomers extends AppCompatActivity {
     }
 
     @SuppressWarnings("deprecation")
-    private void populateListViewFromDB()
+   /* private void populateListViewFromDB()
     {
         count++;
         Cursor cursor = dataBaseHelper.getAllData();
@@ -104,7 +104,7 @@ public class ViewAllCustomers extends AppCompatActivity {
 
 
 
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

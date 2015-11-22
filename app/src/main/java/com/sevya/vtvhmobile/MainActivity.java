@@ -151,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
                                                 landline = eachObject.getString("Phone");
                                                 mergeCustomer.setLandlineNumber(landline);
                                                 mergeCustomer.setMandal(eachObject.getString("Mandal"));
+                                                mergeCustomer.setCountry(eachObject.getString("Country"));
+                                                mergeCustomer.setIsPrimaryact(eachObject.getString("IsPrimaryAct"));
+                                                mergeCustomer.setPin(eachObject.getString("Pin"));
+                                                mergeCustomer.setTinno(eachObject.getString("TinNo"));
+                                                mergeCustomer.setDuplicateIds(eachObject.getString("DuplicateIds"));
 
                                                 dataBaseHelper.insertMergeDetails(mergeCustomer);
 

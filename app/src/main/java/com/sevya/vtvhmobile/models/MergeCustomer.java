@@ -14,8 +14,72 @@ public class MergeCustomer {
     private String email;
     private String city;
     private String mandal;
+    private String state;
+    private String country;
+    private String pin;
+    private String tinno;
+    private String isPrimaryact;
+    private String duplicateIds;
+    private String salesmanId;
     private String district;
     private String Street;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getTinno() {
+        return tinno;
+    }
+
+    public void setTinno(String tinno) {
+        this.tinno = tinno;
+    }
+
+    public String getIsPrimaryact() {
+        return isPrimaryact;
+    }
+
+    public void setIsPrimaryact(String isPrimaryact) {
+        this.isPrimaryact = isPrimaryact;
+    }
+
+    public String getDuplicateIds() {
+        return duplicateIds;
+    }
+
+    public void setDuplicateIds(String duplicateIds) {
+        this.duplicateIds = duplicateIds;
+    }
+
+    public String getSalesmanId() {
+        return salesmanId;
+    }
+
+    public void setSalesmanId(String salesmanId) {
+        this.salesmanId = salesmanId;
+    }
+
     private String actid;
 
     public String getName() {

@@ -60,6 +60,6 @@
 
   ],
 
-  "soapUrl":"http://103.42.248.146:2001/VTVHQuickSaleService.asmx",
+  "soapUrl":"http://192.168.1.19:2006/VTVHQuickSaleService.asmx",
   "targetNameSpace":"http://tempuri.org/"
 }

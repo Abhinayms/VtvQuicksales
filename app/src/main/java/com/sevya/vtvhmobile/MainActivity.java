@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                                                 mergeCustomer.setPin(eachObject.getString("Pin"));
                                                 mergeCustomer.setTinno(eachObject.getString("TinNo"));
                                                 mergeCustomer.setDuplicateIds(eachObject.getString("DuplicateIds"));
+                                                mergeCustomer.setFlatNo(eachObject.getString("FlatNo"));
 
                                                 dataBaseHelper.insertMergeDetails(mergeCustomer);
 

@@ -25,14 +25,14 @@
             <TextView
                 android:layout_width="90dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=" "
+                android:layout_weight="1.5"
+                android:text="select"
                 android:textColor="#03A9F4"        />
             <TextView
                 android:layout_width="90dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Act Type"
+                android:text="Act No#"
                 android:textColor="#03A9F4"
                 />
             <TextView
@@ -55,6 +55,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Address"
+                android:textColor="#03A9F4"
+                />
+            <TextView
+                android:layout_width="90dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Act Type"
                 android:textColor="#03A9F4"
                 />
         </LinearLayout>

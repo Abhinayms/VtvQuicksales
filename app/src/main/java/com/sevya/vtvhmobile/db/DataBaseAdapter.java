@@ -68,6 +68,7 @@ public class
         contentValues.put(dataBaseHelper.STATE,mergeCustomer.getState());
         contentValues.put(dataBaseHelper.SALESMAN_ID,mergeCustomer.getSalesmanId());
         contentValues.put(dataBaseHelper.TINNO,mergeCustomer.getTinno());
+        contentValues.put(dataBaseHelper.FLATNO,mergeCustomer.getFlatNo());
 
         db.insert(dataBaseHelper.Table_MERGE,null,contentValues);
 
@@ -188,7 +189,7 @@ public class
 
         String[] columns={dataBaseHelper.UID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRIMARYACT,dataBaseHelper.COMPANY_NAME,dataBaseHelper.ADDRESS,dataBaseHelper.STREET,
                             dataBaseHelper.GENDER,dataBaseHelper.DUPLICATEID,dataBaseHelper.SALESMAN_ID,dataBaseHelper.PROFESSION,dataBaseHelper.LANDLINE_NUMBER,dataBaseHelper.CITY,dataBaseHelper.STATE,
-                            dataBaseHelper.DISTRICT,dataBaseHelper.MANDAL,dataBaseHelper.COUNTRY,dataBaseHelper.PIN,dataBaseHelper.TINNO,dataBaseHelper.PRIMARYACT,dataBaseHelper.EMAIL};
+                            dataBaseHelper.DISTRICT,dataBaseHelper.MANDAL,dataBaseHelper.COUNTRY,dataBaseHelper.PIN,dataBaseHelper.TINNO,dataBaseHelper.PRIMARYACT,dataBaseHelper.EMAIL,dataBaseHelper.FLATNO};
         String where=DataBaseHelper.ACTID+"=?";
         String[] whereargs={actid};
 
@@ -204,7 +205,7 @@ public class
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
         String[] columns={dataBaseHelper.UID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.COMPANY_NAME,dataBaseHelper.GENDER,dataBaseHelper.PROFESSION,
-                dataBaseHelper.LANDLINE_NUMBER,dataBaseHelper.ADDRESS,dataBaseHelper.EMAIL,dataBaseHelper.ACTID};
+                dataBaseHelper.LANDLINE_NUMBER,dataBaseHelper.ADDRESS,dataBaseHelper.EMAIL,dataBaseHelper.ACTID,dataBaseHelper.PRIMARYACT};
 
         String where=DataBaseHelper.MOBILE_NUMBER+"=?";
         String[] whereargs={number};
@@ -285,7 +286,7 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =50;
+        private static final int DATABASE_VERSION =51;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
@@ -328,6 +329,7 @@ public class
         public static final String PIN="PIN";
         public static final String TINNO="TINNO";
         public static final String MANDAL="MANDAL";
+        public static final String FLATNO="FLATNO";
 
 
 
@@ -358,7 +360,7 @@ public class
         private static final String CREATE_TABLE_MERGE = "CREATE TABLE " + Table_MERGE + " (" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME + " VARCHAR(255)," + ACTID + " VARCHAR(255)," +
                 "" + MOBILE_NUMBER + " VARCHAR(100)," + COMPANY_NAME + " VARCHAR(100)," + GENDER + " VARCHAR(10)," + PROFESSION + " VARCHAR(30)," +
                 "" + LANDLINE_NUMBER + " VARCHAR(20)," + PRIMARYACT + " VARCHAR(255)," + ADDRESS + " VARCHAR(255)," + STREET + " VARCHAR(255)," + CITY + " VARCHAR(255)," + MANDAL + " VARCHAR(255)," + DISTRICT + " VARCHAR(255)," +
-                "" + EMAIL + " VARCHAR(100)," + STATE + " VARCHAR(50)," + COUNTRY + " VARCHAR(50)," + DUPLICATEID + " VARCHAR(100)," + PIN + " VARCHAR(30)," + TINNO + " VARCHAR(30)," + SALESMAN_ID + " VARCHAR(30));";
+                "" + EMAIL + " VARCHAR(100)," + STATE + " VARCHAR(255)," + COUNTRY + " VARCHAR(255)," + FLATNO + " VARCHAR(255)," + DUPLICATEID + " VARCHAR(100)," + PIN + " VARCHAR(100)," + TINNO + " VARCHAR(100)," + SALESMAN_ID + " VARCHAR(30));";
 
         public DataBaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -24,6 +24,16 @@ public class MergeCustomer {
     private String district;
     private String Street;
 
+    public String getFlatNo() {
+        return flatNo;
+    }
+
+    public void setFlatNo(String flatNo) {
+        this.flatNo = flatNo;
+    }
+
+    private String flatNo;
+
     public String getState() {
         return state;
     }

@@ -67,12 +67,7 @@ public class PurchaseInfo extends AppCompatActivity {
         txtname= (TextView) findViewById(R.id.txt_name);
         txtnumber= (TextView) findViewById(R.id.txt_mobile);
         txtstatus= (TextView) findViewById(R.id.txt_status);
-        /*txttotalprice= (TextView) findViewById(R.id.txt_tprice);
 
-        txtmodelId=(TextView)findViewById(R.id.txt_mId);
-        txtmodelName=(TextView)findViewById(R.id.txt_mName);
-        txtqty=(TextView)findViewById(R.id.txt_qty);
-*/
 
 
 
@@ -91,11 +86,6 @@ public class PurchaseInfo extends AppCompatActivity {
         txtname.setText(name);
         txtnumber.setText(number);
         txtstatus.setText(status);
-/*        txtqty.setText(qty);
-        txtmodelId.setText(modelId);
-        txtmodelName.setText(modelName);
-
-        txttotalprice.setText(totalPrice);*/
 
         DataBaseAdapter dataBaseHelper=new DataBaseAdapter(this);
 

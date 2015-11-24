@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.MergeCustomer;
 import com.sevya.vtvhmobile.models.ResponseStatus;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String district;
     private String landline;
     private String prof;
-    ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 final String numberr = number.getText().toString();
 
                 if (!isValidNumber(numberr)) {
-                    number.setError("Please enter 10 digit Mobile Number");
+
+                    Toast.makeText(MainActivity.this,"Please enter valid 10 digit mobile number",Toast.LENGTH_SHORT).show();
                 } else {
                     final ProgressDialog progress;
 
@@ -194,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                                                 gender = eachObject.getString("Gender");
                                                 district = eachObject.getString("District");
                                                 landline = eachObject.getString("Phone");
-                                                prof=eachObject.getString("Profession");
+//                                                prof=eachObject.getString("Profession");
 
 
                                                 MainActivity.this.runOnUiThread(new Thread(new Runnable() {

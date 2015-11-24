@@ -3,7 +3,6 @@ package com.sevya.vtvhmobile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,19 +24,18 @@ import android.widget.Toast;
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.CartModel;
-import com.sevya.vtvhmobile.models.CartModelList;
+import com.sevya.vtvhmobile.models.CartModelArrayList;
 import com.sevya.vtvhmobile.models.ResponseStatus;
-import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,7 +58,6 @@ public class CartActivity extends AppCompatActivity {
     CartModel cartModel;
 
     DataBaseAdapter dataBaseHelper;
-    SimpleCursorAdapter simpleCursorAdapter;
     Cursor cursor;
     ListView listView;
     String cartid;
@@ -81,6 +78,7 @@ public class CartActivity extends AppCompatActivity {
     String date;
     String num;
     int count;
+    List<CartModel> cartModelArrayList;
 
 
 
@@ -134,7 +132,6 @@ public class CartActivity extends AppCompatActivity {
 
 
         cursor = dataBaseHelper.getItem(number, date);
-        Log.d("count",""+cursor.getCount());
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
@@ -185,7 +182,7 @@ public class CartActivity extends AppCompatActivity {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                                int position, long arg3) {
-                    Cursor selectedFromList = (Cursor) (listView.getItemAtPosition(position));//.toString();
+                    Cursor selectedFromList = (Cursor) (listView.getItemAtPosition(position));
                     String cart_id = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.CART_ID));
 
                     removeItemFromList(cart_id,position);
@@ -300,15 +297,16 @@ public class CartActivity extends AppCompatActivity {
     public void submit(View v)
     {
                 ButtonAnimation.animation(v);
-        EditText deliveryCharges=(EditText)findViewById(R.id.textdeliverycharges);
-               final List<CartModel> cartModelArrayList = new ArrayList<CartModel>();
-               //cartModelList=new CartModelList<CartModel>();
+                EditText deliveryCharges=(EditText)findViewById(R.id.textdeliverycharges);
+
+               //final CartModel[] cartModelArrayList = new CartModel[1];
+                cartModelArrayList = new ArrayList<CartModel>();
+         //cartModelArrayList=new ArrayList<CartModel>();
                 cursor.moveToFirst();
                for (int i = 0; i < cursor.getCount(); i++) {
                    cartModel = new CartModel();
                     cartModel.setActid(Actid);
                     cartModel.setSalesmanId(new Integer(76));
-
 
                     String unitPrice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE));
                     cartModel.setSalePrice(unitPrice);
@@ -326,9 +324,11 @@ public class CartActivity extends AppCompatActivity {
                    cartModel.setIsDemoReq(Boolean.parseBoolean(isDemoReq));
                    cartModel.setIsInstallationReq(Boolean.parseBoolean(isInstallReq));
 
+                  // cartModelArrayList[0] = cartModel;
+
                    cartModelArrayList.add(cartModel);
 
-                  // cartModelList.add(cartModel);
+
                    cursor.moveToNext();
 
                 }
@@ -336,9 +336,9 @@ public class CartActivity extends AppCompatActivity {
                 thread = new Thread() {
                     public void run() {
                         SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                        ServiceParams modalParam = new ServiceParams(cartModelArrayList, "cartModelList", cartModelArrayList.getClass());
+                        ServiceParams modalParam = new ServiceParams(cartModelArrayList, "cartModelList",cartModelArrayList.getClass());
                         try {
-                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("insertCartDetailsService"), modalParam);
+                            status = (ResponseStatus) soapServiceClient.callCartService(SOAPServices.getServices("insertCartDetailsService"), cartModelArrayList);
                             if (status.getStatusCode() == 200) {
                                 array = new JSONArray(status.getStatusResponse());
                                 for (int index = 0; index < array.length(); index++) {

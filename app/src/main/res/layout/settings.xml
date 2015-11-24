@@ -113,7 +113,7 @@
         android:background="@drawable/edit_text_design"
          />
 </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -122,32 +122,29 @@
         android:layout_marginTop="20dp"
         >
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Authenticate"
             android:textColor="#ffffff"
             android:background="@drawable/buttonshape"
             android:onClick="authenticate"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:layout_weight="1"
 
 
             />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Test"
             android:textColor="#ffffff"
             android:background="@drawable/buttonshape"
             android:onClick="test"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:layout_weight="1"
+            android:layout_alignParentRight="true"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

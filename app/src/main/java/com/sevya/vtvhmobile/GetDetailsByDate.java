@@ -1,19 +1,17 @@
 package com.sevya.vtvhmobile;
 
-import android.app.DatePickerDialog;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.DatePicker;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+
 
 public class GetDetailsByDate extends AppCompatActivity {
     Toolbar mToolbar;
@@ -32,7 +30,6 @@ public class GetDetailsByDate extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

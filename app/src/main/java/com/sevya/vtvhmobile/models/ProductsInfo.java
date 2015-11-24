@@ -72,6 +72,14 @@ public class ProductsInfo {
         return demo;
     }
 
+    public String getModalId() {
+        return modalId;
+    }
+
+    public void setModalId(String modalId) {
+        this.modalId = modalId;
+    }
+
     public void setDemo(boolean demo) {
         this.demo = demo;
     }
@@ -85,4 +93,5 @@ public class ProductsInfo {
     private String price;
     private boolean install;
     private boolean demo;
+    private String modalId;
 }

@@ -1,8 +1,6 @@
 package com.sevya.vtvhmobile.models;
 
-/**
- * Created by abhinaym on 24/10/15.
- */
+
 
 import android.content.Context;
 import android.widget.Toast;

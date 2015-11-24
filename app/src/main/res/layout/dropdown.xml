@@ -341,20 +341,22 @@
                 android:textColor="#000"
                 android:textSize="15dp"
                 />
-            <Switch
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_compat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="50dp"
+                android:checked="false"
                 android:layout_alignParentRight="true"
-                android:id="@+id/switchDemo"
-                android:textColor="#000000"
-                android:textOn="yes"
-                android:textOff="no"
-                android:showText="true"
-                android:paddingRight="30dp"
-                android:thumb="@drawable/thumb"
-                android:track="@drawable/track"
-                android:switchTextAppearance="@style/SwitchTextAppearance"
+                android:paddingRight="20dp"
+                android:textOff="OFF"
+                android:textOn="ON"
                 />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -372,19 +374,17 @@
                 android:textColor="#000"
                 android:textSize="15dp"
                 />
-            <Switch
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_compat2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="50dp"
                 android:layout_alignParentRight="true"
-                android:id="@+id/switchInstallation"
-                android:textColor="#000000"
-                android:textOn="yes"
-                android:textOff="no"
-                android:showText="true"
-                android:paddingRight="30dp"
-                android:thumb="@drawable/thumb"
-                android:track="@drawable/track"
-                android:switchTextAppearance="@style/SwitchTextAppearance"/>
+                android:paddingRight="20dp"
+                />
+
         </RelativeLayout>
 
     </LinearLayout>

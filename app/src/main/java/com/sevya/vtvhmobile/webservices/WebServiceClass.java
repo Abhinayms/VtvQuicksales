@@ -83,11 +83,7 @@ public class WebServiceClass {
             // Get the response
             SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
             Log.d("",""+response);
-           /* if(!response.toString().equals("null")){
-                status =  new ResponseStatus(200, response.toString());
-            }else{
-                status = new ResponseStatus(201,"couldn't find data" );
-            }*/
+
 
         } catch (Exception e) {
             e.printStackTrace();

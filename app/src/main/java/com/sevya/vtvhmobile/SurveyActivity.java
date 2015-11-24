@@ -23,6 +23,7 @@ public class SurveyActivity extends AppCompatActivity {
     Spinner spinner1;
     Button sgs;
     Intent i;
+    String selectedText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +86,12 @@ public class SurveyActivity extends AppCompatActivity {
     {
         ButtonAnimation.animation(v);
 
+        if(spinner1.getSelectedItem().toString().equals("--Select Survey--")){
+            Toast.makeText(SurveyActivity.this, "Please Select one Survey", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            selectedText=spinner1.getSelectedItem().toString();
+        }
         startActivity(i);
 
     }

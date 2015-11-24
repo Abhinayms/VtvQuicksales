@@ -9,15 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -33,12 +31,12 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.GetModelsForList;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 import com.sevya.vtvhmobile.models.ResponseStatus;
-import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
@@ -77,8 +75,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     String selectedModelId;
     List<String> stockPointList;
     HashMap<String,String> stockpointMap;
-    Switch sInstall;
-    Switch sDemo;
+    SwitchCompat sInstall;
+    SwitchCompat sDemo;
     boolean demoReq;
     boolean installReq;
 
@@ -111,8 +109,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
         qtyimagebutton=(ImageButton)findViewById(R.id.cbqty);
         priceimagebutton=(ImageButton)findViewById(R.id.cbup);
-        sInstall=(Switch)findViewById(R.id.switchInstallation);
-        sDemo=(Switch)findViewById(R.id.switchDemo);
+        sInstall=(SwitchCompat)findViewById(R.id.switch_compat2);
+        sDemo=(SwitchCompat)findViewById(R.id.switch_compat);
 
         modelimagebutton.setOnTouchListener(this);
         qtyimagebutton.setOnTouchListener(this);
@@ -124,6 +122,33 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
         dname.setText(name);
         dnum.setText(num);
+        sDemo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cprice.clearFocus();
+                autotv.clearFocus();
+                qty.clearFocus();
+                priceimagebutton.setVisibility(View.INVISIBLE);
+                qtyimagebutton.setVisibility(View.INVISIBLE);
+                modelimagebutton.setVisibility(View.INVISIBLE);
+                demoReq = isChecked;
+
+
+            }
+        });
+        sInstall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cprice.clearFocus();
+                autotv.clearFocus();
+                qty.clearFocus();
+                priceimagebutton.setVisibility(View.INVISIBLE);
+                qtyimagebutton.setVisibility(View.INVISIBLE);
+                modelimagebutton.setVisibility(View.INVISIBLE);
+                installReq = isChecked;
+
+            }
+        });
 
      autotv.addTextChangedListener(new TextWatcher() {
 
@@ -172,13 +197,13 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                              autotv.setAdapter(adapter);
                              autotv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                                 Map mp=new HashMap(modelMap);
+                                 Map map=new HashMap(modelMap);
 
                                  @Override
                                  public void onItemClick(AdapterView<?> p, View v, int pos, long id) {
 
                                      selectedModelName=autotv.getText().toString();
-                                      selectedModelId=(String)mp.get(selectedModelName);
+                                      selectedModelId=(String)map.get(selectedModelName);
 
 
                                      qty.setFocusableInTouchMode(true);
@@ -303,6 +328,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         };
         thread.start();
 
+
+
     }
     public void doneClick(View v) {
                                              ButtonAnimation.animation(v);
@@ -311,24 +338,11 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              productsInfo.setNumber(dnum.getText().toString());
                                              productsInfo.setModelNo(autotv.getText().toString());
                                              productsInfo.setPrice(cprice.getText().toString());
+                                             productsInfo.setModalId(selectedModelId);
+
+
                                              productsInfo.setQty(qty.getText().toString());
 
-                                            sDemo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                @Override
-                                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                                                    demoReq = isChecked;
-
-                                                }
-                                            });
-                                            sInstall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                             @Override
-                                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                                             installReq=isChecked;
-
-                                                }
-                                               });
 
                                             productsInfo.setDemo(demoReq);
                                             productsInfo.setInstall(installReq);
@@ -339,6 +353,13 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                                  qty.setError("Please enter Qty");
                                              else if(cprice.getText().toString().length()==0)
                                                  cprice.setError("Please enter UnitPrice");
+                                             else if(spinner1.getSelectedItem().toString().equals("--Select StockPoint--")){
+                                                 Toast.makeText(BuyProducts.this, "Select a valid Stock Point", Toast.LENGTH_SHORT).show();
+                                             }
+                                             else if (spinner1.getSelectedItem().toString().equals("Stock Not Available"))
+                                             {
+                                                 Toast.makeText(BuyProducts.this, "Sorry,Item out of stock", Toast.LENGTH_SHORT).show();
+                                             }
                                              else {
                                                  int p=Integer.parseInt(cprice.getText().toString());
                                                  int q=Integer.parseInt(qty.getText().toString());

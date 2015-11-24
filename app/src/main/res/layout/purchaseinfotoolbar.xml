@@ -6,11 +6,10 @@
     android:background="@color/colorPrimary"
     android:elevation="4dp"
     android:id="@+id/carttoolbar">
-    <!--android:paddingTop="24dp"-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Purchase Info"
+        android:text="Invoice Detail"
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:layout_gravity="center"

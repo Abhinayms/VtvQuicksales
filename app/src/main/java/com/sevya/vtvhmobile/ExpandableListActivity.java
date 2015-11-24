@@ -20,7 +20,6 @@ import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.SalesListResponseModel;
 import com.sevya.vtvhmobile.models.SalesmanCart;
-import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
@@ -173,28 +172,18 @@ public class ExpandableListActivity extends AppCompatActivity{
                     String mobile = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
                     Log.d("num",""+name+mobile);
 
-                   /* String unitPrice = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE));
-                    String totalPrice = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE));
-                    String modelId = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID));
-                    String modelName = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_NAME));
-                    String qty = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));*/
+
 
                     Intent intent = new Intent(ExpandableListActivity.this, PurchaseInfo.class);
                     intent.putExtra("name", name);
                     intent.putExtra("mobile", mobile);
                     intent.putExtra("date",mDate);
-                    /*intent.putExtra("totalprice", totalPrice);
-                    intent.putExtra("unitPrice", unitPrice);
-                    intent.putExtra("modelId", modelId);
-                    intent.putExtra("modelName", modelName);
-                    intent.putExtra("qty", qty);*/
                     intent.putExtra("status", "not purchased");
                     startActivity(intent);
 
 
                 }
             });
-// set the list adapter.
 
         }
     }

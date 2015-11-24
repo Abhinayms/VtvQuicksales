@@ -101,11 +101,12 @@ public class
         ContentValues contentValues=new ContentValues();
         contentValues.put(dataBaseHelper.NAME,productsInfo.getName());
         contentValues.put(dataBaseHelper.MOBILE_NUMBER,productsInfo.getNumber());
-        contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModelNo());
+        contentValues.put(dataBaseHelper.MODEL_No,productsInfo.getModelNo());
         contentValues.put(dataBaseHelper.PRICE, productsInfo.getPrice());
         contentValues.put(dataBaseHelper.TOTAL_PRICE, productsInfo.getTotalPrice());
         contentValues.put(dataBaseHelper.DEMO,productsInfo.isDemo());
         contentValues.put(dataBaseHelper.INSTALL,productsInfo.isInstall());
+        contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModalId());
 
 
 
@@ -147,8 +148,8 @@ public class
 
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
-        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
-                dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE,dataBaseHelper.DEMO,dataBaseHelper.INSTALL};
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,dataBaseHelper.MODEL_ID,
+                dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_No,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE,dataBaseHelper.DEMO,dataBaseHelper.INSTALL};
 
         String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
 
@@ -286,7 +287,7 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =51;
+        private static final int DATABASE_VERSION =52;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
@@ -310,6 +311,7 @@ public class
         public static final String TOTAL_PRICE="TOTALPRICE";
         public static final String STOCKPOINT_ID="STOCKPOINT_ID";
         public static final String MODEL_ID="MODEL_ID";
+        public static final String MODEL_No="MODEL_No";
         public static final String QUANTITY="QUANTITY";
         public static final String CART_ID="_id";
         public static final String SALES_LIST_ID="_id";
@@ -350,7 +352,7 @@ public class
 
 
         private static final String CREATE_TABLE_CART = "CREATE TABLE " + Table_CART + " (" + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," +
-                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100),"+ DEMO + " VARCHAR(100),"+ INSTALL + " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
+                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," + MODEL_No + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100),"+ DEMO + " VARCHAR(100),"+ INSTALL + " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
 
         private static final String CREATE_TABLE_SALES_LIST = " CREATE TABLE " + Table_SALES + " (" + SALES_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + MOBILE_NUMBER + " VARCHAR(100)," + MODEL_ID + " VARCHAR(255)," + QUANTITY + " VARCHAR(100)," + NAME + " VARCHAR(255)," + PRICE + " VARCHAR(100), " + CART_SALE_ID + " VARCHAR(100)," + MODEL_NAME + " VARCHAR(255)," +

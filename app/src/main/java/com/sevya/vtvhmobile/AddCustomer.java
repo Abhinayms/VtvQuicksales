@@ -6,7 +6,6 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,7 +22,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.Customer;
-import com.sevya.vtvhmobile.models.FactoryModel;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
@@ -95,6 +93,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     Customer customer;
     Thread thread;
     UserModel userModel;
+    String selectedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,20 +125,12 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cbln=(ImageButton)findViewById(R.id.cbln);
 
 
-
-
-
-        //clearText();
-
         dataBaseHelper=new DataBaseAdapter(this);
 
         Intent i=getIntent();
         String num=i.getStringExtra("cnum");
 
         cnum.setText(num);
-
-
-
         cname.setOnTouchListener(this);
         cnum.setOnTouchListener(this);
         compName.setOnTouchListener(this);
@@ -249,10 +240,18 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
                     ButtonAnimation.animation(v);
 
+                    if(spinner1.getSelectedItem().toString().equals("Select Category")){
+                        selectedText="";
+                    }
+                    else{
+                        selectedText=spinner1.getSelectedItem().toString();
+                    }
+
                      custName = cname.getText().toString();
                      custNo = cnum.getText().toString();
                      custCompName = compName.getText().toString();
-                     cPro = spinner1.getSelectedItem().toString();
+
+                     cPro = selectedText;
                      cLn = cln.getText().toString();
                      cAdd = cadd.getText().toString();
                      cAdd1 = cadd1.getText().toString();
@@ -301,7 +300,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     {
                         cadd.setError("Please enter Valid Address");
                     }
-                   // else if(cMail.length()!=0) {
+
                       else if(!isEmailValid(cMail))
                         cmail.setError("please enter Valid email");
                         else  {
@@ -324,7 +323,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                                         i.putExtra("cnum", custNo);
                                                         i.putExtra("compName", custCompName);
                                                         i.putExtra("rb", selectedType);
-                                                        i.putExtra("cpro", spinner1.getSelectedItem().toString());
+                                                        i.putExtra("cpro", selectedText);
                                                         i.putExtra("cmail", cMail);
                                                         i.putExtra("cadd", cAdd);
                                                         i.putExtra("cln", cLn);

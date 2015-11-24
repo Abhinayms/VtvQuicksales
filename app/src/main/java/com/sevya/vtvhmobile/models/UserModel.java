@@ -5,7 +5,6 @@ package com.sevya.vtvhmobile.models;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
-import java.io.Serializable;
 import java.util.Hashtable;
 
 /**

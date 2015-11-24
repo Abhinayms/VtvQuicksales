@@ -20,6 +20,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.ResponseStatus;
@@ -335,6 +337,15 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                                                         startActivity(i);
                                                     }
                                                 }));
+
+                                            }
+                                            else if(status.getStatusCode()==500){
+                                                AddCustomer.this.runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Toast.makeText(AddCustomer.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
 
                                             }
 

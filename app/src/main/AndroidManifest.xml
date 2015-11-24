@@ -36,16 +36,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ThankyouScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.sevya.vtvhmobile.ThankyouScreen" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".PurchaseInfo"
             android:label="@string/title_activity_purchase_info"
             android:parentActivityName=".GetDetailsByDate" >

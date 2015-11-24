@@ -185,6 +185,15 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                  }
                              }
                          }
+                         else if(status.getStatusCode()==500){
+                             BuyProducts.this.runOnUiThread(new Runnable() {
+                                 @Override
+                                 public void run() {
+                                     Toast.makeText(BuyProducts.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                 }
+                             });
+
+                         }
                      } catch (Exception e) {
                          e.printStackTrace();
                      }
@@ -305,6 +314,15 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                     e.printStackTrace();
                                 }
                             }
+                        }
+                        else if(status.getStatusCode()==500){
+                            BuyProducts.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(BuyProducts.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

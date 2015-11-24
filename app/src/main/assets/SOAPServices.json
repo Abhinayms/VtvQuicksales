@@ -60,10 +60,6 @@
     {
       "soapServiceName":"getSalesmanIdByIMEIMACService",
       "method":"GetSalesmanIdByIMEIMAC"
-    },
-    {
-      "soapServiceName":"getListintegerService",
-      "method":"Listinteger"
     }
 
 

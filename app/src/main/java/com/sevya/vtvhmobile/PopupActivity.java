@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -337,6 +338,15 @@ public class PopupActivity extends AppCompatActivity {
                                             i.putExtra("cadd3", mergecusor.getString(mergecusor.getColumnIndex(DataBaseAdapter.DataBaseHelper.STREET)));
                                             i.putExtra("actId", mergeActId);
                                             startActivity(i);
+                                        }
+                                    });
+
+                                }
+                                else if(status.getStatusCode()==500){
+                                    PopupActivity.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(PopupActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
 

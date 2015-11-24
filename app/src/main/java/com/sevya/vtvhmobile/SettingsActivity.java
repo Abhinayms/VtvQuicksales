@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.SalesmanCart;
@@ -137,12 +138,19 @@ public class SettingsActivity extends AppCompatActivity{
                             }));
 
                         }
+                        else if(status.getStatusCode()==500){
+                            SettingsActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SettingsActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }
 

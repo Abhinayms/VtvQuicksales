@@ -1,6 +1,7 @@
 package com.sevya.vtvhmobile.webservices;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.sevya.vtvhmobile.models.CartModel;
 import com.sevya.vtvhmobile.models.ResponseStatus;
@@ -96,8 +97,9 @@ public class SOAPServiceClient {
 
         } catch (Exception e) {
             e.printStackTrace();
+
             Log.d("*****","Error Occured");
-            status =  new ResponseStatus(500, "Error occured");
+            status =  new ResponseStatus(500, ""+e.toString());
         }
         return status;
     }
@@ -143,5 +145,6 @@ public class SOAPServiceClient {
         }
         return status;
     }
+
 
 }

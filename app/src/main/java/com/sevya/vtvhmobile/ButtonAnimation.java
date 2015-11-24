@@ -2,6 +2,7 @@ package com.sevya.vtvhmobile;
 
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
 
 public class ButtonAnimation {
@@ -14,4 +15,5 @@ public class ButtonAnimation {
         animation1.setFillAfter(true);
         view.startAnimation(animation1);
     }
+
 }

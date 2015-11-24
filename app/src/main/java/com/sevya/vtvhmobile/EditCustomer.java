@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
@@ -273,6 +275,15 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                                 }
                                             }));
 
+
+                                }
+                                else if(status.getStatusCode()==500){
+                                    EditCustomer.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(EditCustomer.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
                                 }
                             } catch (JSONException e) {

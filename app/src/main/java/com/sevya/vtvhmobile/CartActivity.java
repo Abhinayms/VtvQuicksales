@@ -352,6 +352,15 @@ public class CartActivity extends AppCompatActivity {
 
                                 }
                             }
+                            else if(status.getStatusCode()==500){
+                                CartActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(CartActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                             ;

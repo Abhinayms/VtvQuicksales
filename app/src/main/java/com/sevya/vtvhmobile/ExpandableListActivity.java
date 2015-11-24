@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sevya.vtvhmobile.Adapters.CustomSaleListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -118,6 +119,15 @@ public class ExpandableListActivity extends AppCompatActivity{
                                 }
                             });
 
+
+                        }
+                        else if(status.getStatusCode()==500){
+                            ExpandableListActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(ExpandableListActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }
 

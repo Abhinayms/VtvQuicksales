@@ -45,14 +45,14 @@ public class LoginActivity extends AppCompatActivity {
         mToolbar.setTitle("VTVH  Mobile");
         setSupportActionBar(mToolbar);
 
-       //testConnection();
+       testConnection();
 
     }
 
     public void signIn(View view) {
         ButtonAnimation.animation(view);
 
-       /*Log.d("response", "" + response);
+
         if (testConnection().equals("True")) {
             try {
                 IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
@@ -104,6 +104,15 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             }
+                            else if(status.getStatusCode()==500){
+                                LoginActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -116,12 +125,12 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             Toast.makeText(LoginActivity.this, "Host Unreachable", Toast.LENGTH_LONG).show();
 
-        }*/
+        }
 
 
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        /*Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
-        startActivity(i);
+        startActivity(i);*/
     }
 
     public String testConnection() {
@@ -129,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 SalesmanCart salesmanCart = new SalesmanCart();
                 salesmanCart.setSalesmanId(new Integer(10));
-                salesmanCart.setDate("2015-11-09");
+                salesmanCart.setDate("2015-11-24");
                 SOAPServiceClient soapServiceClient = new SOAPServiceClient();
                 //ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
                 ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
@@ -141,7 +150,15 @@ public class LoginActivity extends AppCompatActivity {
 
                             connectionResponse=object.getString("Message");
                         }
+                        else if(status.getStatusCode()==500){
+                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LoginActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -154,43 +171,6 @@ public class LoginActivity extends AppCompatActivity {
         thread.start();
         return connectionResponse;
     }
-
-    /*public String check() {
-        thread = new Thread() {
-            public void run() {
-
-                SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                //ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
-                List<Integer> demo=new ArrayList<>();
-                demo.add(new Integer(1));
-                demo.add(new Integer(2));
-
-
-
-                ServiceParams modalParam = new ServiceParams(demo.get(), "fields",demo.getClass());
-
-                {
-                    try {
-                        status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getListintegerService"), modalParam);
-                        if (status.getStatusCode() == 200) {
-                            JSONObject object = new JSONObject(status.getStatusResponse());
-
-                            connectionResponse=object.getString("Message");
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }
-
-        };
-        thread.start();
-        return connectionResponse;
-    }*/
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

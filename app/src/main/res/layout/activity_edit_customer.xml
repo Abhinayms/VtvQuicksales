@@ -76,142 +76,84 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Profession"
-            android:textSize="15dp"
-            android:inputType="text"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:id="@+id/cpro"
-            android:background="@drawable/edit_text_design"
-            />
-        <ImageButton
-        android:background="#fff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/cancel_edit"
-        android:layout_weight="8"
-            android:id="@+id/cbpro"
-            android:visibility="invisible"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Gender"
-            android:textSize="15dp"
-            android:inputType="text"
-           android:layout_weight="1"
-            android:textColor="#000000"
-            android:id="@+id/cgen"
-            android:background="@drawable/edit_text_design"
-            />
-        <ImageButton
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cancel_edit"
-            android:layout_weight="8"
-            android:id="@+id/cbgen"
-            android:visibility="invisible"
-            />
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/compName"
+                android:hint="Company"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:background="@drawable/edit_text_design"
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/compName"
-            android:hint="Company"
-            android:textSize="15dp"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:background="@drawable/edit_text_design"
-
-            />
-        <ImageButton
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cancel_edit"
-            android:layout_weight="8"
-            android:id="@+id/cbcpmny"
-            android:visibility="invisible"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cln"
-            android:hint="Landline Number"
-            android:inputType="number"
-            android:textSize="15dp"
-           android:layout_weight="1"
-            android:textColor="#000000"
-            android:background="@drawable/edit_text_design"
-
-            />
-        <ImageButton
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cancel_edit"
-            android:layout_weight="8"
-            android:id="@+id/cbln"
-            android:visibility="invisible"
-            />
-    </LinearLayout>
-    <LinearLayout
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbcpmny"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             >
-        <EditText
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:textSize="15dp"
+                android:inputType="textEmailAddress"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:id="@+id/cmail"
+                android:background="@drawable/edit_text_design"
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbmail"
+                android:visibility="invisible"
+
+                />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Address  (House No.)"
-            android:inputType="textMultiLine"
-            android:textSize="15dp"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:id="@+id/cadd"
-            android:background="@drawable/edit_text_design"
-            />
-        <ImageButton
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cancel_edit"
-            android:layout_weight="8"
-            android:id="@+id/cbadd"
-            android:visibility="invisible"
-            />
-    </LinearLayout>
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address  (House No.)"
+                android:inputType="textMultiLine"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:id="@+id/cadd"
+                android:background="@drawable/edit_text_design"
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbadd"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -296,23 +238,198 @@
                 android:visibility="invisible"
                 />
         </LinearLayout>
-    <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cln"
+                android:hint="Landline Number"
+                android:inputType="number"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:background="@drawable/edit_text_design"
+
+                />
+            <ImageButton
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cancel_edit"
+                android:layout_weight="8"
+                android:id="@+id/cbln"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Is Company  :"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/rbcomp" />
+            <RadioGroup
+                android:id="@+id/company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+
+                android:layout_marginLeft="100dp"
+                >
+
+
+                <RadioButton
+                    android:id="@+id/compyes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:layout_toEndOf="@+id/rbcomp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/compno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:layout_marginLeft="10dp"
+                    />
+            </RadioGroup>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/genderlayout"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender          :"
+                android:textSize="15dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/textView" />
+            <RadioGroup
+                android:id="@+id/radioSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+
+                android:layout_marginLeft="100dp"
+                >
+
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:layout_below="@+id/radioMale"
+                    android:layout_toEndOf="@+id/textView"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:layout_toEndOf="@+id/radioFemale"
+                    android:layout_marginLeft="5dp"
+                    />
+            </RadioGroup>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Profession :"
+                android:textSize="15dp"
+                android:layout_weight="2"
+                />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/spinner_style"
+                android:spinnerMode="dropdown"
+                android:layout_weight="1"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Profession"
+            android:textSize="15dp"
+            android:inputType="text"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:id="@+id/cpro"
+            android:background="@drawable/edit_text_design"
+            />
+        <ImageButton
+        android:background="#fff"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cancel_edit"
+        android:layout_weight="8"
+            android:id="@+id/cbpro"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         >
-    <EditText
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="Gender"
             android:textSize="15dp"
-            android:inputType="textEmailAddress"
-            android:layout_weight="1"
+            android:inputType="text"
+           android:layout_weight="1"
             android:textColor="#000000"
-            android:id="@+id/cmail"
-        android:background="@drawable/edit_text_design"
+            android:id="@+id/cgen"
+            android:background="@drawable/edit_text_design"
             />
         <ImageButton
             android:background="#fff"
@@ -320,11 +437,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/cancel_edit"
             android:layout_weight="8"
-            android:id="@+id/cbmail"
+            android:id="@+id/cbgen"
             android:visibility="invisible"
-
             />
     </LinearLayout>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

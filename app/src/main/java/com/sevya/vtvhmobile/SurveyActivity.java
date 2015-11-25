@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.sevya.vtvhmobile.db.DataBaseAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class SurveyActivity extends AppCompatActivity {
     Button sgs;
     Intent i;
     String selectedText;
+    DataBaseAdapter dataBaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,8 @@ public class SurveyActivity extends AppCompatActivity {
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        dataBaseHelper=new DataBaseAdapter(this);
 
         i=new Intent(SurveyActivity.this,MainActivity.class);
 
@@ -91,30 +96,12 @@ public class SurveyActivity extends AppCompatActivity {
         }
         else{
             selectedText=spinner1.getSelectedItem().toString();
+            startActivity(i);
+            dataBaseHelper.deleteCartTable();
+
         }
-        startActivity(i);
+
 
     }
-   /* public void survey2(View v)
-    {
-        ButtonAnimation.animation(v);
 
-        startActivity(i);
-
-    }
-    public void survey3(View v)
-    {
-        ButtonAnimation.animation(v);
-
-        startActivity(i);
-
-    }
-    public void survey4(View v)
-    {
-        ButtonAnimation.animation(v);
-
-        startActivity(i);
-
-    }
-*/
 }

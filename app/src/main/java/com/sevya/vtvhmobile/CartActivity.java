@@ -19,23 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.CartModel;
-import com.sevya.vtvhmobile.models.CartModelArrayList;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -207,7 +201,7 @@ public class CartActivity extends AppCompatActivity {
 
     }
     // method to remove list item
-    protected void removeItemFromList(String cart_id,int position) {
+    protected void removeItemFromList(final String cart_id,int position) {
         cartid=cart_id;
         pstn=position;
 
@@ -230,14 +224,19 @@ public class CartActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // TOD O Auto-generated method stub
 
-                        dataBaseHelper.deleteItem(cartid);
-
+                        /*cursor=dataBaseHelper.getProduct(cart_id);
+                        cursor.moveToFirst();*/
                         Intent intent=new Intent(CartActivity.this,BuyProducts.class);
                         intent.putExtra("cname",cname.getText().toString());
                         intent.putExtra("cnum",cnum.getText().toString());
                         intent.putExtra("actId",accountId);
                         intent.putExtra("listsize", listView.getCount());
+                        /*intent.putExtra("modelNo",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
+                        intent.putExtra("quantity",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY)));
+                        intent.putExtra("unitprice",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE)));*/
+
                         startActivity(intent);
+                        dataBaseHelper.deleteItem(cartid);
 
 
                     }
@@ -299,9 +298,7 @@ public class CartActivity extends AppCompatActivity {
                 ButtonAnimation.animation(v);
                 EditText deliveryCharges=(EditText)findViewById(R.id.textdeliverycharges);
 
-               //final CartModel[] cartModelArrayList = new CartModel[1];
                 cartModelArrayList = new ArrayList<CartModel>();
-         //cartModelArrayList=new ArrayList<CartModel>();
                 cursor.moveToFirst();
                for (int i = 0; i < cursor.getCount(); i++) {
                    cartModel = new CartModel();
@@ -312,7 +309,7 @@ public class CartActivity extends AppCompatActivity {
                     cartModel.setSalePrice(unitPrice);
                     String totalPrice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE));
                     cartModel.setTotalPrice(totalPrice);
-                    cartModel.setModalId(new Integer(1570));
+                       cartModel.setModalId(cursor.getInt(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID)));
                     cartModel.setCartModelId(new Integer(0));
                     cartModel.setCartId(new Integer(0));
                     String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));

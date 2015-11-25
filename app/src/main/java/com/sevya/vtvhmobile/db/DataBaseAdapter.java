@@ -162,6 +162,20 @@ public class
         return cursor;
     }
 
+    public Cursor getProduct(String cartId)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        String[] columns={dataBaseHelper.PRICE,
+                dataBaseHelper.MODEL_No,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
+        String where=dataBaseHelper.CART_ID + "=?";
+
+        String[] args={cartId};
+
+        cursor=db.query(dataBaseHelper.Table_CART,columns,where,args,null,null,null);
+        return cursor;
+
+    }
+
 
     public Cursor getItemSales(String number,String date)
     {
@@ -169,7 +183,7 @@ public class
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
         String[] columns={dataBaseHelper.SALES_LIST_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
-                dataBaseHelper.MODEL_NAME,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
+                dataBaseHelper.MODEL_NAME,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
 
         String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.DATE_SALESLIST +"=?" ;
 
@@ -272,7 +286,7 @@ public class
     public void deleteSalesTable()
     {
         SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM Merge_Table"); //delete all rows in a table
+        db.execSQL("DELETE FROM Sales_Table"); //delete all rows in a table
         db.close();
     }
 
@@ -283,6 +297,12 @@ public class
         db.close();
     }
 
+    public void deleteCartTable()
+    {
+        SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM Cart_Table"); //delete all rows in a table
+        db.close();
+    }
 
     public class DataBaseHelper extends SQLiteOpenHelper {
 

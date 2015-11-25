@@ -22,8 +22,8 @@ import com.sevya.vtvhmobile.webservices.ServiceParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     Thread thread;
     String connectionResponse;
     String response;
+    String date;
 
 
     @Override
@@ -45,7 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         mToolbar.setTitle("VTVH  Mobile");
         setSupportActionBar(mToolbar);
 
-       testConnection();
+        Date pdate=new Date();
+        date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
+
+     //  testConnection();
 
     }
 
@@ -53,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         ButtonAnimation.animation(view);
 
 
-        if (testConnection().equals("True")) {
+       /* if (testConnection().equals("True")) {
             try {
                 IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
             } catch (Exception ex) {
@@ -125,12 +129,11 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             Toast.makeText(LoginActivity.this, "Host Unreachable", Toast.LENGTH_LONG).show();
 
-        }
+        }*/
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
+        startActivity(i);
 
-        /*Intent i = new Intent(LoginActivity.this, MainActivity.class);
-
-        startActivity(i);*/
     }
 
     public String testConnection() {
@@ -138,9 +141,10 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 SalesmanCart salesmanCart = new SalesmanCart();
                 salesmanCart.setSalesmanId(new Integer(10));
-                salesmanCart.setDate("2015-11-24");
+                salesmanCart.setDate(date);
+                Log.d("date",""+date);
+
                 SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                //ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
                 ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
                 {
                     try {

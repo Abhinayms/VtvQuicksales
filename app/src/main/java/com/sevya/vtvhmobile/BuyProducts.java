@@ -29,7 +29,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +78,9 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     SwitchCompat sDemo;
     boolean demoReq;
     boolean installReq;
+    String availableQuantity;
+    String spName;
+    String spid;
 
 
     @Override
@@ -97,6 +99,9 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         actId=intent.getStringExtra("actId");
         i=intent.getIntExtra("listsize", 0);
 
+
+
+
         Log.d("bac",""+actId);
 
         dname=(TextView)findViewById(R.id.dname);
@@ -106,6 +111,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         totalPrice=(TextView)findViewById(R.id.totalprice);
         autotv=(AutoCompleteTextView)findViewById(R.id.autoTv);
         autotv.requestFocus();
+        spinner1 = (Spinner) findViewById(R.id.stock_spinner);
         modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
         qtyimagebutton=(ImageButton)findViewById(R.id.cbqty);
         priceimagebutton=(ImageButton)findViewById(R.id.cbup);
@@ -118,6 +124,11 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         autotv.setOnTouchListener(this);
         qty.setOnTouchListener(this);
         cprice.setOnTouchListener(this);
+
+        /*qty.setText(intent.getStringExtra("quantity"));
+        autotv.setText(intent.getStringExtra("modelNo"));
+        cprice.setText(intent.getStringExtra("unitprice"));*/
+
 
 
         dname.setText(name);
@@ -214,10 +225,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                      selectedModelName=autotv.getText().toString();
                                       selectedModelId=(String)map.get(selectedModelName);
 
-
-                                     qty.setFocusableInTouchMode(true);
-                                     qty.requestFocus();
-
                                      addItemsOnSpinner1();
 
                                  }
@@ -241,11 +248,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
             }
         });
-
-
-
     }
-
     public void cancel(View v)
     {
         ButtonAnimation.animation(v);
@@ -286,7 +289,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     }
 
     public void addItemsOnSpinner1() {
-        spinner1 = (Spinner) findViewById(R.id.stock_spinner);
+
     stockPointList=new ArrayList<String>();
         stockPointList.add("--Select StockPoint--");
         stockpointMap=new HashMap<>();
@@ -294,7 +297,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         thread=new Thread() {
             public void run() {
                 SOAPServiceClient soapServiceClient=new SOAPServiceClient();
-
                 {
                     try {
                         status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelDetailsService"), new ServiceParams(new Integer(100), "UserId", Integer.class), new ServiceParams(Integer.parseInt(selectedModelId), "ModelId", Integer.class));
@@ -303,8 +305,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                             for (int index = 0; index < array.length(); index++) {
                                 try {
                                     JSONObject eachObject = (JSONObject) array.get(index);
-                                    String spid=eachObject.getString("SPID");
-                                    String spName=eachObject.getString("SpName");
+                                     spid=eachObject.getString("SPID");
+                                     spName=eachObject.getString("SpName");
 
                                     stockPointList.add(spName);
                                     stockpointMap.put(spName,spid);
@@ -350,6 +352,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
     }
     public void doneClick(View v) {
+
                                              ButtonAnimation.animation(v);
                                              ProductsInfo productsInfo=new ProductsInfo();
                                              productsInfo.setName(dname.getText().toString());
@@ -376,7 +379,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              }
                                              else if (spinner1.getSelectedItem().toString().equals("Stock Not Available"))
                                              {
-                                                 Toast.makeText(BuyProducts.this, "Sorry,Item out of stock", Toast.LENGTH_SHORT).show();
+                                                 Toast.makeText(BuyProducts.this, "Sorry, Item out of stock", Toast.LENGTH_SHORT).show();
                                              }
                                              else {
                                                  int p=Integer.parseInt(cprice.getText().toString());

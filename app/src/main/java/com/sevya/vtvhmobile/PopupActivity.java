@@ -42,6 +42,8 @@ public class PopupActivity extends AppCompatActivity {
     String num;
     TableLayout tl;
     TableRow tbrow;
+    TableRow tbrow0;
+    TableRow dtbrow;
     CheckBox checkBox;
     String name;
     private Map<Integer, String> viewIdentifier = null;
@@ -86,7 +88,7 @@ public class PopupActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     public void populateSameCustomersList() {
         Cursor cursor = dataBaseHelper.getPerson(num);
-        startManagingCursor(cursor);
+      //  startManagingCursor(cursor);
         cursor.moveToFirst();
 
 
@@ -96,8 +98,54 @@ public class PopupActivity extends AppCompatActivity {
         viewIdentifier.put(2, "name");
         viewIdentifier.put(3, "number");
         viewIdentifier.put(4, "address");
-        viewIdentifier.put(5,"primaryact");
+        viewIdentifier.put(5, "primaryact");
 
+        tbrow0=new TableRow(this);
+
+        TextView t0v0 = new TextView(this);
+        t0v0.setText("Select");
+        t0v0.setTextColor(Color.BLUE);
+        t0v0.setGravity(Gravity.LEFT);
+        t0v0.setPadding(0,0,10,0);
+        tbrow0.addView(t0v0);
+
+
+        TextView t1v0 = new TextView(this);
+        t1v0.setText("Act Id");
+        t1v0.setTextColor(Color.BLUE);
+        t1v0.setGravity(Gravity.LEFT);
+        t1v0.setPadding(0, 0,10, 0);
+        tbrow0.addView(t1v0);
+
+        TextView t2v0 = new TextView(this);
+        t2v0.setText("Name");
+        t2v0.setTextColor(Color.BLUE);
+        t2v0.setGravity(Gravity.LEFT);
+        t2v0.setPadding(0, 0,10, 0);
+        tbrow0.addView(t2v0);
+
+        TextView t3v0 = new TextView(this);
+        t3v0.setText("Mobile");
+        t3v0.setTextColor(Color.BLUE);
+        t3v0.setPadding(0,0,10,0);
+        t3v0.setGravity(Gravity.LEFT);
+        tbrow0.addView(t3v0);
+
+        TextView t4v0 = new TextView(this);
+        t4v0.setText("Address");
+        t4v0.setTextColor(Color.BLUE);
+        t4v0.setPadding(0, 0,10, 0);
+        t4v0.setGravity(Gravity.LEFT);
+        tbrow0.addView(t4v0);
+
+        TextView t5v0 = new TextView(this);
+        t5v0.setText("Act Type");
+        t5v0.setTextColor(Color.BLUE);
+        t5v0.setPadding(0, 0,10, 0);
+        t5v0.setGravity(Gravity.LEFT);
+        tbrow0.addView(t5v0);
+
+        tl.addView(tbrow0);
 
         int count = cursor.getCount();
         for (int i = 0; i < count; i++) {
@@ -108,39 +156,45 @@ public class PopupActivity extends AppCompatActivity {
             tbrow.addView(checkBox);
 
 
+
             TextView t1v = new TextView(this);
             t1v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.ACTID)));
             t1v.setId(1);
             t1v.setTextColor(Color.BLACK);
-            t1v.setGravity(Gravity.CENTER);
+            t1v.setPadding(0, 0,10, 0);
+            t1v.setGravity(Gravity.LEFT);
             tbrow.addView(t1v);
 
             TextView t2v = new TextView(this);
             t2v.setId(2);
             t2v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME)));
             t2v.setTextColor(Color.BLACK);
-            t2v.setGravity(Gravity.CENTER);
+            t2v.setPadding(0, 0,10, 0);
+            t2v.setGravity(Gravity.LEFT);
             tbrow.addView(t2v);
 
             TextView t3v = new TextView(this);
             t3v.setId(3);
             t3v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER)));
             t3v.setTextColor(Color.BLACK);
-            t3v.setGravity(Gravity.CENTER);
+            t3v.setPadding(0, 0,10, 0);
+            t3v.setGravity(Gravity.LEFT);
             tbrow.addView(t3v);
 
             TextView t4v = new TextView(this);
             t4v.setId(4);
             t4v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.ADDRESS)));
             t4v.setTextColor(Color.BLACK);
-            t4v.setGravity(Gravity.CENTER);
+            t4v.setPadding(0, 0,10, 0);
+            t4v.setGravity(Gravity.LEFT);
             tbrow.addView(t4v);
 
             TextView t5v = new TextView(this);
             t5v.setId(5);
             t5v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRIMARYACT)));
             t5v.setTextColor(Color.BLACK);
-            t5v.setGravity(Gravity.CENTER);
+            t5v.setPadding(0, 0, 10, 0);
+            t5v.setGravity(Gravity.LEFT);
             tbrow.addView(t5v);
 
             tl.addView(tbrow);
@@ -155,7 +209,7 @@ public class PopupActivity extends AppCompatActivity {
         ButtonAnimation.animation(v);
 
         selectedList = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < tl.getChildCount(); i++) {
+        for (int i = 1; i < tl.getChildCount(); i++) {
             TableRow row = (TableRow) tl.getChildAt(i);
 
             CheckBox c = (CheckBox) row.getChildAt(0);
@@ -179,14 +233,63 @@ public class PopupActivity extends AppCompatActivity {
 
         Button submit=(Button)dialog.findViewById(R.id.mergesubmit);
 
+        TableRow tbrow1 = new TableRow(this);
+
+
+        TextView t0v0 = new TextView(this);
+        t0v0.setText("SelectOne");
+        t0v0.setTextColor(Color.BLUE);
+        t0v0.setGravity(Gravity.LEFT);
+        t0v0.setPadding(10,5,10,0);
+        tbrow1.addView(t0v0);
+
+
+        TextView t1v0 = new TextView(this);
+        t1v0.setText("Act Id");
+        t1v0.setTextColor(Color.BLUE);
+        t1v0.setGravity(Gravity.LEFT);
+        t1v0.setPadding(0, 0,10, 0);
+        tbrow1.addView(t1v0);
+
+        TextView t2v0 = new TextView(this);
+        t2v0.setText("Name");
+        t2v0.setTextColor(Color.BLUE);
+        t2v0.setGravity(Gravity.LEFT);
+        t2v0.setPadding(0, 0,10, 0);
+        tbrow1.addView(t2v0);
+
+        TextView t3v0 = new TextView(this);
+        t3v0.setText("Mobile");
+        t3v0.setTextColor(Color.BLUE);
+        t3v0.setPadding(0,0,10,0);
+        t3v0.setGravity(Gravity.LEFT);
+        tbrow1.addView(t3v0);
+
+        TextView t4v0 = new TextView(this);
+        t4v0.setText("Address");
+        t4v0.setTextColor(Color.BLUE);
+        t4v0.setPadding(0, 0,10, 0);
+        t4v0.setGravity(Gravity.LEFT);
+        tbrow1.addView(t4v0);
+
+        TextView t5v0 = new TextView(this);
+        t5v0.setText("Act Type");
+        t5v0.setTextColor(Color.BLUE);
+        t5v0.setPadding(0, 0,10, 0);
+        t5v0.setGravity(Gravity.LEFT);
+        tbrow1.addView(t5v0);
+
+        tableLayout1.addView(tbrow1);
+
+
         for(int l=0;l<selectedList.size();l++) {
 
-            TableRow tbrow2 = new TableRow(this);
             mergeMap = selectedList.get(l);
 
 
-
+            TableRow tbrow2 = new TableRow(this);
             checkBox = new CheckBox(this);
+            checkBox.setPadding(10,0,10,0);
             tbrow2.addView(checkBox);
 
 
@@ -194,35 +297,40 @@ public class PopupActivity extends AppCompatActivity {
             t1v.setId(1);
             t1v.setText(mergeMap.get("actId"));
             t1v.setTextColor(Color.BLACK);
-            t1v.setGravity(Gravity.CENTER);
+            t1v.setPadding(0, 0, 10, 0);
+            t1v.setGravity(Gravity.LEFT);
             tbrow2.addView(t1v);
 
             TextView t2v = new TextView(this);
             t2v.setId(2);
             t2v.setText(mergeMap.get("name"));
             t2v.setTextColor(Color.BLACK);
-            t2v.setGravity(Gravity.CENTER);
+            t2v.setPadding(0, 0, 10, 0);
+            t2v.setGravity(Gravity.LEFT);
             tbrow2.addView(t2v);
 
             TextView t3v = new TextView(this);
             t3v.setId(3);
             t3v.setText(mergeMap.get("number"));
             t3v.setTextColor(Color.BLACK);
-            t3v.setGravity(Gravity.CENTER);
+            t3v.setPadding(0, 0, 10, 0);
+            t3v.setGravity(Gravity.LEFT);
             tbrow2.addView(t3v);
 
             TextView t4v = new TextView(this);
             t4v.setId(4);
             t4v.setText(mergeMap.get("address"));
             t4v.setTextColor(Color.BLACK);
-            t4v.setGravity(Gravity.CENTER);
+            t4v.setPadding(0, 0, 10, 0);
+            t4v.setGravity(Gravity.LEFT);
             tbrow2.addView(t4v);
 
             TextView t5v = new TextView(this);
             t5v.setId(5);
             t5v.setText(mergeMap.get("primaryact"));
             t5v.setTextColor(Color.BLACK);
-            t5v.setGravity(Gravity.CENTER);
+            t5v.setPadding(0, 0,10, 0);
+            t5v.setGravity(Gravity.LEFT);
             tbrow2.addView(t5v);
 
 
@@ -240,7 +348,7 @@ public class PopupActivity extends AppCompatActivity {
 
                 selectedListMain = new ArrayList<Map<String, String>>();
                 actList=new ArrayList<String>();
-                for (int i = 0; i < tableLayout1.getChildCount(); i++) {
+                for (int i = 1; i < tableLayout1.getChildCount(); i++) {
                     TableRow row1 = (TableRow) tableLayout1.getChildAt(i);
                     TextView view1 = ((TextView) row1.getChildAt(1));
 
@@ -372,7 +480,7 @@ public class PopupActivity extends AppCompatActivity {
         ButtonAnimation.animation(v);
 
             selectedList = new ArrayList<Map<String, String>>();
-            for (int i = 0; i < tl.getChildCount(); i++) {
+            for (int i = 1; i < tl.getChildCount(); i++) {
                 TableRow row = (TableRow) tl.getChildAt(i);
 
                 CheckBox c = (CheckBox) row.getChildAt(0);

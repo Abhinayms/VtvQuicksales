@@ -17,72 +17,28 @@
 
         />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp">
-            <TextView
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="select"
-                android:textColor="#03A9F4"        />
-            <TextView
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Act No#"
-                android:textColor="#03A9F4"
-                />
-            <TextView
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Name"
-                android:textColor="#03A9F4"
-                />
 
-            <TextView
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mobile "
-                android:textColor="#03A9F4"
-                />
-            <TextView
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Address"
-                android:textColor="#03A9F4"
-                />
-            <TextView
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Act Type"
-                android:textColor="#03A9F4"
-                />
-        </LinearLayout>
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="none">
 
-
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:stretchColumns="*"
             android:id="@+id/mergetable" >
         </TableLayout>
+        </HorizontalScrollView>
 
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginRight="20dp"
@@ -90,12 +46,13 @@
         android:layout_marginTop="40dp"
         >
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="15dp"
+        android:paddingRight="10dp"
+        android:layout_weight="2"
         >
         <Button
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/merge"
             android:text="Merge"
@@ -105,12 +62,14 @@
             />
     </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="15dp"
+            android:paddingRight="10dp"
+            android:layout_weight="1"
+
             >
         <Button
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nomerge"
             android:text="Continue Without \n Merge"
@@ -120,12 +79,14 @@
             />
          </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
+            android:layout_weight="2"
+
             >
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cancel"
             android:text="Cancel"

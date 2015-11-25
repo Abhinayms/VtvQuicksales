@@ -36,6 +36,7 @@ public class PurchaseInfo extends AppCompatActivity {
     String date;
     ListView saleList;
     Cursor cursor;
+    DataBaseAdapter dataBaseHelper;
 
 
 
@@ -87,7 +88,7 @@ public class PurchaseInfo extends AppCompatActivity {
         txtnumber.setText(number);
         txtstatus.setText(status);
 
-        DataBaseAdapter dataBaseHelper=new DataBaseAdapter(this);
+         dataBaseHelper=new DataBaseAdapter(this);
 
          cursor=dataBaseHelper.getItemSales(number,date);
         saleList=(ListView)findViewById(R.id.salelist);
@@ -136,5 +137,16 @@ public class PurchaseInfo extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dataBaseHelper.deleteSalesTable();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataBaseHelper.deleteSalesTable();
     }
 }

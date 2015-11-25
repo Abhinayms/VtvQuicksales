@@ -13,8 +13,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -26,6 +33,9 @@ import com.sevya.vtvhmobile.webservices.ServiceParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,13 +83,23 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     String cPro;
 
 
-
+    Spinner spinner1;
     JSONArray array;
 
     ResponseStatus status;
     String actid;
     int acctId;
     UserModel userModel;
+
+    RelativeLayout genderlayout;
+
+    public RadioGroup rdg;
+    public RadioGroup compGroup;
+    public  RadioButton male;
+    public RadioButton female;
+    public  RadioButton yes;
+    public RadioButton no;
+    public String selectedType="Male";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +168,12 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cbgen.setOnTouchListener(this);
         cbpro.setOnTouchListener(this);
 
+        genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
+
+
         getDetails();
+        addItemsOnSpinner1();
+
     }
 
 
@@ -194,16 +219,59 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     public void update(View view) {
         ButtonAnimation.animation(view);
 
+
+
+        compGroup=(RadioGroup)findViewById(R.id.company);
+        yes=(RadioButton)findViewById(R.id.compyes);
+        male = (RadioButton) findViewById(R.id.radioMale);
+        no=(RadioButton)findViewById(R.id.compno);
+        male.setChecked(true);
+        no.setChecked(true);
+        genderlayout.setVisibility(View.VISIBLE);
+        compGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == R.id.compyes) {
+                    genderlayout.setVisibility(View.GONE);
+                    selectedType = "";
+
+
+                } else if (i == R.id.compno) {
+                    genderlayout.setVisibility(View.VISIBLE);
+                    rdg = (RadioGroup) findViewById(R.id.radioSex);
+                    male = (RadioButton) findViewById(R.id.radioMale);
+                    female = (RadioButton) findViewById(R.id.radioFemale);
+
+                    male.setChecked(true);
+
+                    rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                            if (i == R.id.radioMale) {
+                                selectedType = "Male";
+
+
+                            } else if (i == R.id.radioFemale) {
+                                selectedType = "Female";
+
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+
         cusName=cname.getText().toString();
         cusNum=cnum.getText().toString();
         cusAdd=cadd.getText().toString();
         cusAdd1=cadd1.getText().toString();
         cusEmail=cmail.getText().toString();
         cusCompNmae=compName.getText().toString();
-        cusGen=cgen.getText().toString();
+        cusGen=selectedType;
         cusLn=cln.getText().toString();
-        cPro=cpro.getText().toString();
-
+        cPro=spinner1.getSelectedItem().toString();
         userModel=new UserModel();
         userModel.setPrimaryActID(acctId);
         userModel.setActName(cusName);
@@ -211,7 +279,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         userModel.setAddress1(cusAdd1);
         userModel.setPhone(cusLn);
         userModel.setFlatNo(cusAdd);
-        userModel.setGender(cusGen);
+        userModel.setGender(selectedType);
         //userModel.setCity(cAdd2);
         //userModel.setCountry(cAdd3);
         userModel.setState("");
@@ -298,7 +366,35 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
 
         }
+    public void addItemsOnSpinner1() {
 
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
+        List<String> list = new ArrayList<String>();
+        list.add("Select Category");
+        list.add("Business");
+        list.add("Agriculture");
+        list.add("Govt. Employee");
+        list.add("Private Employee");
+        list.add("Others");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(dataAdapter);
+
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
+                sv.fullScroll(view.getTop());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
     public  boolean isEmailValid(String email) {
         boolean isValid = false;
 

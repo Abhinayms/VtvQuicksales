@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.MergeCustomer;
 import com.sevya.vtvhmobile.models.ResponseStatus;
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String district;
     private String landline;
     private String prof;
+    String mobile;
 
 
     @Override
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         dataBaseHelper = new DataBaseAdapter(this);
         dataBaseHelper.deleteMergeTable();
+
 
 
         number = (EditText) findViewById(R.id.mnumber);
@@ -98,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 ButtonAnimation.animation(view);
 
 
-                final String numberr = number.getText().toString();
+                 mobile = number.getText().toString();
 
-                if (!isValidNumber(numberr)) {
+                if (!isValidNumber(mobile)) {
 
                     Toast.makeText(MainActivity.this,"Please enter valid 10 digit mobile number",Toast.LENGTH_SHORT).show();
                 } else {
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             try
 
                             {
-                                status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"), new ServiceParams(numberr, "MobileNo", Integer.class));
+                                status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"), new ServiceParams(mobile, "MobileNo", Integer.class));
                                 if (status.getStatusCode() == 200) {
                                     array = new JSONArray(status.getStatusResponse());
                                     if (array.length() > 1) {
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                                             public void onClick(DialogInterface dialog, int id) {
                                                                 Intent i = new Intent(MainActivity.this, AddCustomer.class);
-                                                                i.putExtra("cnum", numberr);
+                                                                i.putExtra("cnum", mobile);
                                                                 startActivity(i);
 
                                                             }
@@ -290,8 +291,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean isValidNumber(String numberr) {
-        if (numberr != null && numberr.length() == 10) {
+    private boolean isValidNumber(String number) {
+        if (number != null && number.matches("[7-9][0-9]{9}")) {
             return true;
         }
         return false;

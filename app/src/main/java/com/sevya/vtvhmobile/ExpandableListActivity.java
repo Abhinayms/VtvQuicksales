@@ -70,7 +70,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
           salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);
-        salesmanCart.setSalesmanId(new Integer(100));
+        salesmanCart.setSalesmanId(new Integer(76));
         thread=new Thread() {
             public void run() {
 
@@ -150,7 +150,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
         i=getIntent();
          mDate=i.getStringExtra("Date");
-        String salesmenId="100";
+        String salesmenId="76";
         mGroupsCursor = dataBaseHelper.getAllSalesList(mDate );
         this.startManagingCursor(mGroupsCursor);
         mGroupsCursor.moveToFirst();
@@ -170,7 +170,7 @@ public class ExpandableListActivity extends AppCompatActivity{
             customSaleListViewAdapter=new CustomSaleListViewAdapter(this,mGroupsCursor,0);
 
 
-            lv.addHeaderView(getLayoutInflater().inflate(R.layout.saleslistheader, null, false));
+           // lv.addHeaderView(getLayoutInflater().inflate(R.layout.saleslistheader, null, false));
             lv.setAdapter(customSaleListViewAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -180,8 +180,6 @@ public class ExpandableListActivity extends AppCompatActivity{
                     Cursor selectedFromList = (Cursor) (lv.getItemAtPosition(position));//.toString();
                     String name = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
                     String mobile = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
-                    Log.d("num",""+name+mobile);
-
 
 
                     Intent intent = new Intent(ExpandableListActivity.this, PurchaseInfo.class);

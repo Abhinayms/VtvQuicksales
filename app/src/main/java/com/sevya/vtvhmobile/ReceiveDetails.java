@@ -130,11 +130,6 @@ public class ReceiveDetails extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if(id==R.id.editcustomer)
-        {
-            Intent intent=new Intent(this,EditCustomer.class);
-            startActivity(intent);
-        }
         if(id==R.id.action_cart)
         {
             Intent intent=new Intent(this,CartActivity.class);

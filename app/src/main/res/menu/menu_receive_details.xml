@@ -20,26 +20,4 @@
         android:icon="@drawable/edit"
         app:showAsAction="ifRoom" />
 
-
-
-
-    <item
-        android:id="@+id/ic_action_settings_01"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_action_settings_01"
-        app:showAsAction="ifRoom" >
-        <menu>
-            <item
-                android:id="@+id/settings"
-                android:title="Settings"/>.
-
-
-
-            <item
-                android:id="@+id/editcustomer"
-                android:title="Edit Customer"/>
-        </menu>
-
-    </item>
 </menu>

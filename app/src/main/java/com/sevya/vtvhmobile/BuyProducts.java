@@ -307,6 +307,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                     JSONObject eachObject = (JSONObject) array.get(index);
                                      spid=eachObject.getString("SPID");
                                      spName=eachObject.getString("SpName");
+                                    availableQuantity=eachObject.getString("Qty");
 
                                     stockPointList.add(spName);
                                     stockpointMap.put(spName,spid);
@@ -381,7 +382,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              {
                                                  Toast.makeText(BuyProducts.this, "Sorry, Item out of stock", Toast.LENGTH_SHORT).show();
                                              }
-                                             else if (Integer.parseInt(qty.getText().toString())<=0)
+                                             else if (Integer.parseInt(qty.getText().toString())<=0 || Integer.parseInt(qty.getText().toString())>Integer.parseInt(availableQuantity))
                                              {
                                                  Toast.makeText(BuyProducts.this, "Enter valid Quantity", Toast.LENGTH_SHORT).show();
                                              }

@@ -489,9 +489,6 @@ public class PopupActivity extends AppCompatActivity {
     {
         ButtonAnimation.animation(v);
 
-
-
-
             selectedList = new ArrayList<Map<String, String>>();
 
             for (int i = 1; i < tl.getChildCount(); i++) {

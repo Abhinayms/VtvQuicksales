@@ -151,7 +151,7 @@ public class ReceiveDetails extends AppCompatActivity {
             i.putExtra("cnum", numm.getText().toString());
             i.putExtra("cpro", pro.getText().toString());
             i.putExtra("rb", gen.getText().toString());
-              i.putExtra("compName", CompName.getText().toString());
+            i.putExtra("compName", CompName.getText().toString());
             i.putExtra("cmail", email.getText().toString());
             i.putExtra("cadd",add.getText().toString());
             i.putExtra("cln", ln.getText().toString());

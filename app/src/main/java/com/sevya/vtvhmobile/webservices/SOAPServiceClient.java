@@ -62,7 +62,7 @@ public class SOAPServiceClient {
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("*****","Error Occured");
-            status =  new ResponseStatus(500, "Error occured");
+            status =  new ResponseStatus(500, ""+e);
         }
         return status;
     }

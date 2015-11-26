@@ -87,12 +87,8 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     Button done;
     Button cancel;
     private ResponseStatus status;
-    public JSONArray array;
-
     RelativeLayout genderlayout;
-
     DataBaseAdapter dataBaseHelper;
-    Customer customer;
     Thread thread;
     UserModel userModel;
     String selectedText;

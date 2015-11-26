@@ -6,13 +6,13 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,33 +42,29 @@ public class ExpandableListActivity extends AppCompatActivity{
     SalesmanCart salesmanCart;
     String mDate;
     ListView lv;
+    RelativeLayout salesheader;
 
     private ExpandableListView expandableListView;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         expandableListView = new ExpandableListView(this);
         setContentView(R.layout.activity_expandable_list);
-
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
         mToolbar.setTitle("");
-
-
         setSupportActionBar(mToolbar);
-
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        salesheader=(RelativeLayout)findViewById(R.id.sales_header);
+
         dataBaseHelper=new DataBaseAdapter(this);
         i=getIntent();
           mDate=i.getStringExtra("Date");
 
-          salesmanCart=new SalesmanCart();
+        salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);
         salesmanCart.setSalesmanId(new Integer(76));
         thread=new Thread() {
@@ -152,12 +148,12 @@ public class ExpandableListActivity extends AppCompatActivity{
          mDate=i.getStringExtra("Date");
         String salesmenId="76";
         mGroupsCursor = dataBaseHelper.getAllSalesList(mDate );
-        this.startManagingCursor(mGroupsCursor);
         mGroupsCursor.moveToFirst();
         if(mGroupsCursor.getCount()==0)
         {
             textView=(TextView)findViewById(R.id.saletextview);
             textView.setVisibility(View.VISIBLE);
+            salesheader.setVisibility(View.GONE);
 
         }
         else {
@@ -170,14 +166,14 @@ public class ExpandableListActivity extends AppCompatActivity{
             customSaleListViewAdapter=new CustomSaleListViewAdapter(this,mGroupsCursor,0);
 
 
-           // lv.addHeaderView(getLayoutInflater().inflate(R.layout.saleslistheader, null, false));
+
             lv.setAdapter(customSaleListViewAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1,
                                         int position, long arg3) {
-                    Cursor selectedFromList = (Cursor) (lv.getItemAtPosition(position));//.toString();
+                    Cursor selectedFromList = (Cursor) (lv.getItemAtPosition(position));
                     String name = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
                     String mobile = selectedFromList.getString(selectedFromList.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
 
@@ -228,6 +224,8 @@ public class ExpandableListActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mGroupsCursor.close();
+
         dataBaseHelper.deleteSalesTable();
     }
 }

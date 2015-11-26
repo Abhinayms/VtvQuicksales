@@ -22,6 +22,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/sales_header"
             >
             <TextView
                 android:layout_marginRight="20dp"

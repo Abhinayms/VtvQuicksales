@@ -3,9 +3,8 @@ package com.sevya.vtvhmobile;
 /**
  * Created by abhinaym on 24/10/15.
  */
-import android.content.Context;
+
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,14 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,7 +27,6 @@ import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,15 +39,12 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
     DataBaseAdapter dataBaseHelper;
     Toolbar mToolbar;
-    Cursor cursor;
-    Context context;
 
-    EditText phnnum;
+
     EditText cname;
     EditText cnum;
     EditText compName;
-    EditText cgen;
-    EditText cpro;
+
     EditText cln;
     EditText cadd;
     EditText cadd1;
@@ -68,8 +61,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     ImageButton cbadd2;
     ImageButton cbadd3;
     ImageButton cbln;
-    ImageButton cbpro;
-    ImageButton cbgen;
+
 
     String cusName;
     String cusNum;
@@ -77,6 +69,8 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     String cusLn;
     String cusAdd;
     String cusAdd1;
+    String cusAdd2;
+    String cusAdd3;
     String cusEmail;
     String cusCompNmae;
     String cusActid;
@@ -84,7 +78,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
 
     Spinner spinner1;
-    JSONArray array;
+
 
     ResponseStatus status;
     String actid;
@@ -100,6 +94,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     public  RadioButton yes;
     public RadioButton no;
     public String selectedType="Male";
+    public String selectedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,8 +117,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cname = (EditText) findViewById(R.id.cname);
         cnum = (EditText) findViewById(R.id.cnum);
         compName = (EditText) findViewById(R.id.compName);
-        cgen = (EditText) findViewById(R.id.cgen);
-        cpro = (EditText) findViewById(R.id.cpro);
+
         cln = (EditText) findViewById(R.id.cln);
         cadd = (EditText) findViewById(R.id.cadd);
         cadd1 = (EditText) findViewById(R.id.cadd1);
@@ -141,8 +135,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cbadd2=(ImageButton)findViewById(R.id.cbadd2);
         cbadd3=(ImageButton)findViewById(R.id.cbadd3);
         cbln=(ImageButton)findViewById(R.id.cbln);
-        cbpro=(ImageButton)findViewById(R.id.cbpro);
-        cbgen=(ImageButton)findViewById(R.id.cbgen);
+
 
         cname.setOnTouchListener(this);
         cnum.setOnTouchListener(this);
@@ -153,8 +146,6 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cadd3.setOnTouchListener(this);
         cln.setOnTouchListener(this);
         cmail.setOnTouchListener(this);
-        cpro.setOnTouchListener(this);
-        cgen.setOnTouchListener(this);
 
         cbname.setOnTouchListener(this);
         cbnum.setOnTouchListener(this);
@@ -165,61 +156,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         cbadd3.setOnTouchListener(this);
         cbln.setOnTouchListener(this);
         cbmail.setOnTouchListener(this);
-        cbgen.setOnTouchListener(this);
-        cbpro.setOnTouchListener(this);
+
 
         genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
-
-
-        getDetails();
-        addItemsOnSpinner1();
-
-    }
-
-
-    public void getDetails() {
-
-
-
-        try {
-                Intent intent=getIntent();
-            String name=intent.getStringExtra("cname");
-            String compname=intent.getStringExtra("compName");
-            String num=intent.getStringExtra("cnum");
-            String pro=intent.getStringExtra("cpro");
-            String mail=intent.getStringExtra("cmail");
-            String add=intent.getStringExtra("cadd");
-            String add1=intent.getStringExtra("cadd1");
-            String add2=intent.getStringExtra("cadd2");
-            String add3=intent.getStringExtra("cadd3");
-            String gen=intent.getStringExtra("rb");
-            String ln=intent.getStringExtra("cln");
-             actid=intent.getStringExtra("actId");
-
-
-           acctId=Integer.parseInt(actid);
-
-            cname.setText(name);
-            cnum.setText(num);
-            compName.setText(compname);
-            cgen.setText(gen);
-            cpro.setText(pro);
-            cln.setText(ln);
-            cadd.setText(add);
-            cadd1.setText(add1);
-            cadd2.setText(add2);
-            cadd3.setText(add3);
-            cmail.setText(mail);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void update(View view) {
-        ButtonAnimation.animation(view);
-
-
 
         compGroup=(RadioGroup)findViewById(R.id.company);
         yes=(RadioButton)findViewById(R.id.compyes);
@@ -263,15 +202,66 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
             }
         });
 
+
+        getDetails();
+        addItemsOnSpinner1();
+
+    }
+    public void getDetails() {
+        try {
+                Intent intent=getIntent();
+            String name=intent.getStringExtra("cname");
+            String compname=intent.getStringExtra("compName");
+            String num=intent.getStringExtra("cnum");
+            String pro=intent.getStringExtra("cpro");
+            String mail=intent.getStringExtra("cmail");
+            String add=intent.getStringExtra("cadd");
+            String add1=intent.getStringExtra("cadd1");
+            String add2=intent.getStringExtra("cadd2");
+            String add3=intent.getStringExtra("cadd3");
+            String gen=intent.getStringExtra("rb");
+            String ln=intent.getStringExtra("cln");
+             actid=intent.getStringExtra("actId");
+
+
+           acctId=Integer.parseInt(actid);
+
+            cname.setText(name);
+            cnum.setText(num);
+            compName.setText(compname);
+            cln.setText(ln);
+            cadd.setText(add);
+            cadd1.setText(add1);
+            cadd2.setText(add2);
+            cadd3.setText(add3);
+            cmail.setText(mail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(View view) {
+        ButtonAnimation.animation(view);
+
+        if(spinner1.getSelectedItem().toString().equals("Select Category")){
+            selectedText="";
+        }
+        else{
+            selectedText=spinner1.getSelectedItem().toString();
+        }
+
         cusName=cname.getText().toString();
         cusNum=cnum.getText().toString();
         cusAdd=cadd.getText().toString();
         cusAdd1=cadd1.getText().toString();
+        cusAdd2=cadd2.getText().toString();
+        cusAdd3=cadd3.getText().toString();
         cusEmail=cmail.getText().toString();
         cusCompNmae=compName.getText().toString();
         cusGen=selectedType;
         cusLn=cln.getText().toString();
-        cPro=spinner1.getSelectedItem().toString();
+        cPro=selectedText;
         userModel=new UserModel();
         userModel.setPrimaryActID(acctId);
         userModel.setActName(cusName);
@@ -280,8 +270,8 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         userModel.setPhone(cusLn);
         userModel.setFlatNo(cusAdd);
         userModel.setGender(selectedType);
-        //userModel.setCity(cAdd2);
-        //userModel.setCountry(cAdd3);
+        userModel.setCity(cusAdd2);
+        userModel.setCountry(cusAdd3);
         userModel.setState("");
         userModel.setStreet("");
         userModel.setSurName("");
@@ -335,8 +325,8 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                                     i.putExtra("cadd",cusAdd);
                                                     i.putExtra("cln", cusLn);
                                                     i.putExtra("cadd1", cusAdd1);
-                                                    //i.putExtra("cadd2", cAdd2);
-                                                    //i.putExtra("cadd3", cAdd3);
+                                                    i.putExtra("cadd2", cusAdd2);
+                                                    i.putExtra("cadd3", cusAdd3);
                                                     i.putExtra("actId",actid);
 
                                                     startActivity(i);
@@ -381,19 +371,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);
 
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
-                sv.fullScroll(view.getTop());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
     public  boolean isEmailValid(String email) {
         boolean isValid = false;
@@ -451,8 +429,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbname:
                     cname.setText("");
@@ -468,8 +445,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbnum:
                     cnum.setText("");
@@ -485,8 +461,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbcpmny:
                     compName.setText("");
@@ -502,8 +477,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbln:
                     cln.setText("");
@@ -519,8 +493,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbadd:
                     cadd.setText("");
@@ -536,8 +509,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbadd1:
                     cadd1.setText("");
@@ -553,8 +525,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.VISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbadd2:
                     cadd2.setText("");
@@ -570,8 +541,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.VISIBLE);
                     cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbadd3:
                     cadd3.setText("");
@@ -587,48 +557,11 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                     cbadd2.setVisibility(View.INVISIBLE);
                     cbadd3.setVisibility(View.INVISIBLE);
                     cbmail.setVisibility(View.VISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
+
                     break;
                 case R.id.cbmail:
                     cmail.setText("");
                     break;
-                case R.id.cpro:
-
-                    cbname.setVisibility(View.INVISIBLE);
-                    cbnum.setVisibility(View.INVISIBLE);
-                    cbcpmny.setVisibility(View.INVISIBLE);
-                    cbln.setVisibility(View.INVISIBLE);
-                    cbadd.setVisibility(View.INVISIBLE);
-                    cbadd1.setVisibility(View.INVISIBLE);
-                    cbadd2.setVisibility(View.INVISIBLE);
-                    cbadd3.setVisibility(View.INVISIBLE);
-                    cbmail.setVisibility(View.INVISIBLE);
-                    cbpro.setVisibility(View.VISIBLE);
-                    cbgen.setVisibility(View.INVISIBLE);
-
-                    break;
-                case R.id.cbpro:
-                    cpro.setText("");
-                    break;
-                case R.id.cgen:
-
-                    cbname.setVisibility(View.INVISIBLE);
-                    cbnum.setVisibility(View.INVISIBLE);
-                    cbcpmny.setVisibility(View.INVISIBLE);
-                    cbln.setVisibility(View.INVISIBLE);
-                    cbadd.setVisibility(View.INVISIBLE);
-                    cbadd1.setVisibility(View.INVISIBLE);
-                    cbadd2.setVisibility(View.INVISIBLE);
-                    cbadd3.setVisibility(View.INVISIBLE);
-                    cbmail.setVisibility(View.INVISIBLE);
-                    cbgen.setVisibility(View.VISIBLE);
-                    cbpro.setVisibility(View.INVISIBLE);
-                    break;
-                case R.id.cbgen:
-                    cgen.setText("");
-                    break;
-
 
         }
         return false;

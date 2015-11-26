@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private String landline;
     private String prof;
     String mobile;
+    ProgressDialog progress;
+    AlertDialog alertDialog;
 
 
     @Override
@@ -99,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 ButtonAnimation.animation(view);
 
 
-                 mobile = number.getText().toString();
+                mobile = number.getText().toString();
 
                 if (!isValidNumber(mobile)) {
 
-                    Toast.makeText(MainActivity.this,"Please enter valid 10 digit mobile number",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please enter valid 10 digit mobile number", Toast.LENGTH_SHORT).show();
                 } else {
-                    final ProgressDialog progress;
+
 
                     progress = new ProgressDialog(MainActivity.this);
                     progress.setTitle("Please Wait");
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (array.length() > 1) {
                                         for (int index = 0; index < array.length(); index++) {
                                             try {
-                                                MergeCustomer mergeCustomer=new MergeCustomer();
+                                                MergeCustomer mergeCustomer = new MergeCustomer();
 
                                                 JSONObject eachObject = (JSONObject) array.get(index);
 
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                                                 mergeCustomer.setMobileNumber(mobileNo);
                                                 companyName = eachObject.getString("CompanyName");
                                                 mergeCustomer.setCompany(companyName);
-                                                prof=eachObject.getString("Profession");
+                                                prof = eachObject.getString("Profession");
                                                 mergeCustomer.setProfession(prof);
                                                 street = eachObject.getString("Street");
                                                 mergeCustomer.setStreet(street);
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                                                 @Override
                                                 public void run() {
                                                     Intent i = new Intent(MainActivity.this, PopupActivity.class);
-                                                    i.putExtra("cnum",mobileNo);
+                                                    i.putExtra("cnum", mobileNo);
                                                     startActivity(i);
 
                                                 }
@@ -198,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                                                 gender = eachObject.getString("Gender");
                                                 district = eachObject.getString("District");
                                                 landline = eachObject.getString("Phone");
-//                                                prof=eachObject.getString("Profession");
+                                                prof = eachObject.getString("Profession");
 
 
                                                 MainActivity.this.runOnUiThread(new Thread(new Runnable() {
@@ -226,47 +228,45 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
                                     }
-                                }else if (status.getStatusCode() != 200) {
+                                } else if (status.getStatusCode() != 200) {
 
-                                        progress.dismiss();
+                                    progress.dismiss();
 
-                                        MainActivity.this.runOnUiThread(new Runnable() {
-                                            public void run() {
+                                    MainActivity.this.runOnUiThread(new Runnable() {
+                                        public void run() {
 
-                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                                                        MainActivity.this);
+                                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                                    MainActivity.this);
 
-                                                alertDialogBuilder.setTitle("Alert");
+                                            alertDialogBuilder.setTitle("Alert");
 
-                                                alertDialogBuilder
-                                                        .setMessage("Did not find any matches with this Number. \nCreate new?")
-                                                        .setCancelable(false)
-                                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                                Intent i = new Intent(MainActivity.this, AddCustomer.class);
-                                                                i.putExtra("cnum", mobile);
-                                                                startActivity(i);
+                                            alertDialogBuilder
+                                                    .setMessage("Did not find any matches with this Number. \nCreate new?")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                            Intent i = new Intent(MainActivity.this, AddCustomer.class);
+                                                            i.putExtra("cnum", mobile);
+                                                            startActivity(i);
 
-                                                            }
-                                                        })
-                                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
+                                                        }
+                                                    })
+                                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
 
-                                                                dialog.cancel();
-                                                            }
-                                                        });
-
-
-                                                AlertDialog alertDialog = alertDialogBuilder.create();
-                                                alertDialog.show();
-
-                                            }
-                                        });
+                                                            dialog.cancel();
+                                                        }
+                                                    });
 
 
+                                            alertDialog = alertDialogBuilder.create();
+                                            alertDialog.show();
 
-                                }
-                                else if(status.getStatusCode()==500){
+                                        }
+                                    });
+
+
+                                } else if (status.getStatusCode() == 500) {
                                     MainActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -291,6 +291,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void createnew(View v)
+    {
+        ButtonAnimation.animation(v);
+
+        Intent i = new Intent(MainActivity.this, AddCustomer.class);
+        if(!isValidNumber(number.getText().toString()))
+        {
+            Toast.makeText(MainActivity.this, "Please enter valid 10 digit mobile number", Toast.LENGTH_SHORT).show();
+        }else {
+            if (number.getText().toString().length() == 0) {
+
+                startActivity(i);
+
+            } else {
+                i.putExtra("cnum", number.getText().toString());
+                startActivity(i);
+            }
+        }
+    }
+
     private boolean isValidNumber(String number) {
         if (number != null && number.matches("[7-9][0-9]{9}")) {
             return true;
@@ -313,7 +333,28 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+        if ( progress!=null && progress.isShowing() ){
+            progress.dismiss();
+        }
+
+//        alertDialog.dismiss();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if ( progress!=null && progress.isShowing() ){
+            progress.dismiss();
+        }
+      //  alertDialog.dismiss();
+
+    }
 
 
 

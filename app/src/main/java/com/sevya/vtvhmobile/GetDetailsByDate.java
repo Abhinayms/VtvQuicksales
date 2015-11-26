@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.DatePicker;
 
 
-
-
 public class GetDetailsByDate extends AppCompatActivity {
     Toolbar mToolbar;
     DatePicker datePicker;
@@ -37,8 +35,6 @@ public class GetDetailsByDate extends AppCompatActivity {
 
 
         datePicker=(DatePicker) findViewById(R.id.datepicker);
-
-
 
     }
 

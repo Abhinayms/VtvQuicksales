@@ -28,10 +28,6 @@ public class PurchaseInfo extends AppCompatActivity {
     String status;
     TextView txtname;
     TextView txtnumber;
-    TextView txttotalprice;
-    TextView txtqty;
-    TextView txtmodelName;
-    TextView txtmodelId;
     TextView txtstatus;
     String date;
     ListView saleList;

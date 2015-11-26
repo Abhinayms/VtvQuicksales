@@ -381,6 +381,10 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              {
                                                  Toast.makeText(BuyProducts.this, "Sorry, Item out of stock", Toast.LENGTH_SHORT).show();
                                              }
+                                             else if (Integer.parseInt(qty.getText().toString())<=0)
+                                             {
+                                                 Toast.makeText(BuyProducts.this, "Enter valid Quantity", Toast.LENGTH_SHORT).show();
+                                             }
                                              else {
                                                  int p=Integer.parseInt(cprice.getText().toString());
                                                  int q=Integer.parseInt(qty.getText().toString());

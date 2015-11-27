@@ -1,14 +1,20 @@
 package com.sevya.vtvhmobile;
 
+import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.SalesmanCart;
 import com.sevya.vtvhmobile.util.SOAPServices;
@@ -18,16 +24,29 @@ import com.sevya.vtvhmobile.webservices.ServiceParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+
 /**
  * Created by abhinaym on 8/10/15.
  */
-public class SettingsActivity extends AppCompatActivity{
-    CheckBox sslcheckbox,nonsslcheckbox;
+public class SettingsActivity extends AppCompatActivity {
+    CheckBox sslcheckbox, nonsslcheckbox;
     Toolbar mToolbar;
-    TextView textView;
+    TextView textPort;
+    TextView textHost;
     EditText portNum;
+    EditText hostName;
+    String url;
+    String port;
+    String hostAddress;
+    String hostPort;
     ResponseStatus status;
     Thread thread;
+    Switch sslSwitch;
+    DataBaseAdapter databasehelper;
+    Cursor cursor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,79 +55,116 @@ public class SettingsActivity extends AppCompatActivity{
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        sslcheckbox = (CheckBox) findViewById(R.id.sslcheckbox);
-        textView = (TextView) findViewById(R.id.textView19);
-        textView.setVisibility(View.INVISIBLE);
+        databasehelper=new DataBaseAdapter(this);
+
+
+
+        textPort = (TextView) findViewById(R.id.textPortName);
+        textHost=(TextView)findViewById(R.id.textHostName);
+        textPort.setVisibility(View.INVISIBLE);
         portNum = (EditText) findViewById(R.id.portno);
+        hostName=(EditText)findViewById(R.id.hostname);
         portNum.setVisibility(View.INVISIBLE);
-        sslcheckbox.setOnClickListener(new View.OnClickListener() {
+        hostName.setText("http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
+
+        sslSwitch = (Switch) findViewById(R.id.mySslSwitch);
+        sslSwitch.setChecked(true);
+        sslSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
 
-                CheckBox nonsslcheckbox;
-                TextView textView = (TextView) findViewById(R.id.textView19);
-                nonsslcheckbox = (CheckBox) findViewById(R.id.checkBox);
-                EditText editText = (EditText) findViewById(R.id.portno);
-
-                if (nonsslcheckbox.isChecked()) {
-                    textView.setVisibility(View.INVISIBLE);
-                    nonsslcheckbox.setChecked(false);
-                    editText.setVisibility(View.INVISIBLE);
-                    editText=(EditText)findViewById(R.id.hostname);
-                    editText.setText("");
-
+                if (sslSwitch.isChecked()) {
+                    hostName.setText("http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
+                    textPort.setVisibility(View.INVISIBLE);
+                    portNum.setVisibility(View.INVISIBLE);
                 } else {
-                    CheckBox checkBox = (CheckBox)findViewById(R.id.checkBox);
-                    checkBox.setChecked(true);
-                    textView.setVisibility(View.VISIBLE);
-                    editText.setVisibility(View.VISIBLE);
-                    editText=(EditText)findViewById(R.id.hostname);
-                    editText.setText("");
-                    editText=(EditText)findViewById(R.id.portno);
-                    editText.setText("");
-                }
-            }
-        });
+                    hostName.setText("");
+                    textPort.setVisibility(View.VISIBLE);
+                    portNum.setVisibility(View.VISIBLE);
 
-        nonsslcheckbox = (CheckBox) findViewById(R.id.checkBox);
 
-        nonsslcheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckBox sslcheckbox1,sslCb;
-                sslcheckbox1 = (CheckBox) findViewById(R.id.checkBox);
-                sslCb = (CheckBox) findViewById(R.id.sslcheckbox);
-                EditText editText = (EditText) findViewById(R.id.portno);
-                TextView textView = (TextView) findViewById(R.id.textView19);
-                editText.setText("");
-                if (!(sslcheckbox1.isChecked())) {
-                    sslCb.setChecked(true);
-                    editText.setVisibility(View.INVISIBLE);
-                    editText=(EditText)findViewById(R.id.hostname);
-                    editText.setText("");
-                    textView.setVisibility(View.INVISIBLE);
 
-                } else {
-                    sslCb.setChecked(false);
-                    editText.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.VISIBLE);
-                    editText=(EditText)findViewById(R.id.hostname);
-                    editText.setText("");
                 }
 
             }
-
         });
-    }
+}
+
     public void authenticate(View v)
     {
         ButtonAnimation.animation(v);
+
+        if(sslSwitch.isChecked())
+        {
+           url= hostName.getText().toString();
+           // port=portNum.getText().toString();
+
+            try {
+                AssetManager assetManager = getApplicationContext().getAssets();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(assetManager.open("SOAPServices.json")));
+                String s;
+                StringBuffer buffer = new StringBuffer();
+                while((s=reader.readLine())!=null){
+                    buffer.append(s);
+                }
+
+
+                String newBuffer=buffer.toString().replace("#SOAP_URL#",url);
+                SOAPServices.loadServices(newBuffer);
+
+                Log.d("new buffer",""+newBuffer);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            Toast.makeText(SettingsActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
+        }
+        else {
+
+            url=hostName.getText().toString();
+            port=portNum.getText().toString();
+
+            databasehelper.insertServerCredentials(url,port);
+
+            cursor=databasehelper.getServerCredentials();
+            cursor.moveToFirst();
+            hostAddress=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.HOSTNAME));
+            hostPort=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PORTNUMBER));
+
+            try {
+                AssetManager assetManager = getApplicationContext().getAssets();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(assetManager.open("SOAPServices.json")));
+                String s;
+                StringBuffer buffer = new StringBuffer();
+                while((s=reader.readLine())!=null) {
+                    buffer.append(s);
+
+
+                    StringBuffer addressBuffer=new StringBuffer();
+                    addressBuffer.append("http://"+url+":"+port+"/"+"VTVHQuickSaleService.asmx");
+
+                    Log.d("AddressBuffer",""+addressBuffer);
+
+                    String newBuffer=buffer.toString().replace("#SOAP_URL#",addressBuffer);
+                    SOAPServices.loadServices(newBuffer);
+
+                    Log.d("new buffer", "" + newBuffer);
+
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            Toast.makeText(SettingsActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 
@@ -133,7 +189,7 @@ public class SettingsActivity extends AppCompatActivity{
                             SettingsActivity.this.runOnUiThread(new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-
+                                    Toast.makeText(SettingsActivity.this, "Connection Established", Toast.LENGTH_SHORT).show();
                                 }
                             }));
 

@@ -38,7 +38,9 @@ public class SplashScreen extends Activity {
             while((s=reader.readLine())!=null){
                 buffer.append(s);
             }
-            SOAPServices.loadServices(buffer.toString());
+
+            String newBuffer=buffer.toString().replace("#SOAP_URL#","http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
+            SOAPServices.loadServices(newBuffer);
         }catch(Exception e){
             e.printStackTrace();
         }

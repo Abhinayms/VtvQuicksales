@@ -107,15 +107,46 @@ public class
         contentValues.put(dataBaseHelper.DEMO,productsInfo.isDemo());
         contentValues.put(dataBaseHelper.INSTALL,productsInfo.isInstall());
         contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModalId());
-
-
-
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
 
         long id= db.insert(dataBaseHelper.Table_CART,null,contentValues);
 
 
         return id;
+    }
+
+    public void insertServerCredentials(String hostName,String portNumber)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(dataBaseHelper.HOSTNAME,hostName);
+        contentValues.put(dataBaseHelper.PORTNUMBER,portNumber);
+
+        db.insert(dataBaseHelper.Table_CREDENTIALS, null, contentValues);
+
+
+    }
+
+    public Cursor getServerCredentials()
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        String[] columns={dataBaseHelper.HOSTNAME,dataBaseHelper.PORTNUMBER};
+        cursor=db.query(dataBaseHelper.Table_CREDENTIALS,columns,null,null,null,null,null);
+
+        return cursor;
+    }
+
+    public void updateServerCredentials(String hostName,String portNumber)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(dataBaseHelper.HOSTNAME,hostName);
+        contentValues.put(dataBaseHelper.PORTNUMBER,portNumber);
+
+
+        db.update(dataBaseHelper.Table_CREDENTIALS, contentValues, null, null);
+
+
     }
 
 
@@ -307,12 +338,13 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =52;
+        private static final int DATABASE_VERSION =54;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
         public static final String Table_SALES="Sales_Table";
         public static final String Table_MERGE="Merge_Table";
+        public static final String Table_CREDENTIALS="Credentials_Table";
         public static final String UID = "_id";
         public static final String NAME = "NAME";
         public static final String MOBILE_NUMBER = "MOBILE_NUMBER";
@@ -352,6 +384,9 @@ public class
         public static final String TINNO="TINNO";
         public static final String MANDAL="MANDAL";
         public static final String FLATNO="FLATNO";
+        public static final String CREDENTIALS_ID="_id";
+        public static final String HOSTNAME="HOSTNAME";
+        public static final String PORTNUMBER="PORTNUMBER";
 
 
 
@@ -362,6 +397,8 @@ public class
         private static final String DROP_TABLE_CART = "DROP TABLE IF EXISTS " + Table_CART;
         private static final String DROP_TABLE_SALES_LIST = "DROP TABLE IF EXISTS " + Table_SALES;
         private static final String DROP_TABLE_MERGE = "DROP TABLE IF EXISTS " + Table_MERGE;
+        private static final String DROP_TABLE_CREDENTIALS = "DROP TABLE IF EXISTS " + Table_CREDENTIALS;
+
 
 
 
@@ -384,6 +421,9 @@ public class
                 "" + LANDLINE_NUMBER + " VARCHAR(20)," + PRIMARYACT + " VARCHAR(255)," + ADDRESS + " VARCHAR(255)," + STREET + " VARCHAR(255)," + CITY + " VARCHAR(255)," + MANDAL + " VARCHAR(255)," + DISTRICT + " VARCHAR(255)," +
                 "" + EMAIL + " VARCHAR(100)," + STATE + " VARCHAR(255)," + COUNTRY + " VARCHAR(255)," + FLATNO + " VARCHAR(255)," + DUPLICATEID + " VARCHAR(100)," + PIN + " VARCHAR(100)," + TINNO + " VARCHAR(100)," + SALESMAN_ID + " VARCHAR(30));";
 
+        private static final String CREATE_TABLE_CREDENTIALS= " CREATE TABLE " + Table_CREDENTIALS + " (" + CREDENTIALS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " + HOSTNAME + " VARCHAR(255)," + PORTNUMBER + " VARCHAR(255)); ";
+
+
         public DataBaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             this.context = context;
@@ -396,6 +436,7 @@ public class
                 db.execSQL(CREATE_TABLE_CUSTOMER);
                 db.execSQL(CREATE_TABLE_CART);
                 db.execSQL(CREATE_TABLE_MERGE);
+                db.execSQL(CREATE_TABLE_CREDENTIALS);
 
             } catch (SQLException e) {
                 Message.message(context, "" + e);
@@ -412,6 +453,7 @@ public class
                 db.execSQL(DROP_TABLE_CART);
                 db.execSQL(DROP_TABLE_SALES_LIST);
                 db.execSQL(DROP_TABLE_MERGE);
+                db.execSQL(DROP_TABLE_CREDENTIALS);
                 onCreate(db);
             } catch (SQLException e) {
                 Message.message(context, "" + e);

@@ -3,15 +3,16 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <include
         android:id="@+id/toolbar"
         layout="@layout/settingstoolbar"
 
         />
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -19,61 +20,41 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="SSL"
-        android:id="@+id/textView16"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SSL"
+            android:textSize="20dp"
+            android:id="@+id/ssltext"
 
-        />
+            />
 
-   <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sslcheckbox"
-        android:layout_toRightOf="@id/textView16"
-        android:layout_marginLeft="200dp"
-        android:checked="true"
-        />
-    </LinearLayout>
+        <Switch
+            android:id="@+id/mySslSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="ON"
+            android:thumb="@drawable/color_thumb"
+            android:track="@drawable/gray_track"
+            android:textOff="OFF"
+            android:showText="true"
+            android:layout_alignParentRight="true"            />
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="NON SSL"
-        android:id="@+id/textView17"
-       />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
-        android:layout_marginLeft="167dp"
-
-        android:checked="false" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         >
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Server Host Name/IP"
-        android:id="@+id/textView18"
+        android:id="@+id/textHostName"
         android:layout_marginTop="5dp"
         />
 
@@ -85,13 +66,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/checkBox"
         android:textColor="#000000"
+        android:textSize="15dip"
         android:background="@drawable/edit_text_design"
         />
     </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginTop="20dp"
@@ -99,9 +81,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Server Port No"
-        android:id="@+id/textView19"
+        android:id="@+id/textPortName"
         android:layout_marginRight="40dp"
          />
 

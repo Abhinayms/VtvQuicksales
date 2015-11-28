@@ -80,12 +80,6 @@
             />
 
     </RelativeLayout>
-    <!--<View
-         android:layout_width="match_parent"
-         android:layout_height="2dp"
-         android:background="@android:color/darker_gray"
-         android:layout_marginTop="5dp"
-         />-->
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -103,8 +97,8 @@
             android:layout_height="wrap_content"
             android:text="Purchased Items"
             android:layout_marginTop="20dp"
-            android:textSize="20dp"
-            android:textColor="#00bcd4"
+            android:textSize="17dp"
+            android:textColor="#01579B"
             />
 
     </LinearLayout>
@@ -189,7 +183,7 @@
             android:layout_marginTop="15dp"
             android:text="There are no items in the Cart "
             android:textColor="#00BCD4"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:layout_gravity="center_horizontal"
             android:textStyle="italic|bold"
             android:id="@+id/cartitemtextview"
@@ -223,15 +217,15 @@
                 android:text="Total Price  :"
                 android:id="@+id/texttotalprice"
                 android:textColor="#000"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:id="@+id/totalprice"
-                android:textColor="#009688"
-                android:textSize="20dp"
+                android:textColor="#000"
+                android:textSize="17dp"
                 android:layout_alignParentRight="true"
                 />
         </RelativeLayout>
@@ -248,16 +242,16 @@
             android:layout_height="wrap_content"
             android:text="Delivery Charges :"
             android:textColor="#000"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:layout_weight="1"
             />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textdeliverycharges"
-            android:textColor="#009688"
+            android:textColor="#000000"
             android:textSize="15dp"
-            android:layout_weight="4"
+            android:layout_weight="6.67"
             android:background="@drawable/edit_text_design"
             />
     </LinearLayout>

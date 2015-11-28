@@ -105,7 +105,7 @@ public class PopupActivity extends AppCompatActivity {
 
         TextView t0v0 = new TextView(this);
         t0v0.setText("Select");
-        t0v0.setTextColor(Color.BLUE);
+        t0v0.setTextColor(Color.parseColor("#01579B"));
         t0v0.setGravity(Gravity.LEFT);
         t0v0.setPadding(0, 0, 10, 0);
         tbrow0.addView(t0v0);
@@ -113,35 +113,35 @@ public class PopupActivity extends AppCompatActivity {
 
         TextView t1v0 = new TextView(this);
         t1v0.setText("Act Id");
-        t1v0.setTextColor(Color.BLUE);
+        t1v0.setTextColor(Color.parseColor("#01579B"));
         t1v0.setGravity(Gravity.LEFT);
         t1v0.setPadding(0, 0, 10, 0);
         tbrow0.addView(t1v0);
 
         TextView t2v0 = new TextView(this);
         t2v0.setText("Name");
-        t2v0.setTextColor(Color.BLUE);
+        t2v0.setTextColor(Color.parseColor("#01579B"));
         t2v0.setGravity(Gravity.LEFT);
         t2v0.setPadding(0, 0, 10, 0);
         tbrow0.addView(t2v0);
 
-        TextView t3v0 = new TextView(this);
+        /*TextView t3v0 = new TextView(this);
         t3v0.setText("Mobile");
         t3v0.setTextColor(Color.BLUE);
         t3v0.setPadding(0, 0, 10, 0);
         t3v0.setGravity(Gravity.LEFT);
-        tbrow0.addView(t3v0);
+        tbrow0.addView(t3v0);*/
 
         TextView t4v0 = new TextView(this);
         t4v0.setText("Address");
-        t4v0.setTextColor(Color.BLUE);
+        t4v0.setTextColor(Color.parseColor("#01579B"));
         t4v0.setPadding(0, 0, 10, 0);
         t4v0.setGravity(Gravity.LEFT);
         tbrow0.addView(t4v0);
 
         TextView t5v0 = new TextView(this);
         t5v0.setText("Act Type");
-        t5v0.setTextColor(Color.BLUE);
+        t5v0.setTextColor(Color.parseColor("#01579B"));
         t5v0.setPadding(0, 0, 10, 0);
         t5v0.setGravity(Gravity.LEFT);
         tbrow0.addView(t5v0);
@@ -174,13 +174,13 @@ public class PopupActivity extends AppCompatActivity {
             t2v.setGravity(Gravity.LEFT);
             tbrow.addView(t2v);
 
-            TextView t3v = new TextView(this);
+           /* TextView t3v = new TextView(this);
             t3v.setId(3);
             t3v.setText(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER)));
             t3v.setTextColor(Color.BLACK);
             t3v.setPadding(0, 0,10, 0);
             t3v.setGravity(Gravity.LEFT);
-            tbrow.addView(t3v);
+            tbrow.addView(t3v);*/
 
             TextView t4v = new TextView(this);
             t4v.setId(4);
@@ -241,7 +241,7 @@ public class PopupActivity extends AppCompatActivity {
 
             TextView t0v0 = new TextView(this);
             t0v0.setText("SelectOne");
-            t0v0.setTextColor(Color.BLUE);
+            t0v0.setTextColor(Color.parseColor("#01579B"));
             t0v0.setGravity(Gravity.LEFT);
             t0v0.setPadding(10, 5, 10, 0);
             tbrow1.addView(t0v0);
@@ -249,34 +249,34 @@ public class PopupActivity extends AppCompatActivity {
 
             TextView t1v0 = new TextView(this);
             t1v0.setText("Act Id");
-            t1v0.setTextColor(Color.BLUE);
+            t1v0.setTextColor(Color.parseColor("#01579B"));
             t1v0.setGravity(Gravity.LEFT);
             t1v0.setPadding(0, 0, 10, 0);
             tbrow1.addView(t1v0);
 
             TextView t2v0 = new TextView(this);
-            t2v0.setText("Name");
+            t2v0.setTextColor(Color.parseColor("#01579B"));
             t2v0.setTextColor(Color.BLUE);
             t2v0.setGravity(Gravity.LEFT);
             t2v0.setPadding(0, 0, 10, 0);
             tbrow1.addView(t2v0);
 
-            TextView t3v0 = new TextView(this);
+            /*TextView t3v0 = new TextView(this);
             t3v0.setText("Mobile");
             t3v0.setTextColor(Color.BLUE);
             t3v0.setPadding(0, 0, 10, 0);
             t3v0.setGravity(Gravity.LEFT);
-            tbrow1.addView(t3v0);
+            tbrow1.addView(t3v0);*/
 
             TextView t4v0 = new TextView(this);
-            t4v0.setText("Address");
+            t4v0.setTextColor(Color.parseColor("#01579B"));
             t4v0.setTextColor(Color.BLUE);
             t4v0.setPadding(0, 0, 10, 0);
             t4v0.setGravity(Gravity.LEFT);
             tbrow1.addView(t4v0);
 
             TextView t5v0 = new TextView(this);
-            t5v0.setText("Act Type");
+            t5v0.setTextColor(Color.parseColor("#01579B"));
             t5v0.setTextColor(Color.BLUE);
             t5v0.setPadding(0, 0, 10, 0);
             t5v0.setGravity(Gravity.LEFT);
@@ -312,14 +312,14 @@ public class PopupActivity extends AppCompatActivity {
                 t2v.setGravity(Gravity.LEFT);
                 tbrow2.addView(t2v);
 
-                TextView t3v = new TextView(this);
+                /*TextView t3v = new TextView(this);
                 t3v.setId(3);
                 t3v.setText(mergeMap.get("number"));
                 t3v.setTextColor(Color.BLACK);
                 t3v.setPadding(0, 0, 10, 0);
                 t3v.setGravity(Gravity.LEFT);
                 tbrow2.addView(t3v);
-
+*/
                 TextView t4v = new TextView(this);
                 t4v.setId(4);
                 t4v.setText(mergeMap.get("address"));
@@ -539,13 +539,7 @@ public class PopupActivity extends AppCompatActivity {
             Toast.makeText(PopupActivity.this, "Please select any 1 account", Toast.LENGTH_SHORT).show();
         }
     }
-    public void cancel(View v)
-    {
-        ButtonAnimation.animation(v);
 
-        Intent i=new Intent(PopupActivity.this,MainActivity.class);
-        startActivity(i);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

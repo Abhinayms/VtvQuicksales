@@ -60,14 +60,6 @@ public class CartActivity extends AppCompatActivity {
     CustomCartListViewAdapter customCartListViewAdapter;
     List<CartModel> cartModelList;
     private Integer Actid;
-    private Integer SalesmanId;
-    private Integer ModalId;
-    private Float SalePrice;
-    private Float TotalPrice;
-    private Integer SpId;
-    private Integer Qty;
-    private Integer CartId;
-    private Integer CartModelId;
     String number;
     String date;
     String num;
@@ -309,23 +301,19 @@ public class CartActivity extends AppCompatActivity {
                     cartModel.setSalePrice(unitPrice);
                     String totalPrice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE));
                     cartModel.setTotalPrice(totalPrice);
-                       cartModel.setModalId(cursor.getInt(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID)));
+                    cartModel.setModalId(cursor.getInt(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID)));
                     cartModel.setCartModelId(new Integer(0));
                     cartModel.setCartId(new Integer(0));
                     String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
                     cartModel.setQty(Integer.parseInt(qty));
                     cartModel.setSpId(new Integer(49));
                     cartModel.setDeliveryCharges(deliveryCharges.getText().toString());
-                   String isDemoReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO));
-                   String isInstallReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.INSTALL));
-                   cartModel.setIsDemoReq(Boolean.parseBoolean(isDemoReq));
-                   cartModel.setIsInstallationReq(Boolean.parseBoolean(isInstallReq));
-
-                  // cartModelArrayList[0] = cartModel;
+                    String isDemoReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO));
+                    String isInstallReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.INSTALL));
+                    cartModel.setIsDemoReq(Boolean.parseBoolean(isDemoReq));
+                    cartModel.setIsInstallationReq(Boolean.parseBoolean(isInstallReq));
 
                    cartModelArrayList.add(cartModel);
-
-
                    cursor.moveToNext();
 
                 }

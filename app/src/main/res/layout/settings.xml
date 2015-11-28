@@ -24,21 +24,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SSL"
-            android:textSize="20dp"
+            android:textSize="15dip"
             android:id="@+id/ssltext"
 
             />
 
-        <Switch
-            android:id="@+id/mySslSwitch"
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_compat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="ON"
-            android:thumb="@drawable/color_thumb"
-            android:track="@drawable/gray_track"
+            android:layout_marginStart="50dp"
+            android:checked="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
             android:textOff="OFF"
-            android:showText="true"
-            android:layout_alignParentRight="true"            />
+            android:textOn="ON"
+            />
 
     </RelativeLayout>
     <LinearLayout
@@ -52,7 +53,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15dip"
         android:text="Server Host Name/IP"
         android:id="@+id/textHostName"
         android:layout_marginTop="5dp"
@@ -81,7 +82,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15dip"
         android:text="Server Port No"
         android:id="@+id/textPortName"
         android:layout_marginRight="40dp"

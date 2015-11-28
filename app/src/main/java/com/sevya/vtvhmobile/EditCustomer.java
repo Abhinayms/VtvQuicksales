@@ -7,12 +7,14 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -88,7 +90,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     RelativeLayout genderlayout;
 
     public RadioGroup rdg;
-    public RadioGroup compGroup;
+    public SwitchCompat compGroup;
     public  RadioButton male;
     public RadioButton female;
     public  RadioButton yes;
@@ -160,22 +162,19 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
         genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
 
-        compGroup=(RadioGroup)findViewById(R.id.company);
-        yes=(RadioButton)findViewById(R.id.compyes);
+        compGroup=(SwitchCompat)findViewById(R.id.company);
+
         male = (RadioButton) findViewById(R.id.radioMale);
-        no=(RadioButton)findViewById(R.id.compno);
         male.setChecked(true);
-        no.setChecked(true);
         genderlayout.setVisibility(View.VISIBLE);
-        compGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+
+        compGroup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.compyes) {
-                    genderlayout.setVisibility(View.GONE);
-                    selectedType = "";
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-
-                } else if (i == R.id.compno) {
+                if(isChecked)
+                {
                     genderlayout.setVisibility(View.VISIBLE);
                     rdg = (RadioGroup) findViewById(R.id.radioSex);
                     male = (RadioButton) findViewById(R.id.radioMale);
@@ -197,8 +196,11 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                             }
                         }
                     });
-
+                }else{
+                    genderlayout.setVisibility(View.GONE);
+                    selectedType="";
                 }
+
             }
         });
 

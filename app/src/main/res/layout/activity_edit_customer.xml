@@ -29,7 +29,7 @@
             android:textSize="15dp"
             android:textColor="#000000"
             android:layout_weight="1"
-            android:background="@drawable/edit_text_design"
+            android:drawable="@drawable/edittext_focus_color"
             />
             <ImageButton
                 android:background="#fff"
@@ -58,7 +58,8 @@
             android:layout_weight="1"
             android:textColor="#000000"
             android:maxLength="10"
-            android:background="@drawable/edit_text_design"
+            android:drawable="@drawable/edittext_focus_color"
+
             />
         <ImageButton
             android:background="#fff"
@@ -85,7 +86,7 @@
                 android:textSize="15dp"
                 android:layout_weight="1"
                 android:textColor="#000000"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
 
                 />
             <ImageButton
@@ -114,7 +115,7 @@
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:id="@+id/cmail"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
                 />
             <ImageButton
                 android:background="#fff"
@@ -143,7 +144,7 @@
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:id="@+id/cadd"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
                 />
             <ImageButton
                 android:background="#fff"
@@ -171,7 +172,7 @@
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:id="@+id/cadd1"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
                 />
             <ImageButton
                 android:background="#fff"
@@ -199,7 +200,7 @@
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:id="@+id/cadd2"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
                 />
             <ImageButton
                 android:background="#fff"
@@ -227,7 +228,7 @@
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:id="@+id/cadd3"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
                 />
             <ImageButton
                 android:background="#fff"
@@ -255,7 +256,7 @@
                 android:textSize="15dp"
                 android:layout_weight="1"
                 android:textColor="#000000"
-                android:background="@drawable/edit_text_design"
+                android:drawable="@drawable/edittext_focus_color"
 
                 />
             <ImageButton
@@ -282,33 +283,15 @@
                 android:textSize="15dp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/rbcomp" />
-            <RadioGroup
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:orientation="horizontal"
-
-                android:layout_marginLeft="100dp"
-                >
-
-
-                <RadioButton
-                    android:id="@+id/compyes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yes"
-                    android:layout_toEndOf="@+id/rbcomp"
-                    />
-
-                <RadioButton
-                    android:id="@+id/compno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No"
-                    android:layout_marginLeft="10dp"
-                    />
-            </RadioGroup>
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:paddingRight="30dp"
+                />
 
         </RelativeLayout>
         <RelativeLayout
@@ -357,7 +340,6 @@
                     android:layout_marginLeft="5dp"
                     />
             </RadioGroup>
-
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -365,7 +347,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
 
             >
             <TextView

@@ -8,9 +8,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
+import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.util.SOAPServices;
 
 
@@ -24,9 +27,33 @@ public class SplashScreen extends Activity {
     private static int SPLASH_TIME_OUT = 2000;
     private Context context;
     private static List soapServicesList;
+    DataBaseAdapter databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        databaseHelper=new DataBaseAdapter(this);
+
+        String url="http://192.168.1.19:2006/VTVHQuickSaleService.asmx";
+
+
+        Cursor cursor=databaseHelper.getServerCredentials();
+        if (cursor.getCount()==0)
+        {
+            databaseHelper.insertServerCredentials(url, "");
+
+        }
+        else{
+            databaseHelper.updateServerCredentials(url, "");
+        }
+
+        cursor=databaseHelper.getServerCredentials();
+        cursor.moveToFirst();
+        String hostaddress=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.HOSTNAME));
+
+
+
+        Log.d("splash screen ip",""+hostaddress);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcomescreen);
@@ -39,8 +66,11 @@ public class SplashScreen extends Activity {
                 buffer.append(s);
             }
 
-            String newBuffer=buffer.toString().replace("#SOAP_URL#","http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
+            String newBuffer=buffer.toString().replace("#SOAP_URL#",hostaddress);
             SOAPServices.loadServices(newBuffer);
+
+            Log.d("splash screen buffer", "" + newBuffer);
+
         }catch(Exception e){
             e.printStackTrace();
         }

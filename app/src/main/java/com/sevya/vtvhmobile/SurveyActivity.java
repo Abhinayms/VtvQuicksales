@@ -1,31 +1,27 @@
 package com.sevya.vtvhmobile;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Toast;
-
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class SurveyActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
-    Spinner spinner1;
-    Button sgs;
+    Button sgs1;
+    Button sgs2;
+    Button sgs3;
+    Button sgs4;
     Intent i;
-    String selectedText;
+    int j;
+
     DataBaseAdapter dataBaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,35 +31,57 @@ public class SurveyActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
 
+        sgs1=(Button)findViewById(R.id.survey1);
+        sgs2=(Button)findViewById(R.id.survey2);
+        sgs3=(Button)findViewById(R.id.survey3);
+        sgs4=(Button)findViewById(R.id.survey4);
 
         setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         dataBaseHelper=new DataBaseAdapter(this);
 
         i=new Intent(SurveyActivity.this,MainActivity.class);
 
-        spinner1 = (Spinner) findViewById(R.id.survey_spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("--Select Survey--");
-        list.add("Survey 1");
-        list.add("Survey 2");
-        list.add("Survey 3");
-        list.add("Survey 4");
-        list.add("Survey 5");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
-
-
     }
 
+    public int survey(View v)
+    {
+       int id= v.getId();
+        if(id==R.id.survey1)
+        {
 
+            sgs1.setBackgroundColor(Color.parseColor("#2962FF"));
+            sgs2.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs3.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs4.setBackgroundColor(Color.parseColor("#03A9F4"));
+
+            j=1;
+        }
+       else if(id==R.id.survey2)
+        {
+            sgs1.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs2.setBackgroundColor(Color.parseColor("#2962FF"));
+            sgs3.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs4.setBackgroundColor(Color.parseColor("#03A9F4"));
+            j=2;
+        }
+        else if(id==R.id.survey3)
+        {
+            sgs1.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs2.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs3.setBackgroundColor(Color.parseColor("#2962FF"));
+            sgs4.setBackgroundColor(Color.parseColor("#03A9F4"));
+            j=3;
+        }
+       else if(id==R.id.survey4)
+        {
+            sgs1.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs2.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs3.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs4.setBackgroundColor(Color.parseColor("#2962FF"));
+            j=4;
+        }
+         return j;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -91,15 +109,7 @@ public class SurveyActivity extends AppCompatActivity {
     {
         ButtonAnimation.animation(v);
 
-        if(spinner1.getSelectedItem().toString().equals("--Select Survey--")){
-            Toast.makeText(SurveyActivity.this, "Please Select one Survey", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            selectedText=spinner1.getSelectedItem().toString();
-            startActivity(i);
-            dataBaseHelper.deleteCartTable();
 
-        }
 
 
     }

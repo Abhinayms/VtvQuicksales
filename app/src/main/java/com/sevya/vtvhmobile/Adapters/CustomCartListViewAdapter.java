@@ -1,11 +1,8 @@
 package com.sevya.vtvhmobile.Adapters;
 
-/**
- * Created by abhinaym on 4/11/15.
- */
+
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +59,7 @@ public class CustomCartListViewAdapter extends CursorAdapter {
 
     }
 
-    private int[] colors = new int[] { 0x15527921, 0x6323595 };
+    private int[] colors = new int[] {0x6323595, 0x16777215};
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

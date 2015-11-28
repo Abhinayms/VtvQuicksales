@@ -1,9 +1,11 @@
 package com.sevya.vtvhmobile;
 
+import android.app.ProgressDialog;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -44,8 +46,9 @@ public class SettingsActivity extends AppCompatActivity {
     String hostPort;
     ResponseStatus status;
     Thread thread;
-    Switch sslSwitch;
+    SwitchCompat sslSwitch;
     DataBaseAdapter databasehelper;
+    ProgressDialog progress;
     Cursor cursor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         portNum.setVisibility(View.INVISIBLE);
         hostName.setText("http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
 
-        sslSwitch = (Switch) findViewById(R.id.mySslSwitch);
+        sslSwitch = (SwitchCompat) findViewById(R.id.switch_compat);
         sslSwitch.setChecked(true);
         sslSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -130,7 +133,7 @@ public class SettingsActivity extends AppCompatActivity {
             url=hostName.getText().toString();
             port=portNum.getText().toString();
 
-            databasehelper.insertServerCredentials(url,port);
+            databasehelper.updateServerCredentials(url, port);
 
             cursor=databasehelper.getServerCredentials();
             cursor.moveToFirst();
@@ -170,9 +173,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void test(View v){
         ButtonAnimation.animation(v);
-
+        progress = new ProgressDialog(SettingsActivity.this);
+        progress.setTitle("Please Wait");
+        progress.setMessage("Testing....");
+        progress.setCancelable(true);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
         thread=new Thread() {
             public void run() {
+
                 SalesmanCart salesmanCart=new SalesmanCart();
                 salesmanCart.setSalesmanId(new Integer(10));
                 salesmanCart.setDate("2015-11-09");
@@ -189,15 +198,18 @@ public class SettingsActivity extends AppCompatActivity {
                             SettingsActivity.this.runOnUiThread(new Thread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    progress.dismiss();
                                     Toast.makeText(SettingsActivity.this, "Connection Established", Toast.LENGTH_SHORT).show();
                                 }
                             }));
 
                         }
                         else if(status.getStatusCode()==500){
+
                             SettingsActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    progress.dismiss();
                                     Toast.makeText(SettingsActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -212,5 +224,27 @@ public class SettingsActivity extends AppCompatActivity {
 
         };
         thread.start();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if ( progress!=null && progress.isShowing() ){
+            progress.dismiss();
+        }
+
+//        alertDialog.dismiss();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if ( progress!=null && progress.isShowing() ){
+            progress.dismiss();
+        }
+        //  alertDialog.dismiss();
+
     }
 }

@@ -161,7 +161,7 @@ public class ExpandableListActivity extends AppCompatActivity{
             textView=(TextView)findViewById(R.id.saletextview);
             textView.setVisibility(View.INVISIBLE);
 
-            lv = (ListView)this.findViewById(android.R.id.list);
+            lv = (ListView)this.findViewById(R.id.salesList);
 
             customSaleListViewAdapter=new CustomSaleListViewAdapter(this,mGroupsCursor,0);
 

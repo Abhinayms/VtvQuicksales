@@ -125,10 +125,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         qty.setOnTouchListener(this);
         cprice.setOnTouchListener(this);
 
-        /*qty.setText(intent.getStringExtra("quantity"));
-        autotv.setText(intent.getStringExtra("modelNo"));
-        cprice.setText(intent.getStringExtra("unitprice"));*/
-
 
 
         dname.setText(name);
@@ -215,6 +211,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
                              ArrayAdapter<String> adapter = new ArrayAdapter<>(BuyProducts.this, android.R.layout.simple_dropdown_item_1line, modelList);
                              autotv.setAdapter(adapter);
+                             adapter.notifyDataSetChanged();
                              autotv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                                  Map map=new HashMap(modelMap);
@@ -353,7 +350,6 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
     }
     public void doneClick(View v) {
-
                                              ButtonAnimation.animation(v);
                                              ProductsInfo productsInfo=new ProductsInfo();
                                              productsInfo.setName(dname.getText().toString());

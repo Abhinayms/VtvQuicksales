@@ -60,7 +60,7 @@ public class GetDetailsByDate extends AppCompatActivity {
 
 
         Intent intent=new Intent(GetDetailsByDate.this,ExpandableListActivity.class);
-        intent.putExtra("Date",date);
+        intent.putExtra("Date", date);
         startActivity(intent);
     }
 
@@ -84,5 +84,11 @@ public class GetDetailsByDate extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i=new Intent(GetDetailsByDate.this,MainActivity.class);
+        startActivity(i);
+
     }
 }

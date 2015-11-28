@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:orientation="vertical"
-
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,8 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textSize="20dp"
-                android:textColor="#004D40"
+                android:textSize="17dip"
+                android:textColor="#000"
                 android:id="@+id/name"
                 />
             <TextView
@@ -40,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mobile Number"
-                android:textSize="20dp"
-                android:textColor="#004D40"
+                android:textSize="17dip"
+                android:textColor="#000"
                 android:layout_alignParentRight="true"
 
 
@@ -49,12 +50,10 @@
         </RelativeLayout>
 
     <ListView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@android:id/list"
-        android:dividerHeight="0.5dp"
-        android:divider="#A4C739"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:id="@+id/salesList"
         >
 
     </ListView>

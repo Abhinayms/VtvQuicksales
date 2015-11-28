@@ -7,6 +7,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +16,15 @@ import android.widget.TextView;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 
 public class PurchaseInfo extends AppCompatActivity {
     Toolbar mToolbar;
     String name;
     String number;
-    String totalPrice;
+    TextView totalPrice;
     String unitPrice;
     String qty;
     String modelName;
@@ -32,6 +36,7 @@ public class PurchaseInfo extends AppCompatActivity {
     String date;
     ListView saleList;
     Cursor cursor;
+    Double sum=0.0;
     DataBaseAdapter dataBaseHelper;
 
 
@@ -64,6 +69,7 @@ public class PurchaseInfo extends AppCompatActivity {
         txtname= (TextView) findViewById(R.id.txt_name);
         txtnumber= (TextView) findViewById(R.id.txt_mobile);
         txtstatus= (TextView) findViewById(R.id.txt_status);
+        totalPrice=(TextView)findViewById(R.id.totalprice);
 
 
 
@@ -72,11 +78,11 @@ public class PurchaseInfo extends AppCompatActivity {
 
         name=i.getStringExtra("name");
         number=i.getStringExtra("mobile");
-        totalPrice=i.getStringExtra("totalprice");
+       /* totalPrice=i.getStringExtra("totalprice");
         unitPrice=i.getStringExtra("unitPrice");
         modelId=i.getStringExtra("modelId");
         modelName=i.getStringExtra("modelName");
-        qty=i.getStringExtra("qty");
+        qty=i.getStringExtra("qty");*/
         status=i.getStringExtra("status");
         date=i.getStringExtra("date");
 
@@ -87,19 +93,23 @@ public class PurchaseInfo extends AppCompatActivity {
          dataBaseHelper=new DataBaseAdapter(this);
 
          cursor=dataBaseHelper.getItemSales(number,date);
+        cursor.moveToFirst();
+        for(int j=0;j<cursor.getCount();j++) {
+
+            String tprice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE));
+            Double convertedPrice=Double.parseDouble(tprice);
+            sum+=convertedPrice;
+            cursor.moveToNext();
+        }
+        String tcost= NumberFormat.getNumberInstance(Locale.US).format(sum);
+        totalPrice.setText(tcost);
         saleList=(ListView)findViewById(R.id.salelist);
 
         String[] from=new String[]{DataBaseAdapter.DataBaseHelper.MODEL_NAME, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};
-        int[] to=new int[]{R.id.p_model,R.id.p_qty,R.id.p_price,R.id.p_totalprice};
+        int[] to=new int[]{R.id.p_model,R.id.p_qty,R.id.p_price};
 
-        SimpleCursorAdapter saleListadapter=new SimpleCursorAdapter(PurchaseInfo.this,R.layout.cartitemlayout,cursor,from,to,0);
+        SimpleCursorAdapter saleListadapter=new SimpleCursorAdapter(PurchaseInfo.this,R.layout.invoicelistitem,cursor,from,to,0);
         saleList.setAdapter(saleListadapter);
-
-
-
-
-
-
 
 
     }

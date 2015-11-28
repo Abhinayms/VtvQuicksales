@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
 
             >
         <Button
@@ -78,23 +78,7 @@
             android:textColor="#ffffff"
             />
          </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:layout_weight="2"
 
-            >
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cancel"
-            android:text="Cancel"
-            android:background="@drawable/buttonshape"
-            android:onClick="cancel"
-            android:textColor="#ffffff"
-            />
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

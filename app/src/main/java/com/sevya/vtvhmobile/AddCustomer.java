@@ -6,6 +6,7 @@ package com.sevya.vtvhmobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -78,7 +80,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
     public RadioGroup rdg;
-    public RadioGroup compGroup;
+    public SwitchCompat compGroup;
     public  RadioButton male;
     public RadioButton female;
     public  RadioButton yes;
@@ -188,48 +190,46 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     public void onButtonClickDone()
     {
 
-        compGroup=(RadioGroup)findViewById(R.id.company);
-        yes=(RadioButton)findViewById(R.id.compyes);
+        compGroup=(SwitchCompat)findViewById(R.id.company);
         male = (RadioButton) findViewById(R.id.radioMale);
-        no=(RadioButton)findViewById(R.id.compno);
         male.setChecked(true);
-        no.setChecked(true);
         genderlayout.setVisibility(View.VISIBLE);
-        compGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-        @Override
-        public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            if (i == R.id.compyes) {
-                genderlayout.setVisibility(View.GONE);
-                selectedType="";
+        compGroup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+               if(isChecked)
+               {
+                   genderlayout.setVisibility(View.VISIBLE);
+                   rdg = (RadioGroup) findViewById(R.id.radioSex);
+                   male = (RadioButton) findViewById(R.id.radioMale);
+                   female = (RadioButton) findViewById(R.id.radioFemale);
+
+                   male.setChecked(true);
+
+                   rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                       @Override
+                       public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                           if (i == R.id.radioMale) {
+                               selectedType = "Male";
 
 
-            } else if (i == R.id.compno) {
-                genderlayout.setVisibility(View.VISIBLE);
-                rdg = (RadioGroup) findViewById(R.id.radioSex);
-                male = (RadioButton) findViewById(R.id.radioMale);
-                female = (RadioButton) findViewById(R.id.radioFemale);
+                           } else if (i == R.id.radioFemale) {
+                               selectedType = "Female";
 
-                male.setChecked(true);
-
-                rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                        if (i == R.id.radioMale) {
-                            selectedType = "Male";
-
-
-                        } else if (i == R.id.radioFemale) {
-                            selectedType = "Female";
-
-                        }
-                    }
-                });
+                           }
+                       }
+                   });
+               }else{
+                   genderlayout.setVisibility(View.GONE);
+                   selectedType="";
+               }
 
             }
-        }
         });
+
+
         try {
             done = (Button) findViewById(R.id.button_done);
             done.setOnClickListener(new View.OnClickListener() {

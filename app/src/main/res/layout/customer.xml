@@ -47,7 +47,7 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
@@ -79,13 +79,14 @@
             />
     </RelativeLayout>
     <View
-         android:layout_width="match_parent"
-         android:layout_height="0.1dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
-         android:layout_marginTop="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-                 />
+
+        />
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -114,11 +115,12 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
         />
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -149,7 +151,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
@@ -183,11 +185,12 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
         />
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -216,11 +219,12 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
         />
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -249,11 +253,12 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
         />
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -282,11 +287,12 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+
         />
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -316,7 +322,7 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
@@ -351,7 +357,7 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
@@ -387,23 +393,28 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.2dp"
         android:background="#eeeeee"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
 
         />
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Continue"
+        android:gravity="right|bottom"
+        android:paddingRight="20dp"
+        android:layout_marginTop="60dp"
+        >
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/fb"
         android:id="@+id/Rcontinue"
-        android:textColor="#ffffff"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/buttonshape"
+        android:src="@drawable/rightarrow"
         />
+    </RelativeLayout>
 
 </LinearLayout>
 </ScrollView>

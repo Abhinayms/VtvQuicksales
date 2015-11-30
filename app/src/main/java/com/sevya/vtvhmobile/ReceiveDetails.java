@@ -4,12 +4,25 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.sevya.vtvhmobile.db.DataBaseAdapter;
+import com.sevya.vtvhmobile.models.ProductsInfo;
+import com.sevya.vtvhmobile.models.ResponseStatus;
+import com.sevya.vtvhmobile.util.SOAPServices;
+import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
+import com.sevya.vtvhmobile.webservices.ServiceParams;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -27,16 +40,23 @@ public class ReceiveDetails extends AppCompatActivity {
     TextView add3;
     TextView gen;
     TextView ln;
-    Button rcontinue;
+    ImageButton rcontinue;
     String date;
     String actid;
     private Toolbar mToolbar;
+    Thread thread;
+    String mobile;
+    String customerName;
+    ResponseStatus status;
+    JSONArray array;
+    DataBaseAdapter dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer);
 
+        dataBaseHelper=new DataBaseAdapter(this);
 
         name=(TextView)findViewById(R.id.ename);
         numm=(TextView)findViewById(R.id.enumm);
@@ -77,6 +97,9 @@ public class ReceiveDetails extends AppCompatActivity {
         gen.setText(cgen);
         ln.setText(cln);
 
+        mobile=numm.getText().toString();
+        customerName=name.getText().toString();
+
         Calendar c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_MONTH);
         int month = c.get(Calendar.MONTH)+1;
@@ -100,18 +123,22 @@ public class ReceiveDetails extends AppCompatActivity {
     public void onButtonClick()
     {
 
-        rcontinue=(Button) findViewById(R.id.Rcontinue);
+        rcontinue=(ImageButton) findViewById(R.id.Rcontinue);
         rcontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 ButtonAnimation.animation(v);
 
-                Intent in =new Intent(ReceiveDetails.this,BuyProducts.class);
+                Intent in =new Intent(ReceiveDetails.this,CartActivity.class);
                 in.putExtra("cname",name.getText().toString());
-                in.putExtra("cnum",numm.getText().toString());
-                in.putExtra("actId",actid);
+                in.putExtra("cnum", numm.getText().toString());
+                in.putExtra("actId", actid);
+                in.putExtra("Date", date);
                 startActivity(in);
+
+
+
             }
         });
 
@@ -132,6 +159,62 @@ public class ReceiveDetails extends AppCompatActivity {
         int id = item.getItemId();
         if(id==R.id.action_cart)
         {
+            thread = new Thread() {
+                public void run() {
+                    SOAPServiceClient soapServiceClient = new SOAPServiceClient();
+
+                    try {
+                        status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getGetCartItemsBasedOnMobileNoService"), new ServiceParams(mobile, "mobileNo", String.class));
+                        if (status.getStatusCode() == 200) {
+                            JSONObject obj=new JSONObject(status.getStatusResponse());
+                            array=obj.getJSONArray("Details");
+
+                            for (int index = 0; index < array.length(); index++) {
+                                try {
+                                    JSONObject eachObject = (JSONObject) array.get(index);
+                                    ProductsInfo productsInfo=new ProductsInfo();
+                                    productsInfo.setName(customerName);
+                                    productsInfo.setNumber(mobile);
+                                 //   productsInfo.setModelNo(autotv.getText().toString());
+                                    productsInfo.setPrice(eachObject.getString("SalePrice"));
+                                    productsInfo.setTotalPrice(eachObject.getString("TotalPrice"));
+                                    productsInfo.setModalId(eachObject.getString("ModalId"));
+                                    productsInfo.setStockPoint(eachObject.getString("SpId"));
+                                    productsInfo.setQty(eachObject.getString("Qty"));
+                                    productsInfo.setInstall(eachObject.getBoolean("IsInstallationReq"));
+                                    productsInfo.setDemo(eachObject.getBoolean("IsDemoReq"));
+
+
+
+                                     dataBaseHelper.insertDataItems(productsInfo);
+
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }
+                        else if(status.getStatusCode()==500){
+                            ReceiveDetails.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(ReceiveDetails.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ;
+                    }
+
+
+                }
+
+            };
+            thread.start();
+
             Intent intent=new Intent(this,CartActivity.class);
             intent.putExtra("cname",name.getText().toString());
             intent.putExtra("cnum",numm.getText().toString());

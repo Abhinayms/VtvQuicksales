@@ -78,7 +78,8 @@ public class ExpandableListActivity extends AppCompatActivity{
                     try {
                         status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getSalesmanListByDateService"),modalParam);
                         if(status.getStatusCode() == 200 ) {
-                            array = new JSONArray(status.getStatusResponse());
+                            JSONObject obj = new JSONObject(status.getStatusResponse());
+                            array = obj.getJSONArray("Details");
                             for (int index = 0; index < array.length(); index++) {
                                 try {
                                     JSONObject eachObject = (JSONObject) array.get(index);
@@ -224,7 +225,7 @@ public class ExpandableListActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mGroupsCursor.close();
+
 
         dataBaseHelper.deleteSalesTable();
     }

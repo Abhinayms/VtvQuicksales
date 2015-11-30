@@ -65,7 +65,6 @@ public class SettingsActivity extends AppCompatActivity {
         databasehelper=new DataBaseAdapter(this);
 
 
-
         textPort = (TextView) findViewById(R.id.textPortName);
         textHost=(TextView)findViewById(R.id.textHostName);
         textPort.setVisibility(View.INVISIBLE);
@@ -88,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                     portNum.setVisibility(View.INVISIBLE);
                 } else {
                     hostName.setText("");
+                    portNum.setText("");
                     textPort.setVisibility(View.VISIBLE);
                     portNum.setVisibility(View.VISIBLE);
 
@@ -125,7 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
             }catch(Exception e){
                 e.printStackTrace();
             }
-
+            hostName.setText(url);
             Toast.makeText(SettingsActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -139,6 +139,7 @@ public class SettingsActivity extends AppCompatActivity {
             cursor.moveToFirst();
             hostAddress=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.HOSTNAME));
             hostPort=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PORTNUMBER));
+            hostName.setText(hostAddress);
 
             try {
                 AssetManager assetManager = getApplicationContext().getAssets();
@@ -150,20 +151,17 @@ public class SettingsActivity extends AppCompatActivity {
 
 
                     StringBuffer addressBuffer=new StringBuffer();
-                    addressBuffer.append("http://"+url+":"+port+"/"+"VTVHQuickSaleService.asmx");
-
-                    Log.d("AddressBuffer",""+addressBuffer);
+                    addressBuffer.append("http://"+hostAddress+":"+hostPort+"/"+"VTVHQuickSaleService.asmx");
 
                     String newBuffer=buffer.toString().replace("#SOAP_URL#",addressBuffer);
                     SOAPServices.loadServices(newBuffer);
 
-                    Log.d("new buffer", "" + newBuffer);
 
                 }
             }catch(Exception e){
                 e.printStackTrace();
             }
-
+            hostName.setText(hostAddress);
             Toast.makeText(SettingsActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
         }
 

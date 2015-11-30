@@ -69,8 +69,6 @@ public class SplashScreen extends Activity {
             String newBuffer=buffer.toString().replace("#SOAP_URL#",hostaddress);
             SOAPServices.loadServices(newBuffer);
 
-            Log.d("splash screen buffer", "" + newBuffer);
-
         }catch(Exception e){
             e.printStackTrace();
         }

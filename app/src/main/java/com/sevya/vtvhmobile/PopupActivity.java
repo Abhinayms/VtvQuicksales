@@ -255,6 +255,7 @@ public class PopupActivity extends AppCompatActivity {
             tbrow1.addView(t1v0);
 
             TextView t2v0 = new TextView(this);
+            t2v0.setText("Name");
             t2v0.setTextColor(Color.parseColor("#01579B"));
             t2v0.setTextColor(Color.BLUE);
             t2v0.setGravity(Gravity.LEFT);
@@ -269,6 +270,7 @@ public class PopupActivity extends AppCompatActivity {
             tbrow1.addView(t3v0);*/
 
             TextView t4v0 = new TextView(this);
+            t4v0.setText("Address");
             t4v0.setTextColor(Color.parseColor("#01579B"));
             t4v0.setTextColor(Color.BLUE);
             t4v0.setPadding(0, 0, 10, 0);
@@ -276,6 +278,7 @@ public class PopupActivity extends AppCompatActivity {
             tbrow1.addView(t4v0);
 
             TextView t5v0 = new TextView(this);
+            t5v0.setText("Primary act");
             t5v0.setTextColor(Color.parseColor("#01579B"));
             t5v0.setTextColor(Color.BLUE);
             t5v0.setPadding(0, 0, 10, 0);
@@ -409,13 +412,8 @@ public class PopupActivity extends AppCompatActivity {
                         }
 
                         duplicateid = buffer.toString();
-                        Log.d("duplicateId", "" + duplicateid);
 
                         userModel.setDuplicateIds(duplicateid);
-
-                        Log.d("name from database", "" + name);
-                        Log.d("list", "" + actList.toString());
-
 
                         thread = new Thread() {
                             public void run() {
@@ -514,7 +512,6 @@ public class PopupActivity extends AppCompatActivity {
                 String accountId = mergeMap.get("actId");
                 Cursor nomergecursor = dataBaseHelper.getAllData(accountId);
                 Log.d("cursor count",""+nomergecursor.getCount());
-                startManagingCursor(nomergecursor);
                 nomergecursor.moveToFirst();
                 String name=nomergecursor.getString(nomergecursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
                 Intent i = new Intent(PopupActivity.this, ReceiveDetails.class);

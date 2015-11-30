@@ -138,7 +138,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Items"
+                android:text="Purchased Items"
                 android:textSize="20dp"
                 android:textColor="#00bcd4"
 
@@ -165,6 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Model No   :"
+                android:paddingTop="5dp"
                 android:textSize="15dp"
                 android:layout_weight="2"
                 />
@@ -177,14 +178,14 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Model No"
+                    android:hint="enter model number"
                     android:textSize="15dp"
                     android:id="@+id/autoTv"
                     android:textColor="#000"
                     android:completionThreshold="1"
                     android:layout_weight="1"
 
-                    android:background="@drawable/edit_text_design">
+                    >
 
                     </AutoCompleteTextView>
                 <ImageButton
@@ -244,7 +245,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Qty               :"
+                android:text="Quantity      :"
+                android:paddingTop="5dp"
                 android:textSize="15dp"
                 android:layout_weight="2"
                 />
@@ -263,7 +265,6 @@
                     android:textSize="15dp"
                     android:inputType="number"
                     android:layout_weight="1"
-                    android:background="@drawable/edit_text_design"
                     />
                 <ImageButton
                     android:background="#fff"
@@ -293,6 +294,8 @@
                 android:layout_height="wrap_content"
                 android:text="Unit Price    :"
                 android:textSize="15dp"
+                android:paddingTop="5dp"
+
                 android:layout_weight="2"
                 />
             <LinearLayout
@@ -310,7 +313,6 @@
                     android:textSize="15dp"
                     android:inputType="numberDecimal"
                     android:layout_weight="1"
-                    android:background="@drawable/edit_text_design"
                     />
                 <ImageButton
                     android:background="#fff"

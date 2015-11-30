@@ -59,7 +59,7 @@ public class CustomCartListViewAdapter extends CursorAdapter {
 
     }
 
-    private int[] colors = new int[] {0x6323595, 0x16777215};
+    private int[] colors = new int[] {0x10395294,0x6323595};
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Purchased Items"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:textColor="#01579B"
                     />
 
@@ -133,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Model No"
+                        android:textSize="15dp"
                         android:gravity="left"
                         android:textColor="#03A9F4"
                         android:paddingLeft="5dp"
@@ -143,6 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Quantity"
+                        android:textSize="15dp"
                         android:gravity="center"
                         android:textColor="#03A9F4"
                         android:paddingLeft="10dp"
@@ -153,6 +155,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Unit Price"
+                        android:textSize="15dp"
                         android:gravity="right"
                         android:textColor="#03A9F4"
                         android:paddingLeft="10dp"
@@ -196,16 +199,16 @@
                     android:layout_height="wrap_content"
                     android:text="Total Price  :"
                     android:id="@+id/texttotalprice"
-                    android:textColor="#000"
-                    android:textSize="17dp"
+                    android:textColor="#03A9F4"
+                    android:textSize="15dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:id="@+id/totalprice"
-                    android:textColor="#000"
-                    android:textSize="17dp"
+                    android:textColor="#03A9F4"
+                    android:textSize="15dp"
                     android:layout_alignParentRight="true"
                     />
             </RelativeLayout>

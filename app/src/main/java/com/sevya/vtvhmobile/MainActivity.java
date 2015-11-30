@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private String city;
     private String district;
     private String landline;
+    private String state;
+    private String flatNo;
+    private String mandal;
     private String prof;
     String mobile;
     ProgressDialog progress;
@@ -126,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
                             {
                                 status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"), new ServiceParams(mobile, "MobileNo", Integer.class));
                                 if (status.getStatusCode() == 200) {
-                                    array = new JSONArray(status.getStatusResponse());
+                                    JSONObject obj = new JSONObject(status.getStatusResponse());
+                                    array = obj.getJSONArray("Details");
                                     if (array.length() > 1) {
                                         for (int index = 0; index < array.length(); index++) {
                                             try {
@@ -160,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                                                 landline = eachObject.getString("Phone");
                                                 mergeCustomer.setLandlineNumber(landline);
                                                 mergeCustomer.setMandal(eachObject.getString("Mandal"));
+                                                mergeCustomer.setState(eachObject.getString("State"));
                                                 mergeCustomer.setCountry(eachObject.getString("Country"));
                                                 mergeCustomer.setIsPrimaryact(eachObject.getString("IsPrimaryAct"));
                                                 mergeCustomer.setPin(eachObject.getString("Pin"));
@@ -198,11 +203,14 @@ public class MainActivity extends AppCompatActivity {
                                                 mobileNo = eachObject.getString("MobileNo");
                                                 companyName = eachObject.getString("CompanyName");
                                                 street = eachObject.getString("Street");
+                                                state=eachObject.getString("State");
                                                 city = eachObject.getString("City");
                                                 email = eachObject.getString("Email");
                                                 gender = eachObject.getString("Gender");
                                                 district = eachObject.getString("District");
                                                 landline = eachObject.getString("Phone");
+                                                mandal=eachObject.getString("Mandal");
+                                                flatNo=eachObject.getString("FlatNo");
                                                 prof = eachObject.getString("Profession");
 
 
@@ -218,9 +226,9 @@ public class MainActivity extends AppCompatActivity {
                                                         i.putExtra("cmail", email);
                                                         i.putExtra("cadd", address1);
                                                         i.putExtra("cln", landline);
-                                                        i.putExtra("cadd1", street);
-                                                        i.putExtra("cadd2", city);
-                                                        i.putExtra("cadd3", district);
+                                                        i.putExtra("cadd1", flatNo+street);
+                                                        i.putExtra("cadd2", city+state);
+                                                        i.putExtra("cadd3", district+mandal);
                                                         i.putExtra("actId", actId);
                                                         startActivity(i);
                                                     }
@@ -231,7 +239,27 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
                                     }
-                                } else if (status.getStatusCode() != 200) {
+                                }else if(status.getStatusCode()==202)
+                                {
+                                    MainActivity.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progress.dismiss();
+                                            Toast.makeText(MainActivity.this, ""+status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                else if (status.getStatusCode() == 500) {
+                                    MainActivity.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progress.dismiss();
+                                            Toast.makeText(MainActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+                                else if (status.getStatusCode() != 200) {
 
                                     progress.dismiss();
 
@@ -268,14 +296,6 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     });
 
-
-                                } else if (status.getStatusCode() == 500) {
-                                    MainActivity.this.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(MainActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
 
                                 }
                             } catch (Exception e) {
@@ -374,7 +394,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i=new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(i);
 
+    }
 
 
 }

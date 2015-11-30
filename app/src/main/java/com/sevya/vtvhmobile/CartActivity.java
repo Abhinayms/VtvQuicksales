@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
@@ -45,12 +46,10 @@ public class CartActivity extends AppCompatActivity {
     Button continueshopping;
     TextView totalPrice;
     TextView textTotalPrice;
-
     Thread thread;
     ResponseStatus status;
     JSONArray array;
     CartModel cartModel;
-
     DataBaseAdapter dataBaseHelper;
     Cursor cursor;
     ListView listView;
@@ -58,7 +57,6 @@ public class CartActivity extends AppCompatActivity {
     String accountId;
     int pstn;
     CustomCartListViewAdapter customCartListViewAdapter;
-    List<CartModel> cartModelList;
     private Integer Actid;
     String number;
     String date;
@@ -113,11 +111,11 @@ public class CartActivity extends AppCompatActivity {
         tickButton=(Button)findViewById(R.id.float_button_tick);
         plusButton=(ImageButton)findViewById(R.id.float_button_plus);
 
-        int sum=0;
+        double sum=0;
         number=cnum.getText().toString();
 
 
-        cursor = dataBaseHelper.getItem(number, date);
+        cursor = dataBaseHelper.getItem(number);
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
@@ -128,8 +126,8 @@ public class CartActivity extends AppCompatActivity {
             textView = (TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
-            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.deliverychargelayout);
-            linearLayout.setVisibility(View.GONE);
+            RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.deliverychargelayout);
+            relativeLayout.setVisibility(View.GONE);
 
             continueshopping=(Button)findViewById(R.id.continueshopping);
             continueshopping.setVisibility(View.VISIBLE);
@@ -158,8 +156,8 @@ public class CartActivity extends AppCompatActivity {
         else {
             textView=(TextView)findViewById(R.id.cartitemtextview);
             continueshopping=(Button)findViewById(R.id.continueshopping);
-            textView.setVisibility(View.INVISIBLE);
-            continueshopping.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.GONE);
+            continueshopping.setVisibility(View.GONE);
 
             customCartListViewAdapter=new CustomCartListViewAdapter(this,cursor);
 
@@ -183,7 +181,7 @@ public class CartActivity extends AppCompatActivity {
             for(int i=0;i<cursor.getCount();i++) {
                 int index = cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE);
                 String tprice = cursor.getString(index);
-                int convertedPrice=Integer.parseInt(tprice);
+                double convertedPrice=Double.parseDouble(tprice);
                 sum+=convertedPrice;
                 cursor.moveToNext();
             }
@@ -373,7 +371,6 @@ public class CartActivity extends AppCompatActivity {
                 intent.putExtra("cname", cname.getText().toString());
                 intent.putExtra("cnum", cnum.getText().toString());
                 intent.putExtra("actId",accountId);
-                        //intent.putExtra("listsize",((Integer)listView.getScrollBarSize()).toString());
                 intent.putExtra("listsize", listView.getCount());
                 startActivity(intent);
 

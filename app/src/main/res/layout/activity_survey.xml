@@ -6,7 +6,6 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/surveytoolbar"
-
         />
 
     <Button
@@ -14,22 +13,23 @@
         android:layout_height="wrap_content"
         android:text="Survey 1"
         android:id="@+id/survey1"
-        android:background="@drawable/buttonshape"
         android:textColor="#fff"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:onClick="survey"
+        android:background="#03A9F4"
         />
     <Button
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="Survey 2"
         android:id="@+id/survey2"
-        android:background="@drawable/buttonshape"
         android:textColor="#fff"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="survey"
+        android:background="#03A9F4"
+
 
         />
     <Button
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="Survey 3"
         android:id="@+id/survey3"
-        android:background="@drawable/buttonshape"
+        android:background="#03A9F4"
         android:textColor="#fff"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -49,12 +49,11 @@
         android:layout_height="wrap_content"
         android:text="Survey 4"
         android:id="@+id/survey4"
-        android:background="@drawable/buttonshape"
         android:textColor="#fff"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="survey"
-
+        android:background="#03A9F4"
         />
 
 

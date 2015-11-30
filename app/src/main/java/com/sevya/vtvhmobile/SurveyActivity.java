@@ -109,6 +109,7 @@ public class SurveyActivity extends AppCompatActivity {
     {
         ButtonAnimation.animation(v);
 
+            startActivity(i);
 
 
 

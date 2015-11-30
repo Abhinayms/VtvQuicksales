@@ -68,8 +68,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     String modelName;
     String modelId;
     String modelDescription;
-    List<String> modelList;
-    HashMap<String,String> modelMap;
+    List<String> modelList = null;
+    HashMap<String,String> modelMap = null;
     String selectedModelName;
     String selectedModelId;
     List<String> stockPointList;
@@ -81,6 +81,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     String availableQuantity;
     String spName;
     String spid;
+    ArrayAdapter<String> adapter;
 
 
     @Override
@@ -163,44 +164,42 @@ public class BuyProducts extends Activity  implements OnTouchListener {
          public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 
              prefix = cs.toString();
-
-             modelList = new ArrayList<String>();
-             modelMap=new HashMap<String, String>();
-
-
              thread = new Thread() {
                  public void run() {
                      SOAPServiceClient soapServiceClient = new SOAPServiceClient();
 
                      try {
+                             if(prefix.length() == 1){
+                                modelList = new ArrayList<String>();
+                                modelMap = new HashMap<String, String>();
+                                status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelsForListService"), new ServiceParams(prefix, "ModelPrefix", String.class));
 
-                         status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelsForListService"), new ServiceParams(prefix, "ModelPrefix", String.class));
+                                 if (status.getStatusCode() == 200) {
+                                     array = new JSONArray(status.getStatusResponse());
+                                     for (int index = 0; index < array.length(); index++) {
+                                         try {
+                                             JSONObject eachObject = (JSONObject) array.get(index);
 
-                         if (status.getStatusCode() == 200) {
-                             array = new JSONArray(status.getStatusResponse());
-                             for (int index = 0; index < array.length(); index++) {
-                                 try {
-                                     JSONObject eachObject = (JSONObject) array.get(index);
+                                             modelName = eachObject.getString("ModelName");
+                                             modelId=eachObject.getString("ModelId");
+                                             modelList.add(modelName);
+                                             modelMap.put(modelName,modelId);
 
-                                     modelName = eachObject.getString("ModelName");
-                                     modelId=eachObject.getString("ModelId");
-                                     modelList.add(modelName);
-                                     modelMap.put(modelName,modelId);
-
-                                 } catch (Exception e) {
-                                     e.printStackTrace();
+                                         } catch (Exception e) {
+                                             e.printStackTrace();
+                                         }
+                                     }
                                  }
-                             }
-                         }
-                         else if(status.getStatusCode()==500){
-                             BuyProducts.this.runOnUiThread(new Runnable() {
-                                 @Override
-                                 public void run() {
-                                     Toast.makeText(BuyProducts.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
-                                 }
-                             });
+                                 else if(status.getStatusCode()==500){
+                                     BuyProducts.this.runOnUiThread(new Runnable() {
+                                         @Override
+                                         public void run() {
+                                             Toast.makeText(BuyProducts.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                         }
+                                     });
 
-                         }
+                                 }
+                            }
                      } catch (Exception e) {
                          e.printStackTrace();
                      }
@@ -208,10 +207,18 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                          @Override
                          public void run() {
 
+                             List<String> itemsToShow = new ArrayList<String>();
+                             for(String item : modelList){
 
-                             ArrayAdapter<String> adapter = new ArrayAdapter<>(BuyProducts.this, android.R.layout.simple_dropdown_item_1line, modelList);
-                             autotv.setAdapter(adapter);
+                                 if(item.startsWith(prefix.toLowerCase()) || item.startsWith(prefix.toUpperCase())){
+                                     itemsToShow.add(item);
+                                 }
+                             }
+
+                             adapter = new ArrayAdapter<>(BuyProducts.this, android.R.layout.simple_dropdown_item_1line, itemsToShow);
                              adapter.notifyDataSetChanged();
+                             autotv.setAdapter(adapter);
+
                              autotv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                                  Map map=new HashMap(modelMap);
@@ -265,6 +272,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                             intent.putExtra("cname", dname.getText().toString());
                             intent.putExtra("cnum", dnum.getText().toString());
                             intent.putExtra("Date",date);
+                            intent.putExtra("actId",actId);
                             startActivity(intent);
                         } else {
                             Intent intent=new Intent(BuyProducts.this,MainActivity.class);
@@ -383,8 +391,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                                  Toast.makeText(BuyProducts.this, "Enter valid Quantity", Toast.LENGTH_SHORT).show();
                                              }
                                              else {
-                                                 int p=Integer.parseInt(cprice.getText().toString());
-                                                 int q=Integer.parseInt(qty.getText().toString());
+                                                 double p=Double.parseDouble(cprice.getText().toString());
+                                                 double q=Double.parseDouble(qty.getText().toString());
                                                  String tp=""+(p*q);
                                                  productsInfo.setTotalPrice(tp);
 

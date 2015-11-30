@@ -173,7 +173,7 @@ public class
 
     }
 
-    public Cursor getItem(String number,String date)
+    public Cursor getItem(String number)
     {
 
 
@@ -182,10 +182,10 @@ public class
         String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,dataBaseHelper.MODEL_ID,
                 dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_No,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE,dataBaseHelper.DEMO,dataBaseHelper.INSTALL};
 
-        String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
+        String where=dataBaseHelper.MOBILE_NUMBER + "=?"; //+ " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
 
 
-        String[] args={number,date};
+        String[] args={number};
 
         cursor =db.query(dataBaseHelper.Table_CART, columns,where,args, null, null, null);
 

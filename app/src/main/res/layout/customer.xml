@@ -41,7 +41,7 @@
             android:layout_marginLeft="140dp"
             android:layout_alignParentLeft="true"
             android:id="@+id/ename"
-
+            android:textSize="15dp"
             />
 
     </RelativeLayout>
@@ -76,6 +76,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/enumm"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
     </RelativeLayout>
     <View
@@ -110,6 +111,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/custCompName"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
 
     </RelativeLayout>
@@ -145,6 +147,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/email"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
 
     </RelativeLayout>
@@ -181,6 +184,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/eadd"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
     </RelativeLayout>
     <View
@@ -215,6 +219,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/eadd1"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
     </RelativeLayout>
     <View
@@ -249,6 +254,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/eadd2"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
     </RelativeLayout>
     <View
@@ -283,6 +289,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/eadd3"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
     </RelativeLayout>
     <View
@@ -317,6 +324,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/eln"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
 
     </RelativeLayout>
@@ -352,6 +360,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/egen"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
 
     </RelativeLayout>
@@ -387,6 +396,7 @@
             android:layout_marginLeft="140dp"
             android:id="@+id/epro"
             android:layout_alignParentLeft="true"
+            android:textSize="15dp"
             />
 
     </RelativeLayout>

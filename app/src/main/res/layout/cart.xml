@@ -112,7 +112,6 @@
         android:paddingTop="8dip"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
         >
 
         <TextView

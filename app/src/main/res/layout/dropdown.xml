@@ -80,6 +80,7 @@
                 android:layout_marginLeft="140dp"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/dname"
+                android:textSize="15dp"
                 />
 
         </RelativeLayout>
@@ -115,6 +116,7 @@
                 android:layout_marginLeft="140dp"
                 android:id="@+id/dnum"
                 android:layout_alignParentLeft="true"
+                android:textSize="15dp"
                 />
 
 

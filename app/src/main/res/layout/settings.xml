@@ -92,6 +92,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/portno"
         android:textColor="#000000"
+        android:textSize="15dp"
          />
 </LinearLayout>
     <RelativeLayout

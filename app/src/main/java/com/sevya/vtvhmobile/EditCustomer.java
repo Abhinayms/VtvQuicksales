@@ -163,7 +163,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
 
         compGroup=(SwitchCompat)findViewById(R.id.company);
-
+        compGroup.setChecked(false);
         male = (RadioButton) findViewById(R.id.radioMale);
         male.setChecked(true);
         genderlayout.setVisibility(View.VISIBLE);
@@ -175,6 +175,11 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
                 if(isChecked)
                 {
+
+                    genderlayout.setVisibility(View.GONE);
+                    selectedType="";
+
+                }else{
                     genderlayout.setVisibility(View.VISIBLE);
                     rdg = (RadioGroup) findViewById(R.id.radioSex);
                     male = (RadioButton) findViewById(R.id.radioMale);
@@ -196,9 +201,6 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                             }
                         }
                     });
-                }else{
-                    genderlayout.setVisibility(View.GONE);
-                    selectedType="";
                 }
 
             }

@@ -257,7 +257,6 @@ public class PopupActivity extends AppCompatActivity {
             TextView t2v0 = new TextView(this);
             t2v0.setText("Name");
             t2v0.setTextColor(Color.parseColor("#01579B"));
-            t2v0.setTextColor(Color.BLUE);
             t2v0.setGravity(Gravity.LEFT);
             t2v0.setPadding(0, 0, 10, 0);
             tbrow1.addView(t2v0);
@@ -272,7 +271,6 @@ public class PopupActivity extends AppCompatActivity {
             TextView t4v0 = new TextView(this);
             t4v0.setText("Address");
             t4v0.setTextColor(Color.parseColor("#01579B"));
-            t4v0.setTextColor(Color.BLUE);
             t4v0.setPadding(0, 0, 10, 0);
             t4v0.setGravity(Gravity.LEFT);
             tbrow1.addView(t4v0);
@@ -280,7 +278,6 @@ public class PopupActivity extends AppCompatActivity {
             TextView t5v0 = new TextView(this);
             t5v0.setText("Primary act");
             t5v0.setTextColor(Color.parseColor("#01579B"));
-            t5v0.setTextColor(Color.BLUE);
             t5v0.setPadding(0, 0, 10, 0);
             t5v0.setGravity(Gravity.LEFT);
             tbrow1.addView(t5v0);
@@ -352,7 +349,6 @@ public class PopupActivity extends AppCompatActivity {
 
                     selectedListMain = new ArrayList<Map<String, String>>();
 
-
                     actList = new ArrayList<String>();
                     for (int i = 1; i < tableLayout1.getChildCount(); i++) {
                         TableRow row1 = (TableRow) tableLayout1.getChildAt(i);
@@ -376,8 +372,8 @@ public class PopupActivity extends AppCompatActivity {
                         }
 
                     }
-                    Log.d("size",""+selectedList.size());
-                    if (selectedList.size() == 1) {
+                    Log.d("size",""+selectedListMain.size());
+                    if (selectedListMain.size() == 1) {
                         String actId = mergeMapMain.get("actId");
                         final Cursor datacursor = dataBaseHelper.getAllData(actId);
                         datacursor.moveToFirst();
@@ -428,13 +424,17 @@ public class PopupActivity extends AppCompatActivity {
                                             mergeActId = object.getString("Actid");
 
 
+
                                             PopupActivity.this.runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    mergecusor = dataBaseHelper.getAllData(mergeActId);
+                                                    String accountId=mergeMapMain.get("actId");
+                                                    mergecusor = dataBaseHelper.getAllData(accountId);
                                                     mergecusor.moveToFirst();
+                                                    String name=mergecusor.getString(mergecusor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
+                                                    Log.d("merge cursor count",""+mergecusor.getCount());
                                                     Intent i = new Intent(PopupActivity.this, ReceiveDetails.class);
-                                                    i.putExtra("cname", mergecusor.getString(mergecusor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME)));
+                                                    i.putExtra("cname", name);
                                                     i.putExtra("cnum", mergecusor.getString(mergecusor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER)));
                                                     i.putExtra("compName", mergecusor.getString(mergecusor.getColumnIndex(DataBaseAdapter.DataBaseHelper.COMPANY_NAME)));
                                                     i.putExtra("rb", mergecusor.getString(mergecusor.getColumnIndex(DataBaseAdapter.DataBaseHelper.GENDER)));
@@ -511,7 +511,7 @@ public class PopupActivity extends AppCompatActivity {
                 Log.d("actid",""+mergeMap.get("actId"));
                 String accountId = mergeMap.get("actId");
                 Cursor nomergecursor = dataBaseHelper.getAllData(accountId);
-                Log.d("cursor count",""+nomergecursor.getCount());
+
                 nomergecursor.moveToFirst();
                 String name=nomergecursor.getString(nomergecursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
                 Intent i = new Intent(PopupActivity.this, ReceiveDetails.class);

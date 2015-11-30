@@ -130,114 +130,155 @@ public class MainActivity extends AppCompatActivity {
                                 status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"), new ServiceParams(mobile, "MobileNo", Integer.class));
                                 if (status.getStatusCode() == 200) {
                                     JSONObject obj = new JSONObject(status.getStatusResponse());
-                                    array = obj.getJSONArray("Details");
-                                    if (array.length() > 1) {
-                                        for (int index = 0; index < array.length(); index++) {
-                                            try {
-                                                MergeCustomer mergeCustomer = new MergeCustomer();
+                                        Log.d("details",""+obj.getString("Details"));
+                                    if(!obj.getString("Details").equals("null")) {
+                                        array = obj.getJSONArray("Details");
 
-                                                JSONObject eachObject = (JSONObject) array.get(index);
+                                        if (array.length() > 1) {
+                                            for (int index = 0; index < array.length(); index++) {
+                                                try {
+                                                    MergeCustomer mergeCustomer = new MergeCustomer();
 
-                                                actId = eachObject.getString("PrimaryActID");
-                                                Log.d("mac", "" + actId);
-                                                mergeCustomer.setActid(actId);
-                                                name = eachObject.getString("ActName");
-                                                mergeCustomer.setName(name);
-                                                address1 = eachObject.getString("Address1");
-                                                mergeCustomer.setAddress(address1);
-                                                mobileNo = eachObject.getString("MobileNo");
-                                                mergeCustomer.setMobileNumber(mobileNo);
-                                                companyName = eachObject.getString("CompanyName");
-                                                mergeCustomer.setCompany(companyName);
-                                                prof = eachObject.getString("Profession");
-                                                mergeCustomer.setProfession(prof);
-                                                street = eachObject.getString("Street");
-                                                mergeCustomer.setStreet(street);
-                                                city = eachObject.getString("City");
-                                                mergeCustomer.setCity(city);
-                                                email = eachObject.getString("Email");
-                                                mergeCustomer.setEmail(email);
-                                                gender = eachObject.getString("Gender");
-                                                mergeCustomer.setGender(gender);
-                                                district = eachObject.getString("District");
-                                                mergeCustomer.setDistrict(district);
-                                                landline = eachObject.getString("Phone");
-                                                mergeCustomer.setLandlineNumber(landline);
-                                                mergeCustomer.setMandal(eachObject.getString("Mandal"));
-                                                mergeCustomer.setState(eachObject.getString("State"));
-                                                mergeCustomer.setCountry(eachObject.getString("Country"));
-                                                mergeCustomer.setIsPrimaryact(eachObject.getString("IsPrimaryAct"));
-                                                mergeCustomer.setPin(eachObject.getString("Pin"));
-                                                mergeCustomer.setTinno(eachObject.getString("TinNo"));
-                                                mergeCustomer.setDuplicateIds(eachObject.getString("DuplicateIds"));
-                                                mergeCustomer.setFlatNo(eachObject.getString("FlatNo"));
+                                                    JSONObject eachObject = (JSONObject) array.get(index);
 
-                                                dataBaseHelper.insertMergeDetails(mergeCustomer);
+                                                    actId = eachObject.getString("PrimaryActID");
+                                                    Log.d("mac", "" + actId);
+                                                    mergeCustomer.setActid(actId);
+                                                    name = eachObject.getString("ActName");
+                                                    mergeCustomer.setName(name);
+                                                    address1 = eachObject.getString("Address1");
+                                                    mergeCustomer.setAddress(address1);
+                                                    mobileNo = eachObject.getString("MobileNo");
+                                                    mergeCustomer.setMobileNumber(mobileNo);
+                                                    companyName = eachObject.getString("CompanyName");
+                                                    mergeCustomer.setCompany(companyName);
+                                                    prof = eachObject.getString("Profession");
+                                                    mergeCustomer.setProfession(prof);
+                                                    street = eachObject.getString("Street");
+                                                    mergeCustomer.setStreet(street);
+                                                    city = eachObject.getString("City");
+                                                    mergeCustomer.setCity(city);
+                                                    email = eachObject.getString("Email");
+                                                    mergeCustomer.setEmail(email);
+                                                    gender = eachObject.getString("Gender");
+                                                    mergeCustomer.setGender(gender);
+                                                    district = eachObject.getString("District");
+                                                    mergeCustomer.setDistrict(district);
+                                                    landline = eachObject.getString("Phone");
+                                                    mergeCustomer.setLandlineNumber(landline);
+                                                    mergeCustomer.setMandal(eachObject.getString("Mandal"));
+                                                    mergeCustomer.setState(eachObject.getString("State"));
+                                                    mergeCustomer.setCountry(eachObject.getString("Country"));
+                                                    mergeCustomer.setIsPrimaryact(eachObject.getString("IsPrimaryAct"));
+                                                    mergeCustomer.setPin(eachObject.getString("Pin"));
+                                                    mergeCustomer.setTinno(eachObject.getString("TinNo"));
+                                                    mergeCustomer.setDuplicateIds(eachObject.getString("DuplicateIds"));
+                                                    mergeCustomer.setFlatNo(eachObject.getString("FlatNo"));
 
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
+                                                    dataBaseHelper.insertMergeDetails(mergeCustomer);
 
-                                            MainActivity.this.runOnUiThread(new Thread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Intent i = new Intent(MainActivity.this, PopupActivity.class);
-                                                    i.putExtra("cnum", mobileNo);
-                                                    startActivity(i);
-
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
                                                 }
-                                            }));
-                                        }
-
-                                    } else if (array.length() == 1) {
-                                        for (int index = 0; index < array.length(); index++) {
-                                            try {
-
-                                                JSONObject eachObject = (JSONObject) array.get(index);
-
-                                                actId = eachObject.getString("PrimaryActID");
-                                                Log.d("mac", "" + actId);
-
-                                                name = eachObject.getString("ActName");
-                                                address1 = eachObject.getString("Address1");
-                                                mobileNo = eachObject.getString("MobileNo");
-                                                companyName = eachObject.getString("CompanyName");
-                                                street = eachObject.getString("Street");
-                                                state=eachObject.getString("State");
-                                                city = eachObject.getString("City");
-                                                email = eachObject.getString("Email");
-                                                gender = eachObject.getString("Gender");
-                                                district = eachObject.getString("District");
-                                                landline = eachObject.getString("Phone");
-                                                mandal=eachObject.getString("Mandal");
-                                                flatNo=eachObject.getString("FlatNo");
-                                                prof = eachObject.getString("Profession");
-
 
                                                 MainActivity.this.runOnUiThread(new Thread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        Intent i = new Intent(MainActivity.this, ReceiveDetails.class);
-                                                        i.putExtra("cname", name);
+                                                        Intent i = new Intent(MainActivity.this, PopupActivity.class);
                                                         i.putExtra("cnum", mobileNo);
-                                                        i.putExtra("compName", companyName);
-                                                        i.putExtra("rb", gender);
-                                                        i.putExtra("cpro", prof);
-                                                        i.putExtra("cmail", email);
-                                                        i.putExtra("cadd", address1);
-                                                        i.putExtra("cln", landline);
-                                                        i.putExtra("cadd1", flatNo+street);
-                                                        i.putExtra("cadd2", city+state);
-                                                        i.putExtra("cadd3", district+mandal);
-                                                        i.putExtra("actId", actId);
                                                         startActivity(i);
+
                                                     }
                                                 }));
+                                            }
 
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
+                                        } else if (array.length() == 1) {
+                                            for (int index = 0; index < array.length(); index++) {
+                                                try {
+
+                                                    JSONObject eachObject = (JSONObject) array.get(index);
+
+                                                    actId = eachObject.getString("PrimaryActID");
+                                                    Log.d("mac", "" + actId);
+
+                                                    name = eachObject.getString("ActName");
+                                                    address1 = eachObject.getString("Address1");
+                                                    mobileNo = eachObject.getString("MobileNo");
+                                                    companyName = eachObject.getString("CompanyName");
+                                                    street = eachObject.getString("Street");
+                                                    state = eachObject.getString("State");
+                                                    city = eachObject.getString("City");
+                                                    email = eachObject.getString("Email");
+                                                    gender = eachObject.getString("Gender");
+                                                    district = eachObject.getString("District");
+                                                    landline = eachObject.getString("Phone");
+                                                    mandal = eachObject.getString("Mandal");
+                                                    flatNo = eachObject.getString("FlatNo");
+                                                    prof = eachObject.getString("Profession");
+
+
+                                                    MainActivity.this.runOnUiThread(new Thread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Intent i = new Intent(MainActivity.this, ReceiveDetails.class);
+                                                            i.putExtra("cname", name);
+                                                            i.putExtra("cnum", mobileNo);
+                                                            i.putExtra("compName", companyName);
+                                                            i.putExtra("rb", gender);
+                                                            i.putExtra("cpro", prof);
+                                                            i.putExtra("cmail", email);
+                                                            i.putExtra("cadd", address1);
+                                                            i.putExtra("cln", landline);
+                                                            i.putExtra("cadd1", flatNo + street);
+                                                            i.putExtra("cadd2", city + state);
+                                                            i.putExtra("cadd3", district + mandal);
+                                                            i.putExtra("actId", actId);
+                                                            startActivity(i);
+                                                        }
+                                                    }));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         }
+                                    }
+                                    else {
+
+                                        progress.dismiss();
+
+                                        MainActivity.this.runOnUiThread(new Runnable() {
+                                            public void run() {
+
+                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                                        MainActivity.this);
+
+                                                alertDialogBuilder.setTitle("Alert");
+
+                                                alertDialogBuilder
+                                                        .setMessage("Did not find any matches with this Number. \nCreate new?")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                                Intent i = new Intent(MainActivity.this, AddCustomer.class);
+                                                                i.putExtra("cnum", mobile);
+                                                                startActivity(i);
+
+                                                            }
+                                                        })
+                                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+
+                                                                dialog.cancel();
+                                                            }
+                                                        });
+
+
+                                                alertDialog = alertDialogBuilder.create();
+                                                alertDialog.show();
+
+                                            }
+                                        });
                                     }
                                 }else if(status.getStatusCode()==202)
                                 {
@@ -259,45 +300,8 @@ public class MainActivity extends AppCompatActivity {
                                     });
 
                                 }
-                                else if (status.getStatusCode() != 200) {
-
-                                    progress.dismiss();
-
-                                    MainActivity.this.runOnUiThread(new Runnable() {
-                                        public void run() {
-
-                                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                                                    MainActivity.this);
-
-                                            alertDialogBuilder.setTitle("Alert");
-
-                                            alertDialogBuilder
-                                                    .setMessage("Did not find any matches with this Number. \nCreate new?")
-                                                    .setCancelable(false)
-                                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int id) {
-                                                            Intent i = new Intent(MainActivity.this, AddCustomer.class);
-                                                            i.putExtra("cnum", mobile);
-                                                            startActivity(i);
-
-                                                        }
-                                                    })
-                                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int id) {
-
-                                                            dialog.cancel();
-                                                        }
-                                                    });
 
 
-                                            alertDialog = alertDialogBuilder.create();
-                                            alertDialog.show();
-
-                                        }
-                                    });
-
-
-                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

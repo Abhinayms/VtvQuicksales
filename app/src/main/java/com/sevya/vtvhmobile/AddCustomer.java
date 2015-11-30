@@ -3,7 +3,10 @@ package com.sevya.vtvhmobile;
 /**
  * Created by abhinaym on 24/10/15.
  */
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
@@ -22,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -94,7 +98,9 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     Thread thread;
     UserModel userModel;
     String selectedText;
-
+    AlertDialog levelDialog;
+    TextView profession;
+    TextView selectedProfession;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +115,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cadd1=(EditText)findViewById(R.id.cadd1);
         cadd2=(EditText)findViewById(R.id.cadd2);
         cadd3=(EditText)findViewById(R.id.cadd3);
-
+        profession=(TextView)findViewById(R.id.textprofession);
          genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
 
         cmail=(EditText)findViewById(R.id.cmail);
@@ -158,8 +164,8 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
     public void addItemsOnSpinner1() {
-
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
+          selectedProfession=(TextView)findViewById(R.id.selectedProfession);
+       /* spinner1 = (Spinner) findViewById(R.id.spinner1);
         List<String> list = new ArrayList<String>();
         list.add("Select Category");
         list.add("Business");
@@ -184,7 +190,55 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+        });*/
+profession.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+        final CharSequence[] items = {" Business ", " Agriculture ", " Govt. Employee ", "Private Employee ","Others"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddCustomer.this);
+        builder.setTitle("Profession");
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+
+
+                switch (item) {
+                    case 0:
+                        selectedProfession.setText("Business");
+                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedText="Business";
+
+                        break;
+                    case 1:
+                        selectedProfession.setText("Agriculture");
+                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedText="Agriculture";
+                        break;
+                    case 2:
+                        selectedProfession.setText("Govt. Employee");
+                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedText="Govt. Employee";
+                        break;
+                    case 3:
+                        selectedProfession.setText("Private Employee");
+                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedText="Private Employee";
+                        break;
+                    case 4:
+                        selectedProfession.setText("Others");
+                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedText="Others";
+                        break;
+
+                }
+                levelDialog.dismiss();
+            }
         });
+        levelDialog = builder.create();
+        levelDialog.show();
+    }
+});
+
     }
 
     public void onButtonClickDone()
@@ -193,6 +247,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         compGroup=(SwitchCompat)findViewById(R.id.company);
         male = (RadioButton) findViewById(R.id.radioMale);
         male.setChecked(true);
+        compGroup.setChecked(false);
         genderlayout.setVisibility(View.VISIBLE);
         compGroup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -200,6 +255,10 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
                if(isChecked)
                {
+                   genderlayout.setVisibility(View.GONE);
+                   selectedType="";
+
+               }else{
                    genderlayout.setVisibility(View.VISIBLE);
                    rdg = (RadioGroup) findViewById(R.id.radioSex);
                    male = (RadioButton) findViewById(R.id.radioMale);
@@ -221,9 +280,6 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                            }
                        }
                    });
-               }else{
-                   genderlayout.setVisibility(View.GONE);
-                   selectedType="";
                }
 
             }
@@ -238,13 +294,13 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
                     ButtonAnimation.animation(v);
 
-                    if(spinner1.getSelectedItem().toString().equals("Select Category")){
+                   /* if(spinner1.getSelectedItem().toString().equals("Select Category")){
                         selectedText="";
                     }
                     else{
                         selectedText=spinner1.getSelectedItem().toString();
                     }
-
+*/
                      custName = cname.getText().toString();
                      custNo = cnum.getText().toString();
                      custCompName = compName.getText().toString();
@@ -575,5 +631,3 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         return false;
     }
 }
-//custName, null, cMail, cAdd, custCompName,
-//null, cAdd1, cAdd2, null, cAdd3, null, custNo, cLn, null, gender, 76, 0, null

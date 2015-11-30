@@ -305,6 +305,7 @@ public class CartActivity extends AppCompatActivity {
                     String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
                     cartModel.setQty(Integer.parseInt(qty));
                     cartModel.setSpId(new Integer(49));
+                   cartModel.setModel(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
                     cartModel.setDeliveryCharges(deliveryCharges.getText().toString());
                     String isDemoReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO));
                     String isInstallReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.INSTALL));

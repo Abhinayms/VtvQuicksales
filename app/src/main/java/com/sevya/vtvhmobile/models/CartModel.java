@@ -23,6 +23,9 @@ public class CartModel implements KvmSerializable {
     private Boolean IsDemoReq;
     private Boolean IsInstallationReq;
     private String DeliveryCharges;
+    private  String Model;
+
+
 
     public Integer getActid()  {
         return Actid;
@@ -110,6 +113,9 @@ public class CartModel implements KvmSerializable {
 
     public void setIsInstallationReq(Boolean isInstallationReq) {
         IsInstallationReq = isInstallationReq;
+
+
+
     }
 
     public String getDeliveryCharges() {
@@ -119,7 +125,13 @@ public class CartModel implements KvmSerializable {
     public void setDeliveryCharges(String deliveryCharges) {
         DeliveryCharges = deliveryCharges;
     }
+    public String getModel() {
+        return Model;
+    }
 
+    public void setModel(String model) {
+        Model = model;
+    }
     @Override
     public Object getProperty(int i) {
 
@@ -148,13 +160,15 @@ public class CartModel implements KvmSerializable {
                 return IsInstallationReq;
             case 11:
                 return DeliveryCharges;
+            case 12:
+                return Model;
         }
         return null;
     }
 
     @Override
     public int getPropertyCount() {
-        return 12;
+        return 13;
     }
 
     @Override
@@ -198,6 +212,8 @@ public class CartModel implements KvmSerializable {
                 DeliveryCharges=o.toString();
             default:
                 break;
+            case 12:
+                Model=o.toString();
         }
     }
 
@@ -258,6 +274,10 @@ public class CartModel implements KvmSerializable {
             case 11:
                 propertyInfo.type = propertyInfo.STRING_CLASS;
                 propertyInfo.name = "DeliveryCharges";
+                break;
+            case 12:
+                propertyInfo.type=propertyInfo.STRING_CLASS;
+                propertyInfo.name="Model";
                 break;
             default:
                 break;

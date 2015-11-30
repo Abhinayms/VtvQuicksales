@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -21,6 +23,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.view.View;
@@ -294,7 +297,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     }
 
     public void addItemsOnSpinner1() {
-
+    autotv.clearFocus();
     stockPointList=new ArrayList<String>();
         stockPointList.add("--Select StockPoint--");
         stockpointMap=new HashMap<>();
@@ -409,6 +412,22 @@ public class BuyProducts extends Activity  implements OnTouchListener {
                                              }
 
     }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -422,6 +441,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
 
             case R.id.modelimagebutton:
                 autotv.setText("");
+                qty.setText("");
+                cprice.setText("");
                 break;
             case R.id.edit_text:
                 modelimagebutton.setVisibility(View.INVISIBLE);

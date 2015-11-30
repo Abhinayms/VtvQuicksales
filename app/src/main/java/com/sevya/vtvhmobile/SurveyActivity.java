@@ -107,6 +107,7 @@ public class SurveyActivity extends AppCompatActivity {
 
     public void submit(View v)
     {
+        dataBaseHelper.deleteCartTable();
         ButtonAnimation.animation(v);
 
             startActivity(i);

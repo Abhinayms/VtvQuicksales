@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,6 +64,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         dataBaseHelper=new DataBaseAdapter(this);
         i=getIntent();
           mDate=i.getStringExtra("Date");
+
 
         salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);

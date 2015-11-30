@@ -179,6 +179,7 @@ public class ReceiveDetails extends AppCompatActivity {
                                     productsInfo.setPrice(eachObject.getString("SalePrice"));
                                     productsInfo.setTotalPrice(eachObject.getString("TotalPrice"));
                                     productsInfo.setModalId(eachObject.getString("ModalId"));
+                                    productsInfo.setModelNo(eachObject.getString("Model"));
                                     productsInfo.setStockPoint(eachObject.getString("SpId"));
                                     productsInfo.setQty(eachObject.getString("Qty"));
                                     productsInfo.setInstall(eachObject.getBoolean("IsInstallationReq"));

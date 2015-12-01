@@ -23,6 +23,7 @@
                android:text="full name"
                android:textColor="#9e9e9e"
                android:textSize="13dp"
+               android:textStyle="italic"
                />
            </LinearLayout>
            <LinearLayout
@@ -64,6 +65,8 @@
                 android:text="mobile number"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -106,6 +109,8 @@
                 android:text="company"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -147,6 +152,8 @@
                 android:text="email"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -188,6 +195,8 @@
                 android:text="address/house number"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -229,6 +238,8 @@
                 android:text="street name &amp; number"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -270,6 +281,8 @@
                 android:text="city &amp; mandal"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -311,6 +324,8 @@
                 android:text="district &amp; pincode"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -352,6 +367,8 @@
                 android:text="landline number"
                 android:textColor="#9e9e9e"
                 android:textSize="13dp"
+                android:textStyle="italic"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -413,7 +430,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:id="@+id/genderlayout"
-            android:layout_marginBottom="20dp"
             android:visibility="gone"
             >
             <TextView
@@ -460,6 +476,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
             android:layout_marginTop="20dp"
+            android:id="@+id/professionlayout"
 
             >
             <TextView
@@ -467,6 +484,7 @@
                 android:layout_height="wrap_content"
                 android:text="Profession :"
                 android:textSize="15dp"
+                android:id="@+id/txtprofession"
                 />
 
             <TextView
@@ -476,6 +494,7 @@
                 android:textSize="15dp"
                 android:textColor="#9e9e9e"
                 android:id="@+id/selectedProfession"
+                android:textStyle="italic"
                 />
 
         </LinearLayout>

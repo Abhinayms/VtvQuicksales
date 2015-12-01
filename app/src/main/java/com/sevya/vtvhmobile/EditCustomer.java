@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -45,19 +46,15 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
     DataBaseAdapter dataBaseHelper;
     Toolbar mToolbar;
-
-
     EditText cname;
     EditText cnum;
     EditText compName;
-
     EditText cln;
     EditText cadd;
     EditText cadd1;
     EditText cadd2;
     EditText cadd3;
     EditText cmail;
-
     ImageButton cbname;
     ImageButton cbnum;
     ImageButton cbcpmny;
@@ -67,8 +64,6 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     ImageButton cbadd2;
     ImageButton cbadd3;
     ImageButton cbln;
-
-
     String cusName;
     String cusNum;
     String cusGen;
@@ -79,19 +74,15 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     String cusAdd3;
     String cusEmail;
     String cusCompNmae;
-    String cusActid;
     String cPro;
-
-
-    Spinner spinner1;
-
-
+   Spinner spinner1;
     ResponseStatus status;
     String actid;
     int acctId;
     UserModel userModel;
 
     RelativeLayout genderlayout;
+    LinearLayout profLayout;
 
     public RadioGroup rdg;
     public SwitchCompat compGroup;
@@ -168,6 +159,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
 
         genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
+        profLayout=(LinearLayout)findViewById(R.id.professionlayout);
+        selectedProfession=(TextView)findViewById(R.id.selectedProfession);
+        profession=(TextView)findViewById(R.id.txtprofession);
 
         compGroup=(SwitchCompat)findViewById(R.id.company);
         compGroup.setChecked(false);
@@ -185,13 +179,15 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
                     genderlayout.setVisibility(View.GONE);
                     selectedType="";
+                    profLayout.setVisibility(View.GONE);
+                    selectedText="";
 
                 }else{
                     genderlayout.setVisibility(View.VISIBLE);
                     rdg = (RadioGroup) findViewById(R.id.radioSex);
                     male = (RadioButton) findViewById(R.id.radioMale);
                     female = (RadioButton) findViewById(R.id.radioFemale);
-
+                    profLayout.setVisibility(View.VISIBLE);
                     male.setChecked(true);
 
                     rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -382,7 +378,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(dataAdapter);*/
 
-        selectedProfession=(TextView)findViewById(R.id.selectedProfession);
+
 
         profession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,7 +394,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                         switch (item) {
                             case 0:
                                 selectedProfession.setText("Business");
-                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
                                 selectedText="Business";
 
                                 break;
@@ -409,17 +405,17 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                 break;
                             case 2:
                                 selectedProfession.setText("Govt. Employee");
-                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
                                 selectedText="Govt. Employee";
                                 break;
                             case 3:
                                 selectedProfession.setText("Private Employee");
-                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
                                 selectedText="Private Employee";
                                 break;
                             case 4:
                                 selectedProfession.setText("Others");
-                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
                                 selectedText="Others";
                                 break;
 

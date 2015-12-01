@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -101,6 +102,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     AlertDialog levelDialog;
     TextView profession;
     TextView selectedProfession;
+    LinearLayout profLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +119,8 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cadd3=(EditText)findViewById(R.id.cadd3);
         profession=(TextView)findViewById(R.id.textprofession);
          genderlayout=(RelativeLayout)findViewById(R.id.genderlayout);
+        selectedProfession=(TextView)findViewById(R.id.selectedProfession);
+        profLayout=(LinearLayout)findViewById(R.id.professionlayout);
 
         cmail=(EditText)findViewById(R.id.cmail);
 
@@ -164,7 +168,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
     public void addItemsOnSpinner1() {
-          selectedProfession=(TextView)findViewById(R.id.selectedProfession);
+
        /* spinner1 = (Spinner) findViewById(R.id.spinner1);
         List<String> list = new ArrayList<String>();
         list.add("Select Category");
@@ -193,7 +197,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         });*/
         profession.setOnClickListener(new View.OnClickListener() {
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
 
         final CharSequence[] items = {" Business ", " Agriculture ", " Govt. Employee ", "Private Employee ","Others"};
         AlertDialog.Builder builder = new AlertDialog.Builder(AddCustomer.this);
@@ -205,7 +209,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                 switch (item) {
                     case 0:
                         selectedProfession.setText("Business");
-                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedProfession.setTextColor(Color.parseColor("#000000"));
                         selectedText="Business";
 
                         break;
@@ -216,28 +220,31 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                         break;
                     case 2:
                         selectedProfession.setText("Govt. Employee");
-                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedProfession.setTextColor(Color.parseColor("#000000"));
                         selectedText="Govt. Employee";
                         break;
                     case 3:
                         selectedProfession.setText("Private Employee");
-                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedProfession.setTextColor(Color.parseColor("#000000"));
                         selectedText="Private Employee";
                         break;
                     case 4:
                         selectedProfession.setText("Others");
-                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedProfession.setTextColor(Color.parseColor("#000000"));
                         selectedText="Others";
                         break;
 
-                }
-                levelDialog.dismiss();
-            }
-        });
+
+                        }
+                         levelDialog.dismiss();
+                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
+                sv.fullScroll(v.getTop());
+                 }
+             });
         levelDialog = builder.create();
         levelDialog.show();
-    }
-});
+             }
+        });
 
     }
 
@@ -257,12 +264,16 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                {
                    genderlayout.setVisibility(View.GONE);
                    selectedType="";
+                   profLayout.setVisibility(View.GONE);
+                   selectedText="";
+
 
                }else{
                    genderlayout.setVisibility(View.VISIBLE);
                    rdg = (RadioGroup) findViewById(R.id.radioSex);
                    male = (RadioButton) findViewById(R.id.radioMale);
                    female = (RadioButton) findViewById(R.id.radioFemale);
+                   profLayout.setVisibility(View.VISIBLE);
 
                    male.setChecked(true);
 

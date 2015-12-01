@@ -74,7 +74,7 @@ public class CartActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        
+
 
         dataBaseHelper=new DataBaseAdapter(this);
 

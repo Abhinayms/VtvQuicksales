@@ -422,8 +422,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
                         }
                         levelDialog.dismiss();
-                        ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
-                        sv.fullScroll(v.getTop());
+
                     }
                 });
                 levelDialog = builder.create();

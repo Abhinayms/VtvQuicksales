@@ -70,7 +70,9 @@
         <activity
             android:name=".AddCustomer"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_search_" >
+            android:label="@string/title_activity_search_"
+            android:parentActivityName=".MainActivity"
+            >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.Search_Activity" />
 

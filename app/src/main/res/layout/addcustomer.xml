@@ -4,62 +4,21 @@
     android:layout_height="match_parent"
     android:id="@+id/scrollview"
     >
+
+
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/addcustomertoolbar"
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="1dp"
-            android:layout_weight="1"
-             >
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_cancel"
-                android:text="Back"
-
-                style="@style/buttonstyle"
-                android:background="#2196f3"
-                android:textColor="#ffffff" 
-
-                />
-            <!--android:paddingLeft="20dp"-->
-            <!-- android:background="#607d8b"-->
             />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="1dp"
-                        >
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_done"
-                android:background="#2196f3"
-                android:text="Next"
-                android:textColor="#ffffff"
-                android:onClick="showMessages"
-                style="@style/buttonstyle"
-                />
 
 
-        </LinearLayout>
-    </LinearLayout>
 
-
-<LinearLayout
-    android:layout_width="match_parent"
+        <LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:layout_marginLeft="20dp"
@@ -69,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cname"
-            android:hint="customer name"
+            android:hint="name"
             android:inputType="text|textCapWords"
             android:textSize="15dp"
             android:textColor="#000000"
@@ -89,7 +48,7 @@
 
 
 
-</LinearLayout>
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cnum"
-            android:hint="mobile number"
+            android:hint="mobile"
             android:inputType="number"
             android:textSize="15dp"
             android:textColor="#000000"
@@ -131,7 +90,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="company name"
+            android:hint="company"
             android:textSize="15dp"
             android:inputType="text|textCapWords"
             android:layout_weight="1"
@@ -219,7 +178,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="street name &amp; no"
+                android:hint="street name &amp; no."
                 android:textSize="15dp"
                 android:inputType="text|textCapWords"
                 android:layout_weight="1"
@@ -279,7 +238,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="district &amp; pin code"
+                android:hint="district &amp; pincode"
                 android:textSize="15dp"
                 android:inputType="text|textCapWords"
                 android:layout_weight="1"
@@ -309,7 +268,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="landline number"
+            android:hint="landline"
             android:textSize="15dp"
             android:inputType="number"
             android:layout_weight="1"
@@ -348,7 +307,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Is Company  :"
+                android:text="is Company?"
                 android:textSize="15dp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/rbcomp" />
@@ -439,7 +398,23 @@
 
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            >
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonshape"
+                    android:textColor="#fff"
+                    android:text="CREATE"
+                    android:textSize="15dp"
+                    android:id="@+id/button_done"
+                    />
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>
 
@@ -452,3 +427,52 @@
                     android:layout_weight="1"
 
                     />-->
+
+<!--
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="1dp"
+    android:layout_weight="1"
+    >
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_cancel"
+        android:text="Back"
+
+        style="@style/buttonstyle"
+        android:background="#2196f3"
+        android:textColor="#ffffff"
+
+        />
+    &lt;!&ndash;android:paddingLeft="20dp"&ndash;&gt;
+    &lt;!&ndash; android:background="#607d8b"&ndash;&gt;
+    />
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:paddingLeft="1dp"
+    >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_done"
+        android:background="#2196f3"
+        android:text="Next"
+        android:textColor="#ffffff"
+        android:onClick="showMessages"
+        style="@style/buttonstyle"
+        />
+
+
+</LinearLayout>
+</LinearLayout>-->

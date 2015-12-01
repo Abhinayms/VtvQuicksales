@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textSize="15dip"
-        android:text="Server Host Name/IP"
+        android:text="Server hostname/IP"
         android:id="@+id/textHostName"
         android:layout_marginTop="5dp"
         />
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15dip"
-        android:text="Server Port No"
+        android:text="Server Port Number"
         android:id="@+id/textPortName"
         android:layout_marginRight="40dp"
          />

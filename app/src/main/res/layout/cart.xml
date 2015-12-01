@@ -32,9 +32,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer Name"
+            android:text="Name"
             android:textSize="15dp"
-
+            android:textStyle="bold"
             />
         <TextView
             android:layout_width="match_parent"
@@ -67,8 +67,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mobile Number"
+            android:text="Mobile"
             android:textSize="15dp"
+            android:textStyle="bold"
             />
         <TextView
             android:layout_width="match_parent"
@@ -104,8 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Purchased Items"
-            android:textSize="16dp"
-            android:textColor="#03A9F4"
+            android:textSize="17dp"
+            android:textColor="#01579B"
             android:textStyle="bold"
             />
 

@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer Name"
+            android:text="Name"
             android:textSize="15dp"
             android:textStyle="bold"
             />
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mobile Number"
+            android:text="Mobile"
             android:textSize="15dp"
             android:textStyle="bold"
             />
@@ -104,7 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Company Name"
+            android:text="Company"
             android:textSize="15dp"
             android:textStyle="bold"
             />
@@ -215,7 +215,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Street Name &amp; No "
+            android:text="Street Name &amp; No. "
             android:textSize="15dp"
             android:textStyle="bold"
             />
@@ -323,7 +323,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Land Line Number"
+            android:text="LandLine"
             android:textSize="15dp"
             android:textStyle="bold"
             />

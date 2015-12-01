@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         portNum = (EditText) findViewById(R.id.portno);
         hostName=(EditText)findViewById(R.id.hostname);
         portNum.setVisibility(View.INVISIBLE);
-        hostName.setText("http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
+        hostName.setText("http://103.42.248.146:2001/VTVHQuickSaleService.asmx");
 
         sslSwitch = (SwitchCompat) findViewById(R.id.switch_compat);
         sslSwitch.setChecked(true);
@@ -82,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
                                          boolean isChecked) {
 
                 if (sslSwitch.isChecked()) {
-                    hostName.setText("http://192.168.1.19:2006/VTVHQuickSaleService.asmx");
+                    hostName.setText("http://103.42.248.146:2001/VTVHQuickSaleService.asmx");
                     textPort.setVisibility(View.INVISIBLE);
                     portNum.setVisibility(View.INVISIBLE);
                 } else {

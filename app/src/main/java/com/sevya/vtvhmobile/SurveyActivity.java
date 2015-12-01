@@ -49,35 +49,35 @@ public class SurveyActivity extends AppCompatActivity {
         if(id==R.id.survey1)
         {
 
-            sgs1.setBackgroundColor(Color.parseColor("#2962FF"));
-            sgs2.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs3.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs4.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs1.setBackgroundColor(Color.parseColor("#9e9e9e"));
+            sgs2.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs3.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs4.setBackgroundColor(Color.parseColor("#bdbdbd"));
 
             j=1;
         }
        else if(id==R.id.survey2)
         {
-            sgs1.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs2.setBackgroundColor(Color.parseColor("#2962FF"));
-            sgs3.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs4.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs1.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs2.setBackgroundColor(Color.parseColor("#9e9e9e"));
+            sgs3.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs4.setBackgroundColor(Color.parseColor("#bdbdbd"));
             j=2;
         }
         else if(id==R.id.survey3)
         {
-            sgs1.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs2.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs3.setBackgroundColor(Color.parseColor("#2962FF"));
-            sgs4.setBackgroundColor(Color.parseColor("#03A9F4"));
+            sgs1.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs2.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs3.setBackgroundColor(Color.parseColor("#9e9e9e"));
+            sgs4.setBackgroundColor(Color.parseColor("#bdbdbd"));
             j=3;
         }
        else if(id==R.id.survey4)
         {
-            sgs1.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs2.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs3.setBackgroundColor(Color.parseColor("#03A9F4"));
-            sgs4.setBackgroundColor(Color.parseColor("#2962FF"));
+            sgs1.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs2.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs3.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            sgs4.setBackgroundColor(Color.parseColor("#9e9e9e"));
             j=4;
         }
          return j;

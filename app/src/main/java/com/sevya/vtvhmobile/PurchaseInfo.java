@@ -88,7 +88,7 @@ public class PurchaseInfo extends AppCompatActivity {
 
         txtname.setText(name);
         txtnumber.setText(number);
-        txtstatus.setText(status);
+        txtstatus.setText("Unpaid");
 
          dataBaseHelper=new DataBaseAdapter(this);
 
@@ -101,8 +101,8 @@ public class PurchaseInfo extends AppCompatActivity {
             sum+=convertedPrice;
             cursor.moveToNext();
         }
-        String tcost= NumberFormat.getNumberInstance(Locale.US).format(sum);
-        totalPrice.setText(tcost);
+        //String tcost= NumberFormat.getNumberInstance(Locale.US).format(sum);
+        totalPrice.setText(String.format("%.2f",sum));
         saleList=(ListView)findViewById(R.id.salelist);
 
         String[] from=new String[]{DataBaseAdapter.DataBaseHelper.MODEL_NAME, DataBaseAdapter.DataBaseHelper.QUANTITY, DataBaseAdapter.DataBaseHelper.PRICE, DataBaseAdapter.DataBaseHelper.TOTAL_PRICE};

@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -78,7 +79,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     private String cPro;
     private String actId;
 
-
+    Toolbar mToolbar;
 
     public RadioGroup rdg;
     public SwitchCompat compGroup;
@@ -103,6 +104,15 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addcustomer);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         cname = (EditText) findViewById(R.id.cname);
         cnum = (EditText) findViewById(R.id.cnum);
@@ -159,7 +169,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
         addItemsOnSpinner1();
         onButtonClickDone();
-        onButtonClickCancel();
+        //onButtonClickCancel();
     }
 
 
@@ -208,8 +218,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
                         }
                          levelDialog.dismiss();
-                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
-                sv.fullScroll(v.getTop());
+               
                  }
              });
         levelDialog = builder.create();
@@ -422,7 +431,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     }
 
 
-    public void onButtonClickCancel()
+    /*public void onButtonClickCancel()
     {   try {
 
         cancel = (Button) findViewById(R.id.button_cancel);
@@ -439,7 +448,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     {
         e.printStackTrace();
     }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

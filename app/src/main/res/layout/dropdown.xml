@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textSize="15dp"
-
+                android:textStyle="bold"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -69,6 +69,8 @@
                 android:layout_height="wrap_content"
                 android:text="Mobile "
                 android:textSize="15dp"
+                android:textStyle="bold"
+
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -101,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Purchased Items"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textColor="#00bcd4"
 
                 />
@@ -130,6 +132,9 @@
                 android:paddingTop="5dp"
                 android:textSize="15dp"
                 android:layout_weight="2"
+                android:textStyle="bold"
+
+
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -177,6 +182,8 @@
                 android:textSize="15dp"
                 android:textColor="#000"
                 android:layout_weight="2"
+                android:textStyle="bold"
+
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -210,6 +217,8 @@
                 android:paddingTop="5dp"
                 android:textSize="15dp"
                 android:layout_weight="2"
+                android:textStyle="bold"
+
                 />
 
             <LinearLayout
@@ -256,7 +265,7 @@
                 android:text="Unit Price    :"
                 android:textSize="15dp"
                 android:paddingTop="5dp"
-
+                android:textStyle="bold"
                 android:layout_weight="2"
                 />
             <LinearLayout
@@ -303,6 +312,8 @@
                 android:text="Demo Required :"
                 android:textColor="#000"
                 android:textSize="15dp"
+                android:textStyle="bold"
+
                 />
 
             <android.support.v7.widget.SwitchCompat
@@ -336,6 +347,8 @@
                 android:text="Installation Required :"
                 android:textColor="#000"
                 android:textSize="15dp"
+                android:textStyle="bold"
+
                 />
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switch_compat2"

@@ -13,22 +13,22 @@
         android:layout_height="wrap_content"
         android:text="Survey 1"
         android:id="@+id/survey1"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:onClick="survey"
-        android:background="#03A9F4"
+        android:background="#bdbdbd"
         />
     <Button
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="Survey 2"
         android:id="@+id/survey2"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="survey"
-        android:background="#03A9F4"
+        android:background="#bdbdbd"
 
 
         />
@@ -37,8 +37,8 @@
         android:layout_height="wrap_content"
         android:text="Survey 3"
         android:id="@+id/survey3"
-        android:background="#03A9F4"
-        android:textColor="#fff"
+        android:background="#bdbdbd"
+        android:textColor="#000"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="survey"
@@ -49,22 +49,24 @@
         android:layout_height="wrap_content"
         android:text="Survey 4"
         android:id="@+id/survey4"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:onClick="survey"
-        android:background="#03A9F4"
+        android:background="#bdbdbd"
+
         />
 
 
-    <Button
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:background="@drawable/buttonshape"
+    <ImageButton
+        android:layout_marginTop="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="SEND"
+        android:src="@drawable/send_button"
+        android:background="@drawable/fb"
         android:textColor="#fff"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
         android:onClick="submit"
         />
 

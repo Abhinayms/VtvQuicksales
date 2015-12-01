@@ -14,8 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -37,11 +35,9 @@ import com.sevya.vtvhmobile.util.SOAPServices;
 import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -169,32 +165,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
     public void addItemsOnSpinner1() {
 
-       /* spinner1 = (Spinner) findViewById(R.id.spinner1);
-        List<String> list = new ArrayList<String>();
-        list.add("Select Category");
-        list.add("Business");
-        list.add("Agriculture");
-        list.add("Govt. Employee");
-        list.add("Private Employee");
-        list.add("Others");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
 
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
-                sv.fullScroll(view.getTop());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
         profession.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(final View v) {
@@ -642,3 +613,29 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         return false;
     }
 }
+ /* spinner1 = (Spinner) findViewById(R.id.spinner1);
+        List<String> list = new ArrayList<String>();
+        list.add("Select Category");
+        list.add("Business");
+        list.add("Agriculture");
+        list.add("Govt. Employee");
+        list.add("Private Employee");
+        list.add("Others");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(dataAdapter);
+
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
+                sv.fullScroll(view.getTop());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/

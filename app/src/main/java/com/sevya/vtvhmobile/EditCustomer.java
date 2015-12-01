@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -382,7 +383,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
         profession.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
                 final CharSequence[] items = {" Business ", " Agriculture ", " Govt. Employee ", "Private Employee ","Others"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditCustomer.this);
@@ -421,16 +422,14 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
 
                         }
                         levelDialog.dismiss();
+                        ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
+                        sv.fullScroll(v.getTop());
                     }
                 });
                 levelDialog = builder.create();
                 levelDialog.show();
             }
         });
-
-
-
-
 
     }
     public  boolean isEmailValid(String email) {

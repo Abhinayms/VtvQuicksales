@@ -108,7 +108,7 @@ public class CartActivity extends AppCompatActivity {
         tickButton=(Button)findViewById(R.id.float_button_tick);
         plusButton=(ImageButton)findViewById(R.id.float_button_plus);
 
-        double sum=0;
+        double sum=0.00;
         number=cnum.getText().toString();
 
 
@@ -123,7 +123,7 @@ public class CartActivity extends AppCompatActivity {
             textView = (TextView)findViewById(R.id.cartitemtextview);
             textView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
-            RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.deliverychargelayout);
+            LinearLayout relativeLayout=(LinearLayout)findViewById(R.id.deliverychargelayout);
             relativeLayout.setVisibility(View.GONE);
 
             continueshopping=(Button)findViewById(R.id.continueshopping);
@@ -182,8 +182,8 @@ public class CartActivity extends AppCompatActivity {
                 sum+=convertedPrice;
                 cursor.moveToNext();
             }
-            String tcost=NumberFormat.getNumberInstance(Locale.US).format(sum);
-            totalPrice.setText(tcost);
+           // String tcost=NumberFormat.getNumberInstance(Locale.US).format(sum);
+            totalPrice.setText(String.format("%.2f",sum)); //((Object) sum).toString())
         }
 
     }
@@ -211,16 +211,16 @@ public class CartActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // TOD O Auto-generated method stub
 
-                        /*cursor=dataBaseHelper.getProduct(cart_id);
-                        cursor.moveToFirst();*/
+                        cursor=dataBaseHelper.getProduct(cart_id);
+                        cursor.moveToFirst();
                         Intent intent=new Intent(CartActivity.this,BuyProducts.class);
                         intent.putExtra("cname",cname.getText().toString());
                         intent.putExtra("cnum",cnum.getText().toString());
                         intent.putExtra("actId",accountId);
                         intent.putExtra("listsize", listView.getCount());
-                        /*intent.putExtra("modelNo",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
+                        intent.putExtra("modelNo",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
                         intent.putExtra("quantity",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY)));
-                        intent.putExtra("unitprice",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE)));*/
+                        intent.putExtra("unitprice",cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE)));
 
                         startActivity(intent);
                         dataBaseHelper.deleteItem(cartid);

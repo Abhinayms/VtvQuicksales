@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -85,6 +84,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
     String spid;
     ArrayAdapter<String> adapter;
     Toolbar mToolbar;
+    TextView stockPoint;
 
 
     @Override
@@ -117,7 +117,6 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
 
 
 
-
         Log.d("bac",""+actId);
 
         dname=(TextView)findViewById(R.id.dname);
@@ -127,12 +126,13 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
         totalPrice=(TextView)findViewById(R.id.totalprice);
         autotv=(AutoCompleteTextView)findViewById(R.id.autoTv);
         autotv.requestFocus();
-        spinner1 = (Spinner) findViewById(R.id.stock_spinner);
+        //spinner1 = (Spinner) findViewById(R.id.stock_spinner);
         modelimagebutton=(ImageButton)findViewById(R.id.modelimagebutton);
         qtyimagebutton=(ImageButton)findViewById(R.id.cbqty);
         priceimagebutton=(ImageButton)findViewById(R.id.cbup);
         sInstall=(SwitchCompat)findViewById(R.id.switch_compat2);
         sDemo=(SwitchCompat)findViewById(R.id.switch_compat);
+        stockPoint=(TextView)findViewById(R.id.txtStockPoint);
 
         modelimagebutton.setOnTouchListener(this);
         qtyimagebutton.setOnTouchListener(this);
@@ -145,6 +145,13 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
 
         dname.setText(name);
         dnum.setText(num);
+
+        qty.setText(intent.getStringExtra("quantity"));
+        autotv.setText(intent.getStringExtra("modelNo"));
+        cprice.setText(intent.getStringExtra("unitprice"));
+        stockPoint.setText(intent.getStringExtra("modelNo"));
+
+
         sDemo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -311,7 +318,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
     public void addItemsOnSpinner1() {
     autotv.clearFocus();
     stockPointList=new ArrayList<String>();
-        stockPointList.add("--Select StockPoint--");
+
         stockpointMap=new HashMap<>();
 
         thread=new Thread() {
@@ -354,10 +361,35 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                     BuyProducts.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            /*Log.d("Stockpoint list",""+stockPointList.toString());
                             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(BuyProducts.this,
                                     android.R.layout.simple_spinner_item, stockPointList);
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinner1.setAdapter(dataAdapter);
+                            spinner1.setAdapter(dataAdapter);*/
+
+                            AlertDialog.Builder builderSingle = new AlertDialog.Builder(BuyProducts.this);
+                            builderSingle.setTitle("Stock Point \n \n");
+
+
+                            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                                    BuyProducts.this,
+                                    android.R.layout.simple_spinner_item, stockPointList);
+
+
+
+                            builderSingle.setAdapter(
+                                    arrayAdapter,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String strName = arrayAdapter.getItem(which);
+                                                stockPoint.setText(strName);
+                                        }
+                                    });
+                            builderSingle.show();
+
+
+
 
                         }
                     });
@@ -394,10 +426,10 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                                                  qty.setError("Please enter Qty");
                                              else if(cprice.getText().toString().length()==0)
                                                  cprice.setError("Please enter UnitPrice");
-                                             else if(spinner1.getSelectedItem().toString().equals("--Select StockPoint--")){
+                                             else if(stockPoint.getText().toString().equals("--Select StockPoint--")){
                                                  Toast.makeText(BuyProducts.this, "Select a valid Stock Point", Toast.LENGTH_SHORT).show();
                                              }
-                                             else if (spinner1.getSelectedItem().toString().equals("Stock Not Available"))
+                                             else if (stockPoint.getText().toString().equals("Stock Not Available"))
                                              {
                                                  Toast.makeText(BuyProducts.this, "Sorry, Item out of stock", Toast.LENGTH_SHORT).show();
                                              }
@@ -408,7 +440,8 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                                              else {
                                                  double p=Double.parseDouble(cprice.getText().toString());
                                                  double q=Double.parseDouble(qty.getText().toString());
-                                                 String tp=""+(p*q);
+                                                 String tp=String.format("%.2f",(p*q));
+                                                 //String tp=""+(p*q);
                                                  productsInfo.setTotalPrice(tp);
 
                                                 long id = dataBaseHelper.insertDataItems(productsInfo);

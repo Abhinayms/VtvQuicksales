@@ -83,8 +83,8 @@
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:background="#eeeeee"
+            android:layout_height="1dp"
+            android:background="#9e9e9e"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -175,22 +175,21 @@
                 android:layout_height="wrap_content"
                 android:text="StockPoint :"
                 android:textSize="15dp"
+                android:textColor="#000"
                 android:layout_weight="2"
-
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000"
+                android:id="@+id/txtStockPoint"
+                android:layout_weight="1"
+                android:layout_gravity="left"
                 />
 
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:id="@+id/stock_spinner"
-                style="@style/spinner_style"
-                android:spinnerMode="dropdown"
-                android:layout_marginRight="25dp"
-                >
 
-            </Spinner>
         </LinearLayout>
 
 
@@ -418,3 +417,16 @@
 
             </LinearLayout>
     -->
+
+<!--
+<Spinner
+android:layout_width="match_parent"
+android:layout_height="40dp"
+android:layout_weight="1"
+android:id="@+id/stock_spinner"
+style="@style/spinner_style"
+android:spinnerMode="dropdown"
+android:layout_marginRight="25dp"
+    >
+
+</Spinner>-->

@@ -36,7 +36,7 @@ public class PurchaseInfo extends AppCompatActivity {
     String date;
     ListView saleList;
     Cursor cursor;
-    Double sum=0.0;
+    Double sum=0.00;
     DataBaseAdapter dataBaseHelper;
 
 
@@ -110,6 +110,7 @@ public class PurchaseInfo extends AppCompatActivity {
 
         SimpleCursorAdapter saleListadapter=new SimpleCursorAdapter(PurchaseInfo.this,R.layout.invoicelistitem,cursor,from,to,0);
         saleList.setAdapter(saleListadapter);
+        saleListadapter.notifyDataSetChanged();
 
 
     }

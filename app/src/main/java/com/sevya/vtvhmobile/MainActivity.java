@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity {
                                 status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getAccountDetailsService"), new ServiceParams(mobile, "MobileNo", Integer.class));
                                 if (status.getStatusCode() == 200) {
                                     JSONObject obj = new JSONObject(status.getStatusResponse());
-                                        Log.d("details",""+obj.getString("Details"));
-                                    if(!obj.getString("Details").equals("null")) {
+                                    Log.d("details", "" + obj.getString("Details"));
+                                    if (!obj.getString("Details").equals("null")) {
                                         array = obj.getJSONArray("Details");
 
                                         if (array.length() > 1) {
@@ -243,8 +243,7 @@ public class MainActivity extends AppCompatActivity {
                                                 }
                                             }
                                         }
-                                    }
-                                    else {
+                                    } else {
 
                                         progress.dismiss();
 
@@ -281,17 +280,15 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
-                                }else if(status.getStatusCode()==202)
-                                {
+                                } else if (status.getStatusCode() == 202) {
                                     MainActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             progress.dismiss();
-                                            Toast.makeText(MainActivity.this, ""+status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                }
-                                else if (status.getStatusCode() == 500) {
+                                } else if (status.getStatusCode() == 500) {
                                     MainActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -399,12 +396,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent i=new Intent(MainActivity.this,LoginActivity.class);
         startActivity(i);
-
     }
-
-
 }

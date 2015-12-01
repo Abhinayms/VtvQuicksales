@@ -207,7 +207,7 @@
             <Button
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:text="Continue Shopping"
+                android:text="Add Product"
                 android:textColor="#ffffff"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/buttonshape"

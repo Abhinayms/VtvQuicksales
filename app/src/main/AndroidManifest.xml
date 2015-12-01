@@ -59,7 +59,7 @@
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
-            android:parentActivityName=".ReceiveDetails"
+            android:parentActivityName=".CartActivity"
             >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.DropDownActivity" />

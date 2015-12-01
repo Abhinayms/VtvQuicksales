@@ -177,53 +177,53 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
 
         profession.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(final View v) {
+            @Override
+            public void onClick(final View v) {
 
-        final CharSequence[] items = {" Business ", " Agriculture ", " Govt. Employee ", "Private Employee ","Others"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddCustomer.this);
-        builder.setTitle("Profession");
-        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
+                final CharSequence[] items = {" Business ", " Agriculture ", " Govt. Employee ", "Private Employee ", "Others"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddCustomer.this);
+                builder.setTitle("Profession");
+                builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
 
 
-                switch (item) {
-                    case 0:
-                        selectedProfession.setText("Business");
-                        selectedProfession.setTextColor(Color.parseColor("#000000"));
-                        selectedText="Business";
+                        switch (item) {
+                            case 0:
+                                selectedProfession.setText("Business");
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
+                                selectedText = "Business";
 
-                        break;
-                    case 1:
-                        selectedProfession.setText("Agriculture");
-                        selectedProfession.setTextColor(Color.parseColor("#000000"));
-                        selectedText="Agriculture";
-                        break;
-                    case 2:
-                        selectedProfession.setText("Govt. Employee");
-                        selectedProfession.setTextColor(Color.parseColor("#000000"));
-                        selectedText="Govt. Employee";
-                        break;
-                    case 3:
-                        selectedProfession.setText("Private Employee");
-                        selectedProfession.setTextColor(Color.parseColor("#000000"));
-                        selectedText="Private Employee";
-                        break;
-                    case 4:
-                        selectedProfession.setText("Others");
-                        selectedProfession.setTextColor(Color.parseColor("#000000"));
-                        selectedText="Others";
-                        break;
+                                break;
+                            case 1:
+                                selectedProfession.setText("Agriculture");
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
+                                selectedText = "Agriculture";
+                                break;
+                            case 2:
+                                selectedProfession.setText("Govt. Employee");
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
+                                selectedText = "Govt. Employee";
+                                break;
+                            case 3:
+                                selectedProfession.setText("Private Employee");
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
+                                selectedText = "Private Employee";
+                                break;
+                            case 4:
+                                selectedProfession.setText("Others");
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
+                                selectedText = "Others";
+                                break;
 
 
                         }
-                         levelDialog.dismiss();
-               
-                 }
-             });
-        levelDialog = builder.create();
-        levelDialog.show();
-             }
+                        levelDialog.dismiss();
+
+                    }
+                });
+                levelDialog = builder.create();
+                levelDialog.show();
+            }
         });
 
     }
@@ -620,6 +620,13 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(AddCustomer.this,MainActivity.class);
+        startActivity(i);
     }
 }
  /* spinner1 = (Spinner) findViewById(R.id.spinner1);

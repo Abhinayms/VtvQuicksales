@@ -301,7 +301,7 @@ public class CartActivity extends AppCompatActivity {
                     cartModel.setCartId(new Integer(0));
                     String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
                     cartModel.setQty(Integer.parseInt(qty));
-                    cartModel.setSpId(new Integer(49));
+                    cartModel.setSpId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.STOCKPOINT_ID))));
                    cartModel.setModel(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
                     cartModel.setDeliveryCharges(deliveryCharges.getText().toString());
                     String isDemoReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO));
@@ -391,13 +391,7 @@ public class CartActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id==R.id.home)
-        {
-            Intent intent=new Intent(CartActivity.this,BuyProducts.class);
-            intent.putExtra("cname",cname.getText().toString());
-            intent.putExtra("cnum",cnum.getText().toString());
-            startActivity(intent);
-        }
+
         if(id==R.id.trash)
         {
 
@@ -443,11 +437,47 @@ public class CartActivity extends AppCompatActivity {
         }
         if(id==R.id.homeicon)
         {
-            Intent intent=new Intent(CartActivity.this,MainActivity.class);
-            startActivity(intent);
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(
+                    CartActivity.this);
+
+            // set title
+            alertDialogBuilder.setTitle("Alert");
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Return to Home Screen ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent=new Intent(CartActivity.this,MainActivity.class);
+                            startActivity(intent);
+                            dataBaseHelper.deleteCartTable();
+
+
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+            // create alert dialog
+            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(CartActivity.this,BuyProducts.class);
+        startActivity(i);
     }
 }
 

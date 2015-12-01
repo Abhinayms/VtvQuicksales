@@ -116,4 +116,10 @@ public class SurveyActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(SurveyActivity.this,CartActivity.class);
+        startActivity(i);
+    }
 }

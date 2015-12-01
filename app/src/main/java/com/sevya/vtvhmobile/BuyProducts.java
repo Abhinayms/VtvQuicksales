@@ -252,6 +252,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                                       selectedModelId=(String)map.get(selectedModelName);
 
                                      addItemsOnSpinner1();
+                                     autotv.clearFocus();
 
                                  }
 
@@ -316,7 +317,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
     }
 
     public void addItemsOnSpinner1() {
-    autotv.clearFocus();
+
     stockPointList=new ArrayList<String>();
 
         stockpointMap=new HashMap<>();
@@ -384,6 +385,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                                         public void onClick(DialogInterface dialog, int which) {
                                             String strName = arrayAdapter.getItem(which);
                                                 stockPoint.setText(strName);
+                                            qty.requestFocus();
                                         }
                                     });
                             builderSingle.show();
@@ -412,6 +414,8 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                                              productsInfo.setModelNo(autotv.getText().toString());
                                              productsInfo.setPrice(cprice.getText().toString());
                                              productsInfo.setModalId(selectedModelId);
+                                             productsInfo.setStockPoint(spid);
+                                             Log.d("spid",""+spid);
 
 
                                              productsInfo.setQty(qty.getText().toString());
@@ -513,5 +517,12 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
         }
       return false;
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(BuyProducts.this,ReceiveDetails.class);
+        startActivity(i);
     }
 }

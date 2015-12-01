@@ -108,6 +108,7 @@ public class
         contentValues.put(dataBaseHelper.INSTALL,productsInfo.isInstall());
         contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModalId());
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
+        contentValues.put(dataBaseHelper.STOCKPOINT_ID,productsInfo.getStockPoint());
 
         long id= db.insert(dataBaseHelper.Table_CART,null,contentValues);
 

@@ -1,6 +1,7 @@
 package com.sevya.vtvhmobile;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -244,5 +245,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
         //  alertDialog.dismiss();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(SettingsActivity.this,LoginActivity.class);
+        startActivity(i);
     }
 }

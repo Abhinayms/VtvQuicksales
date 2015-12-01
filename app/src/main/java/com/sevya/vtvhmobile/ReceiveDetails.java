@@ -249,4 +249,11 @@ public class ReceiveDetails extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(ReceiveDetails.this,MainActivity.class);
+        startActivity(i);
+    }
 }

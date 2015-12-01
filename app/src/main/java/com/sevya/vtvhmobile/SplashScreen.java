@@ -34,7 +34,7 @@ public class SplashScreen extends Activity {
 
         databaseHelper=new DataBaseAdapter(this);
 
-        String url="http://192.168.1.19:2006/VTVHQuickSaleService.asmx";
+        String url="http://103.42.248.146:2001/VTVHQuickSaleService.asmx";
 
 
         Cursor cursor=databaseHelper.getServerCredentials();

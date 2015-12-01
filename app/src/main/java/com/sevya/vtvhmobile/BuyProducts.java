@@ -17,7 +17,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,7 +38,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
-import com.sevya.vtvhmobile.models.GetModelsForList;
 import com.sevya.vtvhmobile.models.ProductsInfo;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.util.SOAPServices;
@@ -47,7 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BuyProducts extends Activity  implements OnTouchListener {
+public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
 
     private Spinner spinner1;
     TextView dname;
@@ -67,10 +68,8 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     String actId;
     String prefix;
     DataBaseAdapter dataBaseHelper;
-    GetModelsForList getModelsForList;
     String modelName;
     String modelId;
-    String modelDescription;
     List<String> modelList = null;
     HashMap<String,String> modelMap = null;
     String selectedModelName;
@@ -85,6 +84,7 @@ public class BuyProducts extends Activity  implements OnTouchListener {
     String spName;
     String spid;
     ArrayAdapter<String> adapter;
+    Toolbar mToolbar;
 
 
     @Override
@@ -95,6 +95,18 @@ public class BuyProducts extends Activity  implements OnTouchListener {
         Date pdate=new Date();
         date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
         dataBaseHelper=new DataBaseAdapter(this);
+
+
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
 
         Intent intent=getIntent();
 

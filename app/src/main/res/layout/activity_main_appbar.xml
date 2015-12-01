@@ -62,41 +62,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+
                     >
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="60dp"
+
                         >
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:text="Search"
-                    android:layout_marginTop="30dp"
-                    android:layout_gravity="center_horizontal"
                     android:textColor="#ffffff"
-                    android:background="@drawable/buttonshape"
+                    android:background="@drawable/fb"
                     android:id="@+id/imageButton"
-                    style="@style/buttonstyle"
+                    android:src="@drawable/add_search"
                     />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingLeft="10dp"
+                        android:layout_marginTop="20dp"
                         >
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <ImageButton
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:text="Create new"
-                            android:layout_marginTop="30dp"
-                            android:layout_gravity="center_horizontal"
                             android:textColor="#ffffff"
-                            android:background="@drawable/buttonshape"
+                            android:src="@drawable/add_person"
+                            android:background="@drawable/fb"
                             android:onClick="createnew"
-                            style="@style/buttonstyle"
                             />
                     </RelativeLayout>
                 </LinearLayout>

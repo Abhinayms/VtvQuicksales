@@ -4,7 +4,10 @@ package com.sevya.vtvhmobile;
  * Created by abhinaym on 24/10/15.
  */
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
@@ -21,6 +24,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
@@ -97,6 +101,9 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     public RadioButton no;
     public String selectedType="Male";
     public String selectedText;
+    TextView selectedProfession;
+    TextView profession;
+    AlertDialog levelDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,13 +255,13 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     public void update(View view) {
         ButtonAnimation.animation(view);
 
-        if(spinner1.getSelectedItem().toString().equals("Select Category")){
+   /*     if(spinner1.getSelectedItem().toString().equals("Select Category")){
             selectedText="";
         }
         else{
             selectedText=spinner1.getSelectedItem().toString();
         }
-
+*/
         cusName=cname.getText().toString();
         cusNum=cnum.getText().toString();
         cusAdd=cadd.getText().toString();
@@ -362,7 +369,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         }
     public void addItemsOnSpinner1() {
 
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
+        /*spinner1 = (Spinner) findViewById(R.id.spinner1);
         List<String> list = new ArrayList<String>();
         list.add("Select Category");
         list.add("Business");
@@ -373,7 +380,60 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(dataAdapter);
+        spinner1.setAdapter(dataAdapter);*/
+
+        selectedProfession=(TextView)findViewById(R.id.selectedProfession);
+
+        profession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final CharSequence[] items = {" Business ", " Agriculture ", " Govt. Employee ", "Private Employee ","Others"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditCustomer.this);
+                builder.setTitle("Profession");
+                builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+
+
+                        switch (item) {
+                            case 0:
+                                selectedProfession.setText("Business");
+                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedText="Business";
+
+                                break;
+                            case 1:
+                                selectedProfession.setText("Agriculture");
+                                selectedProfession.setTextColor(Color.parseColor("#000000"));
+                                selectedText="Agriculture";
+                                break;
+                            case 2:
+                                selectedProfession.setText("Govt. Employee");
+                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedText="Govt. Employee";
+                                break;
+                            case 3:
+                                selectedProfession.setText("Private Employee");
+                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedText="Private Employee";
+                                break;
+                            case 4:
+                                selectedProfession.setText("Others");
+                                selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                                selectedText="Others";
+                                break;
+
+                        }
+                        levelDialog.dismiss();
+                    }
+                });
+                levelDialog = builder.create();
+                levelDialog.show();
+            }
+        });
+
+
+
 
 
     }

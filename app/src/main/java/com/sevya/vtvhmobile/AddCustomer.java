@@ -109,7 +109,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         cname = (EditText) findViewById(R.id.cname);
         cnum = (EditText) findViewById(R.id.cnum);
         compName = (EditText) findViewById(R.id.compName);
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
+      //  spinner1 = (Spinner) findViewById(R.id.spinner1);
         cln = (EditText) findViewById(R.id.cln);
         cadd = (EditText) findViewById(R.id.cadd);
         cadd1=(EditText)findViewById(R.id.cadd1);
@@ -191,7 +191,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
 
             }
         });*/
-profession.setOnClickListener(new View.OnClickListener() {
+        profession.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
@@ -211,7 +211,7 @@ profession.setOnClickListener(new View.OnClickListener() {
                         break;
                     case 1:
                         selectedProfession.setText("Agriculture");
-                        selectedProfession.setBackgroundColor(Color.parseColor("#000000"));
+                        selectedProfession.setTextColor(Color.parseColor("#000000"));
                         selectedText="Agriculture";
                         break;
                     case 2:
@@ -313,7 +313,7 @@ profession.setOnClickListener(new View.OnClickListener() {
                      cAdd3 = cadd3.getText().toString();
                      cMail = cmail.getText().toString();
 
-                    int aactId=31;
+
 
 
 

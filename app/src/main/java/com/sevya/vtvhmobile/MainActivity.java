@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
 import com.sevya.vtvhmobile.models.MergeCustomer;
@@ -36,7 +37,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private Button button;
+    private ImageButton button;
     private EditText number;
     DataBaseAdapter dataBaseHelper;
     public Context context;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Customer Search");
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
+      //  getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     private void onSearchClick() {
 
         number = (EditText) findViewById(R.id.mnumber);
-        button = (Button) findViewById(R.id.imageButton);
+        button = (ImageButton) findViewById(R.id.imageButton);
 
         // add button listener
         button.setOnClickListener(new View.OnClickListener() {

@@ -92,20 +92,9 @@
             android:label="@string/title_activity_cart"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".BuyProducts" >
+            >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.CartActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".PurchaseActivity"
-            android:label="@string/title_activity_purchase"
-            android:launchMode="singleTop"
-            android:parentActivityName=".CartActivity" >
-            <intent-filter>
-                <action android:name="com.sevya.vtvhmobile.PurchaseActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -116,16 +105,6 @@
             android:parentActivityName=".CartActivity" >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.SurveyActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".DeleteCustomer"
-            android:label="@string/title_activity_delete_customer"
-            android:parentActivityName=".MainActivity" >
-            <intent-filter>
-                <action android:name="com.sevya.vtvhmobile.DeleteCustomer" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

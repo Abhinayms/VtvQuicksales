@@ -74,10 +74,7 @@ public class CartActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        
 
         dataBaseHelper=new DataBaseAdapter(this);
 

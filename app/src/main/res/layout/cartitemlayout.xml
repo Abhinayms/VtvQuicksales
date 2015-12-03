@@ -47,18 +47,20 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Total Price"
-                android:textSize="15dp"
-                android:id="@+id/p_totalprice"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_weight="1"
-                android:gravity="right"
-                />
+
 
         </LinearLayout>
 </LinearLayout>
+
+    <!-- <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Total Price"
+                    android:textSize="15dp"
+                    android:id="@+id/p_totalprice"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    />-->

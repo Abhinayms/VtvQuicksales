@@ -157,17 +157,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SalesList"
-            android:label="@string/title_activity_sales_list"
-            android:configChanges="orientation|screenSize"
-            android:parentActivityName=".GetDetailsByDate" >
-            <intent-filter>
-                <action android:name="com.sevya.vtvhmobile.SalesList" />
-
-                <category android:name="android.intent.category.Default" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ExpandableListActivity"
             android:label="@string/title_activity_expandable_list"
             android:configChanges="orientation|screenSize"

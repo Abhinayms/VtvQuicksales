@@ -84,7 +84,6 @@ public class ProductsInfo {
         this.demo = demo;
     }
     public String totalPrice;
-
     private String name;
     private String number;
     private String modelNo;
@@ -94,4 +93,14 @@ public class ProductsInfo {
     private boolean install;
     private boolean demo;
     private String modalId;
+
+    public String getActId() {
+        return actId;
+    }
+
+    public void setActId(String actId) {
+        this.actId = actId;
+    }
+
+    private String actId;
 }

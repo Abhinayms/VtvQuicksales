@@ -146,10 +146,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
         dname.setText(name);
         dnum.setText(num);
 
-        qty.setText(intent.getStringExtra("quantity"));
-        autotv.setText(intent.getStringExtra("modelNo"));
-        cprice.setText(intent.getStringExtra("unitprice"));
-        stockPoint.setText(intent.getStringExtra("modelNo"));
+
 
 
         sDemo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -407,58 +404,62 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
 
     }
     public void doneClick(View v) {
-                                             ButtonAnimation.animation(v);
-                                             ProductsInfo productsInfo=new ProductsInfo();
-                                             productsInfo.setName(dname.getText().toString());
-                                             productsInfo.setNumber(dnum.getText().toString());
-                                             productsInfo.setModelNo(autotv.getText().toString());
-                                             productsInfo.setPrice(cprice.getText().toString());
-                                             productsInfo.setModalId(selectedModelId);
-                                             productsInfo.setStockPoint(spid);
-                                             Log.d("spid",""+spid);
+        try {
+            ButtonAnimation.animation(v);
+            ProductsInfo productsInfo = new ProductsInfo();
+            productsInfo.setActId(actId);
+            productsInfo.setName(dname.getText().toString());
+            productsInfo.setNumber(dnum.getText().toString());
+            productsInfo.setModelNo(autotv.getText().toString());
+            productsInfo.setPrice(cprice.getText().toString());
+            productsInfo.setModalId(selectedModelId);
+            productsInfo.setStockPoint(spid);
+            Log.d("spid", "" + spid);
 
 
-                                             productsInfo.setQty(qty.getText().toString());
+            productsInfo.setQty(qty.getText().toString());
 
 
-                                            productsInfo.setDemo(demoReq);
-                                            productsInfo.setInstall(installReq);
-
-                                             if((autotv.getText().toString().length()==0))
-                                                 autotv.setError("Please enter model no");
-                                             else if(qty.getText().toString().length()==0)
-                                                 qty.setError("Please enter Qty");
-                                             else if(cprice.getText().toString().length()==0)
-                                                 cprice.setError("Please enter UnitPrice");
-                                             else if(stockPoint.getText().toString().equals("--Select StockPoint--")){
-                                                 Toast.makeText(BuyProducts.this, "Select a valid Stock Point", Toast.LENGTH_SHORT).show();
-                                             }
-                                             else if (stockPoint.getText().toString().equals("Stock Not Available"))
-                                             {
-                                                 Toast.makeText(BuyProducts.this, "Sorry, Item out of stock", Toast.LENGTH_SHORT).show();
-                                             }
-                                             else if (Integer.parseInt(qty.getText().toString())<=0 || Integer.parseInt(qty.getText().toString())>Integer.parseInt(availableQuantity))
-                                             {
-                                                 Toast.makeText(BuyProducts.this, "Enter valid Quantity", Toast.LENGTH_SHORT).show();
-                                             }
-                                             else {
-                                                 double p=Double.parseDouble(cprice.getText().toString());
-                                                 double q=Double.parseDouble(qty.getText().toString());
-                                                 String tp=String.format("%.2f",(p*q));
-                                                 //String tp=""+(p*q);
-                                                 productsInfo.setTotalPrice(tp);
-
-                                                long id = dataBaseHelper.insertDataItems(productsInfo);
-
-                                                 Intent intent = new Intent(BuyProducts.this, CartActivity.class);
-                                                 intent.putExtra("cname", dname.getText().toString());
-                                                 intent.putExtra("cnum", dnum.getText().toString());
-                                                 intent.putExtra("Date", date);
-                                                 intent.putExtra("actId",actId);
-                                                 startActivity(intent);
+            productsInfo.setDemo(demoReq);
+            productsInfo.setInstall(installReq);
 
 
-                                             }
+            if ((autotv.getText().toString().length() == 0))
+                autotv.setError("Please enter model no");
+            else if (qty.getText().toString().length() == 0)
+                qty.setError("Please enter Qty");
+            else if (cprice.getText().toString().length() == 0)
+                cprice.setError("Please enter UnitPrice");
+            else if (stockPoint.getText().toString().equals("--Select StockPoint--")) {
+                Toast.makeText(BuyProducts.this, "Select a valid Stock Point", Toast.LENGTH_SHORT).show();
+            } else if (stockPoint.getText().toString().equals("Stock Not Available")) {
+                Toast.makeText(BuyProducts.this, "Sorry, Item out of stock", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(qty.getText().toString()) <= 0 || Integer.parseInt(qty.getText().toString()) > Integer.parseInt(availableQuantity)) {
+                Toast.makeText(BuyProducts.this, "Enter valid Quantity", Toast.LENGTH_SHORT).show();
+            } else {
+                double p = Double.parseDouble(cprice.getText().toString());
+                double q = Double.parseDouble(qty.getText().toString());
+                String tp = String.format("%.2f", (p * q));
+                //String tp=""+(p*q);
+                productsInfo.setTotalPrice(tp);
+
+                long id = dataBaseHelper.insertDataItems(productsInfo);
+
+                Intent intent = new Intent(BuyProducts.this, CartActivity.class);
+                intent.putExtra("cname", dname.getText().toString());
+                intent.putExtra("cnum", dnum.getText().toString());
+                intent.putExtra("Date", date);
+                intent.putExtra("actId", actId);
+                startActivity(intent);
+
+
+            }
+        }catch (Exception e)
+        {
+
+            Toast.makeText(BuyProducts.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+
+        }
 
     }
     @Override
@@ -492,6 +493,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                 autotv.setText("");
                 qty.setText("");
                 cprice.setText("");
+                stockPoint.setText("");
                 break;
             case R.id.edit_text:
                 modelimagebutton.setVisibility(View.INVISIBLE);
@@ -518,6 +520,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
       return false;
 
     }
+
 
     @Override
     public void onBackPressed() {

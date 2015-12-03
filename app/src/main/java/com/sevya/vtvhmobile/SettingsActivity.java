@@ -30,6 +30,8 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by abhinaym on 8/10/15.
@@ -51,10 +53,14 @@ public class SettingsActivity extends AppCompatActivity {
     DataBaseAdapter databasehelper;
     ProgressDialog progress;
     Cursor cursor;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
+        Date pdate=new Date();
+        date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -98,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
-}
+    }
 
     public void authenticate(View v)
     {
@@ -166,8 +172,6 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(SettingsActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
         }
 
-
-
     }
 
     public void test(View v){
@@ -183,7 +187,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 SalesmanCart salesmanCart=new SalesmanCart();
                 salesmanCart.setSalesmanId(new Integer(10));
-                salesmanCart.setDate("2015-11-09");
+                salesmanCart.setDate(date);
                 SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                 //ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
                  ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);

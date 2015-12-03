@@ -324,7 +324,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
                                                     i.putExtra("cnum", cusNum);
                                                     i.putExtra("compName", cusCompNmae);
                                                     i.putExtra("rb", cusGen);
-                                                      i.putExtra("cpro", cPro);
+                                                    i.putExtra("cpro", cPro);
                                                     i.putExtra("cmail", cusEmail);
                                                     i.putExtra("cadd",cusAdd);
                                                     i.putExtra("cln", cusLn);

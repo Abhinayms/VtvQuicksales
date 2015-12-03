@@ -99,6 +99,7 @@ public class
     {
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
+        contentValues.put(dataBaseHelper.ACTID,productsInfo.getActId());
         contentValues.put(dataBaseHelper.NAME,productsInfo.getName());
         contentValues.put(dataBaseHelper.MOBILE_NUMBER,productsInfo.getNumber());
         contentValues.put(dataBaseHelper.MODEL_No,productsInfo.getModelNo());
@@ -174,19 +175,19 @@ public class
 
     }
 
-    public Cursor getItem(String number)
+    public Cursor getItem(String actId,String number)
     {
 
 
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
-        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,dataBaseHelper.MODEL_ID,
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.ACTID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,dataBaseHelper.MODEL_ID,
                 dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_No,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE,dataBaseHelper.DEMO,dataBaseHelper.INSTALL};
 
-        String where=dataBaseHelper.MOBILE_NUMBER + "=?"; //+ " AND " + dataBaseHelper.CREATED_DATE +"=?" ;
+        String where= dataBaseHelper.ACTID + "=?" + " AND " + dataBaseHelper.MOBILE_NUMBER +"=?" ;
 
 
-        String[] args={number};
+        String[] args={actId,number};
 
         cursor =db.query(dataBaseHelper.Table_CART, columns,where,args, null, null, null);
 
@@ -339,7 +340,7 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =56;
+        private static final int DATABASE_VERSION =57;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
@@ -392,8 +393,6 @@ public class
 
 
 
-
-
         private static final String DROP_TABLE_CUSTOMER = "DROP TABLE  IF EXISTS " + Table_CUSTOMER;
         private static final String DROP_TABLE_CART = "DROP TABLE IF EXISTS " + Table_CART;
         private static final String DROP_TABLE_SALES_LIST = "DROP TABLE IF EXISTS " + Table_SALES;
@@ -409,7 +408,7 @@ public class
 
 
 
-        private static final String CREATE_TABLE_CART = "CREATE TABLE " + Table_CART + " (" + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," +
+        private static final String CREATE_TABLE_CART = "CREATE TABLE " + Table_CART + " (" + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," + ACTID + " VARCHAR(255)," +
                 "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," + MODEL_No + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100),"+ DEMO + " VARCHAR(100),"+ INSTALL + " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
 

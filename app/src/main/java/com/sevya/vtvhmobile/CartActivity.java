@@ -1,8 +1,10 @@
 package com.sevya.vtvhmobile;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,14 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sevya.vtvhmobile.Adapters.CustomCartListViewAdapter;
@@ -29,10 +32,9 @@ import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 public class CartActivity extends AppCompatActivity {
 
@@ -112,7 +114,7 @@ public class CartActivity extends AppCompatActivity {
         number=cnum.getText().toString();
 
 
-        cursor = dataBaseHelper.getItem(number);
+        cursor = dataBaseHelper.getItem(accountId,number);
         startManagingCursor(cursor);
         if (cursor.getCount()==0)
         {
@@ -195,9 +197,8 @@ public class CartActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 CartActivity.this);
 
-        alert.setTitle("Alert");
-        alert.setMessage("Choose Action");
-        alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+        alert.setTitle("Do you want to Delete this Item?");
+        /*alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TOD O Auto-generated method stub
@@ -240,38 +241,16 @@ public class CartActivity extends AppCompatActivity {
                 alert.show();
 
             }
-        });
+        });*/
         alert.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TOD O Auto-generated method stub
-                AlertDialog.Builder alert = new AlertDialog.Builder(
-                        CartActivity.this);
 
-                alert.setTitle("Delete this Item");
-                alert.setMessage("Do you want delete this item?");
-                alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TOD O Auto-generated method stub
-
-                        dataBaseHelper.deleteItem(cartid);
-                        populateItemsListFromDB();
-                        customCartListViewAdapter.notifyDataSetChanged();
-                        customCartListViewAdapter.notifyDataSetInvalidated();
-
-                    }
-                });
-
-                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TOD O Auto-generated method stub
-                        dialog.dismiss();
-                    }
-                });
-
-                alert.show();
+                dataBaseHelper.deleteItem(cartid);
+                populateItemsListFromDB();
+                customCartListViewAdapter.notifyDataSetChanged();
+                customCartListViewAdapter.notifyDataSetInvalidated();
 
             }
 
@@ -288,7 +267,7 @@ public class CartActivity extends AppCompatActivity {
                 cartModelArrayList = new ArrayList<CartModel>();
                 cursor.moveToFirst();
                for (int i = 0; i < cursor.getCount(); i++) {
-                   cartModel = new CartModel();
+                    cartModel = new CartModel();
                     cartModel.setActid(Actid);
                     cartModel.setSalesmanId(new Integer(76));
 
@@ -302,7 +281,7 @@ public class CartActivity extends AppCompatActivity {
                     String qty = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
                     cartModel.setQty(Integer.parseInt(qty));
                     cartModel.setSpId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.STOCKPOINT_ID))));
-                   cartModel.setModel(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
+                    cartModel.setModel(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
                     cartModel.setDeliveryCharges(deliveryCharges.getText().toString());
                     String isDemoReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO));
                     String isInstallReq=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.INSTALL));
@@ -356,6 +335,7 @@ public class CartActivity extends AppCompatActivity {
 
         Intent i=new Intent(CartActivity.this,SurveyActivity.class);
         startActivity(i);
+       dataBaseHelper.deleteCartTable();
 
     }
 
@@ -368,7 +348,7 @@ public class CartActivity extends AppCompatActivity {
                 Intent intent=new Intent(CartActivity.this,BuyProducts.class);
                 intent.putExtra("cname", cname.getText().toString());
                 intent.putExtra("cnum", cnum.getText().toString());
-                intent.putExtra("actId",accountId);
+                intent.putExtra("actId", accountId);
                 intent.putExtra("listsize", listView.getCount());
                 startActivity(intent);
 
@@ -473,6 +453,23 @@ public class CartActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

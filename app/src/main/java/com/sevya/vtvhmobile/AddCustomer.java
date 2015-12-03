@@ -5,6 +5,7 @@ package com.sevya.vtvhmobile;
  */
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,13 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sevya.vtvhmobile.db.DataBaseAdapter;
-import com.sevya.vtvhmobile.models.Customer;
 import com.sevya.vtvhmobile.models.ResponseStatus;
 import com.sevya.vtvhmobile.models.UserModel;
 import com.sevya.vtvhmobile.util.SOAPServices;
@@ -100,10 +99,14 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
     TextView profession;
     TextView selectedProfession;
     LinearLayout profLayout;
+    SharedPreferences shared;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addcustomer);
+
+        shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
+        shared.getInt("salesmanid",0);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -305,9 +308,6 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                      cMail = cmail.getText().toString();
 
 
-
-
-
                     userModel=new UserModel();
                     userModel.setPrimaryActID(new Integer(0));
                     userModel.setActName(custName);
@@ -329,7 +329,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
                     userModel.setCompanyName(custCompName);
                     userModel.setMandal("");
                     userModel.setDuplicateIds("");
-                    userModel.setUserId(new Integer(76));
+                    userModel.setUserId(shared.getInt("salesmanid",0));
                     userModel.setProfession(cPro);
 
 

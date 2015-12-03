@@ -14,7 +14,7 @@
         <item name="android:actionMenuTextColor">@color/actionMenuTextColor</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
-
+        <item name="android:editTextColor">@android:color/black</item>
         <item name="android:textColor">@color/my_spinner_text_color</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
 

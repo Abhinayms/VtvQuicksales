@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -159,12 +158,14 @@ public class ReceiveDetails extends AppCompatActivity {
         int id = item.getItemId();
         if(id==R.id.action_cart)
         {
+
+
             thread = new Thread() {
                 public void run() {
                     SOAPServiceClient soapServiceClient = new SOAPServiceClient();
 
                     try {
-                        status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getGetCartItemsBasedOnMobileNoService"), new ServiceParams(mobile, "mobileNo", String.class));
+                        status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getGetCartItemsBasedOnMobileNoService"), new ServiceParams(mobile, "mobileNo", String.class),new ServiceParams(Integer.parseInt(actid),"Actid",Integer.class));
                         if (status.getStatusCode() == 200) {
                             JSONObject obj=new JSONObject(status.getStatusResponse());
                             array=obj.getJSONArray("Details");
@@ -175,7 +176,7 @@ public class ReceiveDetails extends AppCompatActivity {
                                     ProductsInfo productsInfo=new ProductsInfo();
                                     productsInfo.setName(customerName);
                                     productsInfo.setNumber(mobile);
-                                 //   productsInfo.setModelNo(autotv.getText().toString());
+                                    productsInfo.setActId(actid);
                                     productsInfo.setPrice(eachObject.getString("SalePrice"));
                                     productsInfo.setTotalPrice(eachObject.getString("TotalPrice"));
                                     productsInfo.setModalId(eachObject.getString("ModalId"));
@@ -195,6 +196,19 @@ public class ReceiveDetails extends AppCompatActivity {
                                 }
 
                             }
+                            ReceiveDetails.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent=new Intent(ReceiveDetails.this,CartActivity.class);
+                                    intent.putExtra("cname",name.getText().toString());
+                                    intent.putExtra("cnum",numm.getText().toString());
+                                    intent.putExtra("Date",date);
+                                    intent.putExtra("actId",actid);
+                                    startActivity(intent);
+                                }
+                            });
+
+
                         }
                         else if(status.getStatusCode()==500){
                             ReceiveDetails.this.runOnUiThread(new Runnable() {
@@ -216,14 +230,7 @@ public class ReceiveDetails extends AppCompatActivity {
             };
             thread.start();
 
-            Intent intent=new Intent(this,CartActivity.class);
-            intent.putExtra("cname",name.getText().toString());
-            intent.putExtra("cnum",numm.getText().toString());
 
-
-            intent.putExtra("Date",date);
-            intent.putExtra("actId",actid);
-            startActivity(intent);
 
         }
         if(id==R.id.action_edit)

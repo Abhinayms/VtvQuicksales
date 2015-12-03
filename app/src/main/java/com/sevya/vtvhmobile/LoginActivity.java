@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     ResponseStatus status;
     Thread thread;
     String connectionResponse;
-    String response;
+    String salesmanId;
     String date;
 
 
@@ -51,15 +52,14 @@ public class LoginActivity extends AppCompatActivity {
         Date pdate=new Date();
         date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
 
-     //  testConnection();
+       //testConnection();
 
     }
 
     public void signIn(View view) {
         ButtonAnimation.animation(view);
+    try {
 
-
-       /* if (testConnection().equals("True")) {
             try {
                 IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
             } catch (Exception ex) {
@@ -87,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (status.getStatusCode() == 200) {
                                 JSONObject object = new JSONObject(status.getStatusResponse());
 
+                                salesmanId = object.getString("SalesmanId");
+
                                 if (object.getString("SalesmanId").equals("null")) {
                                     LoginActivity.this.runOnUiThread(new Runnable() {
                                         @Override
@@ -100,8 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                                     LoginActivity.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                            SharedPreferences shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = shared.edit();
+                                            editor.putInt("salesmanid", Integer.parseInt(salesmanId));
+                                            editor.commit();
 
+                                            Log.d("salesman ", "" + shared.getInt("salesmanid", 0));
+
+                                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                             startActivity(i);
                                         }
                                     });
@@ -109,8 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
 
-                            }
-                            else if(status.getStatusCode()==500){
+                            } else if (status.getStatusCode() == 500) {
                                 LoginActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -128,14 +135,14 @@ public class LoginActivity extends AppCompatActivity {
 
             };
             thread.start();
-        }else {
-            Toast.makeText(LoginActivity.this, "Host Unreachable", Toast.LENGTH_LONG).show();
 
-        }*/
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+       /* Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
-        startActivity(i);
+        startActivity(i);*/
+     }catch (Exception e)
+            {
 
+         }
     }
 
     public String testConnection() {

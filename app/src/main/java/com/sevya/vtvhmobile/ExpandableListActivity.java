@@ -60,7 +60,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         salesheader=(RelativeLayout)findViewById(R.id.sales_header);
-
+        salesheader.setVisibility(View.GONE);
         dataBaseHelper=new DataBaseAdapter(this);
         i=getIntent();
           mDate=i.getStringExtra("Date");
@@ -163,6 +163,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
             textView=(TextView)findViewById(R.id.saletextview);
             textView.setVisibility(View.INVISIBLE);
+            salesheader.setVisibility(View.VISIBLE);
 
             lv = (ListView)this.findViewById(R.id.salesList);
 

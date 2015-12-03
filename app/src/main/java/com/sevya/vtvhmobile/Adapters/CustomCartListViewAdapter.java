@@ -37,7 +37,7 @@ public class CustomCartListViewAdapter extends CursorAdapter {
         TextView modelno=(TextView)view.findViewById(R.id.p_model);
         TextView qty=(TextView)view.findViewById(R.id.p_qty);
         TextView price=(TextView)view.findViewById(R.id.p_price);
-         totalprice=(TextView)view.findViewById(R.id.p_totalprice);
+       //  totalprice=(TextView)view.findViewById(R.id.p_totalprice);
 //        String modelId=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID));
         String modelNo=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No));
         String quty=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY));
@@ -48,7 +48,7 @@ public class CustomCartListViewAdapter extends CursorAdapter {
         qty.setText(quty);
         price.setText(uPrice);
 
-        totalprice.setText(tPrice);
+      //  totalprice.setText(tPrice);
 
 
 

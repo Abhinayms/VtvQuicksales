@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +18,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private ImageButton button;
-    private EditText number;
+    private String number;
     DataBaseAdapter dataBaseHelper;
     public Context context;
     private ResponseStatus status;
@@ -59,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
     private String flatNo;
     private String mandal;
     private String prof;
+    private String country;
     String mobile;
     ProgressDialog progress;
     AlertDialog alertDialog;
+    SearchView searchView;
 
 
     @Override
@@ -74,11 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        number = (EditText) findViewById(R.id.mnumber);
+     //   number = (EditText) findViewById(R.id.mnumber);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Customer Search");
         setSupportActionBar(mToolbar);
+
       //  getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -88,28 +91,53 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawerlayout), mToolbar);
 
+        searchView=(SearchView)findViewById(R.id.search);
 
+        searchView.requestFocus();
+        searchView.setIconifiedByDefault(true);
+        searchView.onActionViewExpanded();
+        searchView.setQueryHint("enter mobile number");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // TODO Auto-generated method stub
+                number = query;
+                onSearchClick();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if(newText.length()>10)
+                {
+                    searchView.clearFocus();
+                    searchView.setFocusable(false);
+                    searchView.setFocusableInTouchMode(false);
+
+                }
+
+                number = newText;
+                return false;
+            }
+        });
+
+    }
+
+    public void customerSearch(View v)
+    {
         onSearchClick();
-
     }
 
     private void onSearchClick() {
 
-        number = (EditText) findViewById(R.id.mnumber);
-        button = (ImageButton) findViewById(R.id.imageButton);
-
-        // add button listener
-        button.setOnClickListener(new View.OnClickListener() {
+      //  number = (EditText) findViewById(R.id.mnumber);
 
 
-            @Override
-            public void onClick(View view) {
 
-                ButtonAnimation.animation(view);
-
-
-                mobile = number.getText().toString();
-
+                mobile = number;
                 if (!isValidNumber(mobile)) {
 
                     Toast.makeText(MainActivity.this, "Please enter valid 10 digit mobile number", Toast.LENGTH_SHORT).show();
@@ -216,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                                                     mandal = eachObject.getString("Mandal");
                                                     flatNo = eachObject.getString("FlatNo");
                                                     prof = eachObject.getString("Profession");
+                                                    country=eachObject.getString("Country");
 
 
                                                     MainActivity.this.runOnUiThread(new Thread(new Runnable() {
@@ -228,11 +257,11 @@ public class MainActivity extends AppCompatActivity {
                                                             i.putExtra("rb", gender);
                                                             i.putExtra("cpro", prof);
                                                             i.putExtra("cmail", email);
-                                                            i.putExtra("cadd", address1);
+                                                            i.putExtra("cadd", address1+flatNo);
                                                             i.putExtra("cln", landline);
-                                                            i.putExtra("cadd1", flatNo + street);
-                                                            i.putExtra("cadd2", city + state);
-                                                            i.putExtra("cadd3", district + mandal);
+                                                            i.putExtra("cadd1", street+city);
+                                                            i.putExtra("cadd2", state+country);
+                                                            i.putExtra("cadd3", mandal+district);
                                                             i.putExtra("actId", actId);
                                                             startActivity(i);
                                                         }
@@ -263,12 +292,13 @@ public class MainActivity extends AppCompatActivity {
                                                                 Intent i = new Intent(MainActivity.this, AddCustomer.class);
                                                                 i.putExtra("cnum", mobile);
                                                                 startActivity(i);
+                                                                progress.dismiss();
 
                                                             }
                                                         })
                                                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                                             public void onClick(DialogInterface dialog, int id) {
-
+                                                                progress.dismiss();
                                                                 dialog.cancel();
                                                             }
                                                         });
@@ -309,10 +339,7 @@ public class MainActivity extends AppCompatActivity {
                     thread.start();
                 }
 
-            }
 
-
-        });
 
     }
 
@@ -321,16 +348,16 @@ public class MainActivity extends AppCompatActivity {
         ButtonAnimation.animation(v);
 
         Intent i = new Intent(MainActivity.this, AddCustomer.class);
-        if(!isValidNumber(number.getText().toString()))
+        if(!isValidNumber(number))
         {
             Toast.makeText(MainActivity.this, "Please enter valid 10 digit mobile number", Toast.LENGTH_SHORT).show();
         }else {
-            if (number.getText().toString().length() == 0) {
+            if (number.length() == 0) {
 
                 startActivity(i);
 
             } else {
-                i.putExtra("cnum", number.getText().toString());
+                i.putExtra("cnum", number);
                 startActivity(i);
             }
         }
@@ -381,7 +408,6 @@ public class MainActivity extends AppCompatActivity {
             progress.dismiss();
         }
 
-//        alertDialog.dismiss();
 
     }
 
@@ -392,7 +418,6 @@ public class MainActivity extends AppCompatActivity {
         if ( progress!=null && progress.isShowing() ){
             progress.dismiss();
         }
-      //  alertDialog.dismiss();
 
     }
 

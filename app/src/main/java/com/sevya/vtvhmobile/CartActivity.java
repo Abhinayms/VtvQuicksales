@@ -3,6 +3,7 @@ package com.sevya.vtvhmobile;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Rect;
 import android.support.v7.app.AlertDialog;
@@ -65,6 +66,7 @@ public class CartActivity extends AppCompatActivity {
     String num;
     int count;
     List<CartModel> cartModelArrayList;
+    SharedPreferences shared;
 
 
 
@@ -72,6 +74,9 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cart);
+
+        shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
+       Log.d("actid",""+shared.getInt("salesmanid", 0));
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -247,6 +252,8 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // TOD O Auto-generated method stub
 
+
+                deleteCartItemFromDb(cartid);
                 dataBaseHelper.deleteItem(cartid);
                 populateItemsListFromDB();
                 customCartListViewAdapter.notifyDataSetChanged();
@@ -257,6 +264,65 @@ public class CartActivity extends AppCompatActivity {
         });
        alert.show();
 
+    }
+    public void deleteCartItemFromDb(String cartid)
+    {
+        cursor=dataBaseHelper.getItemOnCartID(cartid);
+        cursor.moveToFirst();
+        final CartModel cartModel=new CartModel();
+        cartModel.setActid(Actid);
+        cartModel.setSalesmanId(shared.getInt("salesmanid", 0));
+        cartModel.setSalePrice(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE)));
+        cartModel.setTotalPrice(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.TOTAL_PRICE)));
+        cartModel.setModalId(cursor.getInt(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_ID)));
+        cartModel.setQty(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.QUANTITY))));
+        cartModel.setSpId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.STOCKPOINT_ID))));
+        cartModel.setModel(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MODEL_No)));
+        cartModel.setIsDemoReq(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DEMO))));
+        cartModel.setIsInstallationReq(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.INSTALL))));
+        cartModel.setDeliveryCharges("");
+        cartModel.setCartModelId(cursor.getInt(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DBCARTMODEL_ID)));
+        cartModel.setCartId(cursor.getInt(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.DBCART_ID)));
+
+
+        thread=new Thread()
+        {
+            public void run() {
+                SOAPServiceClient soapServiceClient = new SOAPServiceClient();
+                ServiceParams modalParam = new ServiceParams(cartModel, "cartModel",CartModel.class);
+                try {
+                    status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("getDeleteCartItemsService"), modalParam);
+                    if (status.getStatusCode() == 200) {
+                        array = new JSONArray(status.getStatusResponse());
+                        for (int index = 0; index < array.length(); index++) {
+                            try {
+                                JSONObject eachObject = (JSONObject) array.get(index);
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                    else if(status.getStatusCode()==500){
+                        CartActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CartActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ;
+                }
+
+
+            }
+        };
+        thread.start();
     }
 
     public void submit(View v)
@@ -269,7 +335,7 @@ public class CartActivity extends AppCompatActivity {
                for (int i = 0; i < cursor.getCount(); i++) {
                     cartModel = new CartModel();
                     cartModel.setActid(Actid);
-                    cartModel.setSalesmanId(new Integer(76));
+                    cartModel.setSalesmanId(shared.getInt("salesmanid", 0));
 
                     String unitPrice = cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRICE));
                     cartModel.setSalePrice(unitPrice);

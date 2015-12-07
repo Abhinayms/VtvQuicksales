@@ -6,6 +6,7 @@ package com.sevya.vtvhmobile.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class Adapter extends RecyclerView.Adapter< Adapter.myViewHolder> {
 
         public myViewHolder(View itemView) {
             super(itemView);
+
             itemView.setOnClickListener(this);
             title = (TextView) itemView.findViewById(R.id.listText);
             icon = (ImageView) itemView.findViewById(R.id.listIcon);
@@ -75,7 +77,9 @@ public class Adapter extends RecyclerView.Adapter< Adapter.myViewHolder> {
         @Override
         public void onClick(View v) {
 
-            clickListener.itemClicked(v,this.getPosition());
+            Log.d("position",""+this.getPosition());
+            clickListener.itemClicked(v, this.getPosition());
+
         }
     }
     public interface ClickListener{

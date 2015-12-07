@@ -2,7 +2,7 @@
 
   "SOAPServices":[
     {
-      "soapServiceName":"deleteCartItemsService",
+      "soapServiceName":"getDeleteCartItemsService",
       "method":"DeleteCartItems"
     },
     {

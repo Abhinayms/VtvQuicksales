@@ -110,6 +110,8 @@ public class
         contentValues.put(dataBaseHelper.MODEL_ID,productsInfo.getModalId());
         contentValues.put(dataBaseHelper.QUANTITY,productsInfo.getQty());
         contentValues.put(dataBaseHelper.STOCKPOINT_ID,productsInfo.getStockPoint());
+        contentValues.put(dataBaseHelper.DBCART_ID,productsInfo.getDbCartId());
+        contentValues.put(dataBaseHelper.DBCARTMODEL_ID,productsInfo.getDbCartModelId());
 
         long id= db.insert(dataBaseHelper.Table_CART,null,contentValues);
 
@@ -191,6 +193,20 @@ public class
 
         cursor =db.query(dataBaseHelper.Table_CART, columns,where,args, null, null, null);
 
+
+        return cursor;
+    }
+
+    public Cursor getItemOnCartID(String cartid)
+    {
+        SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
+        String[] columns={dataBaseHelper.CART_ID,dataBaseHelper.ACTID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.DBCART_ID,dataBaseHelper.DBCARTMODEL_ID,dataBaseHelper.PRICE,dataBaseHelper.MODEL_ID,
+                dataBaseHelper.STOCKPOINT_ID,dataBaseHelper.MODEL_No,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE,dataBaseHelper.DEMO,dataBaseHelper.INSTALL};
+
+        String where=dataBaseHelper.CART_ID + "=?";
+        String[] args={cartid};
+
+        cursor=db.query(dataBaseHelper.Table_CART,columns,where,args,null,null,null);
 
         return cursor;
     }
@@ -340,7 +356,7 @@ public class
     public class DataBaseHelper extends SQLiteOpenHelper {
 
         private Context context;
-        private static final int DATABASE_VERSION =57;
+        private static final int DATABASE_VERSION =59;
         private static final String DATABASE_NAME = "Vtvh_Database";
         private static final String Table_CUSTOMER = "Customer_table";
         public static final String Table_CART="Cart_Table";
@@ -368,6 +384,8 @@ public class
         public static final String MODEL_No="MODEL_No";
         public static final String QUANTITY="QUANTITY";
         public static final String CART_ID="_id";
+        public static final String DBCART_ID="DBCART_ID";
+        public static final String DBCARTMODEL_ID="DBCARTMODEL_ID";
         public static final String SALES_LIST_ID="_id";
         public static final String CART_SALE_ID="id";
         public static final String SALESMAN_ID="SALESMAN_ID";
@@ -409,7 +427,7 @@ public class
 
 
         private static final String CREATE_TABLE_CART = "CREATE TABLE " + Table_CART + " (" + CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +NAME+ " VARCHAR(255)," + ACTID + " VARCHAR(255)," +
-                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," + MODEL_No + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100),"+ DEMO + " VARCHAR(100),"+ INSTALL + " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
+                "" + MOBILE_NUMBER + " INT," + PRICE + " VARCHAR(100)," + MODEL_No + " VARCHAR(100)," +TOTAL_PRICE + " VARCHAR(255)," +STOCKPOINT_ID+ " VARCHAR(100)," +DBCART_ID+ " VARCHAR(100)," +DBCARTMODEL_ID+ " VARCHAR(100),"+ MODEL_ID + " VARCHAR(255),"+ MODEL_NAME + " VARCHAR(255)," +QUANTITY+ " VARCHAR(100),"+ DEMO + " VARCHAR(100),"+ INSTALL + " VARCHAR(100)," + CREATED_DATE + " DATE DEFAULT CURRENT_DATE);";
 
 
         private static final String CREATE_TABLE_SALES_LIST = " CREATE TABLE " + Table_SALES + " (" + SALES_LIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + MOBILE_NUMBER + " VARCHAR(100)," + MODEL_ID + " VARCHAR(255)," + QUANTITY + " VARCHAR(100)," + NAME + " VARCHAR(255)," + PRICE + " VARCHAR(100), " + CART_SALE_ID + " VARCHAR(100)," + MODEL_NAME + " VARCHAR(255)," +

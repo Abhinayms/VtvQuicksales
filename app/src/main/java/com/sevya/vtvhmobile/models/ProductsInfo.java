@@ -93,6 +93,26 @@ public class ProductsInfo {
     private boolean install;
     private boolean demo;
     private String modalId;
+    private int dbCartId;
+    private int dbCartModelId;
+
+    public int getDbCartId() {
+        return dbCartId;
+    }
+
+    public void setDbCartId(int dbCartId) {
+        this.dbCartId = dbCartId;
+    }
+
+    public int getDbCartModelId() {
+        return dbCartModelId;
+    }
+
+    public void setDbCartModelId(int dbCartModelId) {
+        this.dbCartModelId = dbCartModelId;
+    }
+
+
 
     public String getActId() {
         return actId;

@@ -10,7 +10,9 @@
         android:title="@string/action_cart"
         android:orderInCategory="99"
         android:icon="@drawable/ic_action_trolley"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="ifRoom"
+        android:actionLayout="@layout/menuitemcartlayout"
+        >
 
     </item>
     <item

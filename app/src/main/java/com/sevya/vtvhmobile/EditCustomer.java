@@ -6,6 +6,7 @@ package com.sevya.vtvhmobile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -92,11 +93,15 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
     TextView selectedProfession;
     TextView profession;
     AlertDialog levelDialog;
+    SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_customer);
+        shared=getSharedPreferences("user_credentials", MODE_PRIVATE);
+
+
         dataBaseHelper=new DataBaseAdapter(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -287,7 +292,7 @@ public class EditCustomer extends AppCompatActivity implements View.OnTouchListe
         userModel.setCompanyName(cusCompNmae);
         userModel.setMandal("");
         userModel.setDuplicateIds("");
-        userModel.setUserId(new Integer(76));
+        userModel.setUserId(shared.getInt("salesmanid", 0));
         userModel.setProfession(cPro);
 
 

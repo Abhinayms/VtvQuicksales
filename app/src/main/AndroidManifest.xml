@@ -96,6 +96,7 @@
             android:label="@string/title_activity_cart"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
+            android:parentActivityName=".ReceiveDetails"
             >
             <intent-filter>
                 <action android:name="com.sevya.vtvhmobile.CartActivity" />

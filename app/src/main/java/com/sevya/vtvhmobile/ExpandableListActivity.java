@@ -2,6 +2,7 @@ package com.sevya.vtvhmobile;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class ExpandableListActivity extends AppCompatActivity{
     String mDate;
     ListView lv;
     RelativeLayout salesheader;
+    SharedPreferences shared;
 
     private ExpandableListView expandableListView;
     Intent i;
@@ -52,6 +54,10 @@ public class ExpandableListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         expandableListView = new ExpandableListView(this);
         setContentView(R.layout.activity_expandable_list);
+
+        shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
+
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
@@ -68,7 +74,7 @@ public class ExpandableListActivity extends AppCompatActivity{
 
         salesmanCart=new SalesmanCart();
         salesmanCart.setDate(mDate);
-        salesmanCart.setSalesmanId(new Integer(76));
+        salesmanCart.setSalesmanId(shared.getInt("salesmanid", 0));
         thread=new Thread() {
             public void run() {
 
@@ -97,7 +103,7 @@ public class ExpandableListActivity extends AppCompatActivity{
                                     salesListResponseModel.setSalePrice(eachObject.getString("SalePrice"));
                                     salesListResponseModel.setName(eachObject.getString("ActName"));
                                     salesListResponseModel.setMobileNumber(eachObject.getString("MobileNo"));
-                                    salesListResponseModel.setSalesManId(76);
+                                    salesListResponseModel.setSalesManId(shared.getInt("salesmanid", 0));
                                     salesListResponseModel.setDate(mDate);
 
                                     long id=dataBaseHelper.insertSalesListResponse(salesListResponseModel);
@@ -148,8 +154,7 @@ public class ExpandableListActivity extends AppCompatActivity{
     {
 
         i=getIntent();
-         mDate=i.getStringExtra("Date");
-        String salesmenId="76";
+        mDate=i.getStringExtra("Date");
         mGroupsCursor = dataBaseHelper.getAllSalesList(mDate );
         mGroupsCursor.moveToFirst();
         if(mGroupsCursor.getCount()==0)

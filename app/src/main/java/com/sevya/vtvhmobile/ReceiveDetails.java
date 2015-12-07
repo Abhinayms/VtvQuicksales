@@ -21,6 +21,7 @@ import com.sevya.vtvhmobile.webservices.SOAPServiceClient;
 import com.sevya.vtvhmobile.webservices.ServiceParams;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -48,6 +49,7 @@ public class ReceiveDetails extends AppCompatActivity {
     String customerName;
     ResponseStatus status;
     JSONArray array;
+    JSONObject obj;
     DataBaseAdapter dataBaseHelper;
 
     @Override
@@ -82,6 +84,7 @@ public class ReceiveDetails extends AppCompatActivity {
         String cadd3=i.getStringExtra("cadd3");
         String cgen=i.getStringExtra("rb");
         String cln=i.getStringExtra("cln");
+
         actid=i.getStringExtra("actId");
 
         name.setText(cname);
@@ -109,13 +112,11 @@ public class ReceiveDetails extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        /*getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);*/
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.backarrow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         onButtonClick();
+
 
     }
 
@@ -129,13 +130,12 @@ public class ReceiveDetails extends AppCompatActivity {
 
                 ButtonAnimation.animation(v);
 
-                Intent in =new Intent(ReceiveDetails.this,CartActivity.class);
-                in.putExtra("cname",name.getText().toString());
+                Intent in = new Intent(ReceiveDetails.this, CartActivity.class);
+                in.putExtra("cname", name.getText().toString());
                 in.putExtra("cnum", numm.getText().toString());
                 in.putExtra("actId", actid);
                 in.putExtra("Date", date);
                 startActivity(in);
-
 
 
             }
@@ -143,12 +143,35 @@ public class ReceiveDetails extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_receive_details, menu);
+      //  getUnpaidCart();
+
         return true;
     }
+
+   /* @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem item = menu.findItem(R.id.action_cart);
+
+        try {
+            if (!(obj.getString("Details")).equals("null")) {
+                item.setEnabled(true);
+
+            } else {
+                // disabled
+                item.setEnabled(false);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -158,8 +181,6 @@ public class ReceiveDetails extends AppCompatActivity {
         int id = item.getItemId();
         if(id==R.id.action_cart)
         {
-
-
             thread = new Thread() {
                 public void run() {
                     SOAPServiceClient soapServiceClient = new SOAPServiceClient();
@@ -167,48 +188,66 @@ public class ReceiveDetails extends AppCompatActivity {
                     try {
                         status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getGetCartItemsBasedOnMobileNoService"), new ServiceParams(mobile, "mobileNo", String.class),new ServiceParams(Integer.parseInt(actid),"Actid",Integer.class));
                         if (status.getStatusCode() == 200) {
-                            JSONObject obj=new JSONObject(status.getStatusResponse());
-                            array=obj.getJSONArray("Details");
+                            obj=new JSONObject(status.getStatusResponse());
+                            if(!(obj.getString("Details").equals("null")))
+                            {
+                                        array=obj.getJSONArray("Details");
 
-                            for (int index = 0; index < array.length(); index++) {
-                                try {
-                                    JSONObject eachObject = (JSONObject) array.get(index);
-                                    ProductsInfo productsInfo=new ProductsInfo();
-                                    productsInfo.setName(customerName);
-                                    productsInfo.setNumber(mobile);
-                                    productsInfo.setActId(actid);
-                                    productsInfo.setPrice(eachObject.getString("SalePrice"));
-                                    productsInfo.setTotalPrice(eachObject.getString("TotalPrice"));
-                                    productsInfo.setModalId(eachObject.getString("ModalId"));
-                                    productsInfo.setModelNo(eachObject.getString("Model"));
-                                    productsInfo.setStockPoint(eachObject.getString("SpId"));
-                                    productsInfo.setQty(eachObject.getString("Qty"));
-                                    productsInfo.setInstall(eachObject.getBoolean("IsInstallationReq"));
-                                    productsInfo.setDemo(eachObject.getBoolean("IsDemoReq"));
+                                        for (int index = 0; index < array.length(); index++) {
+                                        try {
+                                                JSONObject eachObject = (JSONObject) array.get(index);
+                                                ProductsInfo productsInfo = new ProductsInfo();
+                                                productsInfo.setName(customerName);
+                                                productsInfo.setNumber(mobile);
+                                                productsInfo.setActId(actid);
+                                                productsInfo.setPrice(eachObject.getString("SalePrice"));
+                                                productsInfo.setTotalPrice(eachObject.getString("TotalPrice"));
+                                                productsInfo.setModalId(eachObject.getString("ModalId"));
+                                                productsInfo.setModelNo(eachObject.getString("Model"));
+                                                productsInfo.setStockPoint(eachObject.getString("SpId"));
+                                                productsInfo.setQty(eachObject.getString("Qty"));
+                                                productsInfo.setInstall(eachObject.getBoolean("IsInstallationReq"));
+                                                productsInfo.setDemo(eachObject.getBoolean("IsDemoReq"));
+                                            productsInfo.setDbCartId(Integer.parseInt(eachObject.getString("CartId")));
+                                            productsInfo.setDbCartModelId(Integer.parseInt(eachObject.getString("CartModelId")));
 
 
 
-                                     dataBaseHelper.insertDataItems(productsInfo);
+                                                dataBaseHelper.insertDataItems(productsInfo);
 
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
+                                ReceiveDetails.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                                    Intent intent = new Intent(ReceiveDetails.this, CartActivity.class);
+                                                    intent.putExtra("cname", name.getText().toString());
+                                                    intent.putExtra("cnum", numm.getText().toString());
+                                                    intent.putExtra("Date", date);
+                                                    intent.putExtra("actId", actid);
+                                                    startActivity(intent);
+                                                    //invalidateOptionsMenu();
+                                    }
+                                });
+                            }else{
+                                ReceiveDetails.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(ReceiveDetails.this, CartActivity.class);
+                                        intent.putExtra("cname", name.getText().toString());
+                                        intent.putExtra("cnum", numm.getText().toString());
+                                        intent.putExtra("Date", date);
+                                        intent.putExtra("actId", actid);
+                                        startActivity(intent);
+                                        //invalidateOptionsMenu();
+                                    }
+                                });
 
                             }
-                            ReceiveDetails.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent intent=new Intent(ReceiveDetails.this,CartActivity.class);
-                                    intent.putExtra("cname",name.getText().toString());
-                                    intent.putExtra("cnum",numm.getText().toString());
-                                    intent.putExtra("Date",date);
-                                    intent.putExtra("actId",actid);
-                                    startActivity(intent);
-                                }
-                            });
-
-
                         }
                         else if(status.getStatusCode()==500){
                             ReceiveDetails.this.runOnUiThread(new Runnable() {
@@ -223,13 +262,10 @@ public class ReceiveDetails extends AppCompatActivity {
                         e.printStackTrace();
                         ;
                     }
-
-
                 }
 
             };
             thread.start();
-
 
 
         }

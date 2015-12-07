@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -85,6 +86,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
     ArrayAdapter<String> adapter;
     Toolbar mToolbar;
     TextView stockPoint;
+    SharedPreferences shared;
 
 
     @Override
@@ -92,11 +94,12 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dropdown);
 
+        shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
+
+
         Date pdate=new Date();
         date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
         dataBaseHelper=new DataBaseAdapter(this);
-
-
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -324,7 +327,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
                 SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                 {
                     try {
-                        status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelDetailsService"), new ServiceParams(new Integer(100), "UserId", Integer.class), new ServiceParams(Integer.parseInt(selectedModelId), "ModelId", Integer.class));
+                        status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getModelDetailsService"), new ServiceParams(shared.getInt("salesmanid",0), "UserId", Integer.class), new ServiceParams(Integer.parseInt(selectedModelId), "ModelId", Integer.class));
                         if (status.getStatusCode() == 200) {
                             array = new JSONArray(status.getStatusResponse());
                             for (int index = 0; index < array.length(); index++) {
@@ -422,6 +425,8 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
 
             productsInfo.setDemo(demoReq);
             productsInfo.setInstall(installReq);
+            productsInfo.setDbCartId(0);
+            productsInfo.setDbCartModelId(0);
 
 
             if ((autotv.getText().toString().length() == 0))

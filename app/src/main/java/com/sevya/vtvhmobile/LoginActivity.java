@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     String connectionResponse;
     String salesmanId;
     String date;
+    SharedPreferences shared;
+
 
 
     @Override
@@ -52,112 +54,110 @@ public class LoginActivity extends AppCompatActivity {
         Date pdate=new Date();
         date = new SimpleDateFormat("yyyy-MM-dd").format(pdate);
 
-       //testConnection();
+       testConnection();
 
     }
 
     public void signIn(View view) {
         ButtonAnimation.animation(view);
-    try {
+        if(testConnection().equals("True"))
+        {
+                try {
 
-            try {
-                IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-            } catch (Exception ex) {
-                if (IMEI == null)
-                    IMEI = "";
-            }
-            //Get MAC
-            try {
-
-                MAC = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).getConnectionInfo().getMacAddress();
-            } catch (Exception ex) {
-                if (MAC == null)
-                    MAC = "";
-            }
-            Log.d("Mac", "" + MAC);
-            Log.d("IMEI", "" + IMEI);
-
-
-            thread = new Thread() {
-                public void run() {
-                    SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                    {
-                        try {
-                            status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getSalesmanIdByIMEIMACService"), new ServiceParams(IMEI, "IMEI", String.class), new ServiceParams(MAC, "MAC", String.class));
-                            if (status.getStatusCode() == 200) {
-                                JSONObject object = new JSONObject(status.getStatusResponse());
-
-                                salesmanId = object.getString("SalesmanId");
-
-                                if (object.getString("SalesmanId").equals("null")) {
-                                    LoginActivity.this.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(LoginActivity.this, "Invalid Mac/Imei", Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-
-                                } else {
-
-                                    LoginActivity.this.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            SharedPreferences shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = shared.edit();
-                                            editor.putInt("salesmanid", Integer.parseInt(salesmanId));
-                                            editor.commit();
-
-                                            Log.d("salesman ", "" + shared.getInt("salesmanid", 0));
-
-                                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(i);
-                                        }
-                                    });
-
-                                }
-
-
-                            } else if (status.getStatusCode() == 500) {
-                                LoginActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(LoginActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+                    } catch (Exception ex) {
+                        if (IMEI == null)
+                            IMEI = "";
                     }
-                }
+                    //Get MAC
+                    try {
 
-            };
-            thread.start();
+                        MAC = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).getConnectionInfo().getMacAddress();
+                    } catch (Exception ex) {
+                        if (MAC == null)
+                            MAC = "";
+                    }
+                    Log.d("Mac", "" + MAC);
+                    Log.d("IMEI", "" + IMEI);
 
-       /* Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
-        startActivity(i);*/
-     }catch (Exception e)
-            {
+                    thread = new Thread() {
+                        public void run() {
+                            SOAPServiceClient soapServiceClient = new SOAPServiceClient();
+                            {
+                                try {
+                                    status = (ResponseStatus) soapServiceClient.callServiceUsingPrimitives(SOAPServices.getServices("getSalesmanIdByIMEIMACService"), new ServiceParams(IMEI, "IMEI", String.class), new ServiceParams(MAC, "MAC", String.class));
+                                    if (status.getStatusCode() == 200) {
+                                        JSONObject object = new JSONObject(status.getStatusResponse());
 
-         }
+                                        salesmanId = object.getString("SalesmanId");
+
+                                        if (object.getString("SalesmanId").equals("null")) {
+                                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(LoginActivity.this, "Invalid Mac/Imei", Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+
+                                        } else {
+
+                                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = shared.edit();
+                                                    editor.putInt("salesmanid", Integer.parseInt(salesmanId));
+                                                    editor.commit();
+
+
+                                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                                    startActivity(i);
+                                                }
+                                            });
+
+                                        }
+
+
+                                    } else if (status.getStatusCode() == 500) {
+                                        LoginActivity.this.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(LoginActivity.this, "" + status.getStatusResponse(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                    };
+                    thread.start();
+
+
+                }catch(Exception e)
+                     {
+                     }
+    }else {
+            Toast.makeText(LoginActivity.this, "Host Unreachable", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public String testConnection() {
         thread = new Thread() {
             public void run() {
-                SalesmanCart salesmanCart = new SalesmanCart();
-                salesmanCart.setSalesmanId(new Integer(10));
-                salesmanCart.setDate(date);
-                Log.d("date",""+date);
+
 
                 SOAPServiceClient soapServiceClient = new SOAPServiceClient();
-                ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
+               // ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
                 {
                     try {
-                        status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("testConnectionService"), primitiveParam);
+                        status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("testConnectionService"));
                         if (status.getStatusCode() == 200) {
                             JSONObject object = new JSONObject(status.getStatusResponse());
 

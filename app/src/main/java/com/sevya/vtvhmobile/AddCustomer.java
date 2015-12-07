@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -106,7 +107,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnTouchListen
         setContentView(R.layout.addcustomer);
 
         shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
-        shared.getInt("salesmanid",0);
+        shared.getInt("salesmanid", 0);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");

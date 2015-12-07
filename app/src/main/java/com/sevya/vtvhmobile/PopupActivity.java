@@ -2,6 +2,7 @@ package com.sevya.vtvhmobile;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +62,7 @@ public class PopupActivity extends AppCompatActivity {
     ResponseStatus status;
     Cursor mergecusor;
     String mergeActId;
+    SharedPreferences shared;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +82,9 @@ public class PopupActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         num = i.getStringExtra("cnum");
-      tl = (TableLayout) findViewById(R.id.mergetable);
+        tl = (TableLayout) findViewById(R.id.mergetable);
+
+        shared = getSharedPreferences("user_credentials", MODE_PRIVATE);
 
         populateSameCustomersList();
     }
@@ -398,7 +402,7 @@ public class PopupActivity extends AppCompatActivity {
                         userModel.setIsPrimaryAct(datacursor.getString(datacursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PRIMARYACT)));
                         userModel.setEmail(datacursor.getString(datacursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.EMAIL)));
                         userModel.setFlatNo(datacursor.getString(datacursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.FLATNO)));
-                        userModel.setUserId(new Integer(76));
+                        userModel.setUserId(shared.getInt("salesmanid", 0));
                         userModel.setProfession(datacursor.getString(datacursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.PROFESSION)));
 
                         buffer = new StringBuffer(",");

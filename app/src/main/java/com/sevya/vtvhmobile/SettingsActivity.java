@@ -185,15 +185,13 @@ public class SettingsActivity extends AppCompatActivity {
         thread=new Thread() {
             public void run() {
 
-                SalesmanCart salesmanCart=new SalesmanCart();
-                salesmanCart.setSalesmanId(new Integer(10));
-                salesmanCart.setDate(date);
+
                 SOAPServiceClient soapServiceClient=new SOAPServiceClient();
                 //ServiceParams modalParam = new ServiceParams(userModel,"userModel", UserModel.class);
-                 ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
+                // ServiceParams primitiveParam = new ServiceParams(salesmanCart, "salesmanCart", SalesmanCart.class);
                 {
                     try {
-                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("testConnectionService"), primitiveParam);
+                            status = (ResponseStatus) soapServiceClient.callService(SOAPServices.getServices("testConnectionService"));
                         if (status.getStatusCode() == 200) {
                             JSONObject object = new JSONObject(status.getStatusResponse());
 

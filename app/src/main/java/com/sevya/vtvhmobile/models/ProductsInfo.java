@@ -83,18 +83,6 @@ public class ProductsInfo {
     public void setDemo(boolean demo) {
         this.demo = demo;
     }
-    public String totalPrice;
-    private String name;
-    private String number;
-    private String modelNo;
-    private String stockPoint;
-    private String qty;
-    private String price;
-    private boolean install;
-    private boolean demo;
-    private String modalId;
-    private int dbCartId;
-    private int dbCartModelId;
 
     public int getDbCartId() {
         return dbCartId;
@@ -121,6 +109,20 @@ public class ProductsInfo {
     public void setActId(String actId) {
         this.actId = actId;
     }
+
+    public String totalPrice;
+    private String name;
+    private String number;
+    private String modelNo;
+    private String stockPoint;
+    private String qty;
+    private String price;
+    private boolean install;
+    private boolean demo;
+    private String modalId;
+    private int dbCartId;
+    private int dbCartModelId;
+
 
     private String actId;
 }

@@ -16,6 +16,7 @@ public class SalesListResponseModel {
     private String mobileNumber;
     private int salesManId;
     private String date;
+    private String purchaseStatus;
 
     public String getDate() {
         return date;
@@ -103,5 +104,13 @@ public class SalesListResponseModel {
 
     public void setSalesManId(int salesManId) {
         this.salesManId = salesManId;
+    }
+
+    public String getPurchaseStatus() {
+        return purchaseStatus;
+    }
+
+    public void setPurchaseStatus(String purchaseStatus) {
+        this.purchaseStatus = purchaseStatus;
     }
 }

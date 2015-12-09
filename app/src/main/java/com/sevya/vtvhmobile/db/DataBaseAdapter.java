@@ -89,6 +89,7 @@ public class
         contentValues.put(dataBaseHelper.SALESMAN_ID, salesListResponseModel.getSalesManId());
         contentValues.put(dataBaseHelper.CARTMODEL_ID, salesListResponseModel.getCartModelId());
         contentValues.put(dataBaseHelper.DATE_SALESLIST,salesListResponseModel.getDate());
+        contentValues.put(dataBaseHelper.STATUS,salesListResponseModel.getPurchaseStatus());
 
         long id=db.insert(dataBaseHelper.Table_SALES,null,contentValues);
 
@@ -168,7 +169,7 @@ public class
     {
 
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
-        String[] columns={dataBaseHelper.SALES_LIST_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.SALESMAN_ID,dataBaseHelper.DATE_SALESLIST};
+        String[] columns={dataBaseHelper.SALES_LIST_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.SALESMAN_ID,dataBaseHelper.DATE_SALESLIST,dataBaseHelper.STATUS};
         String where=dataBaseHelper.DATE_SALESLIST +  "=?"; //+ " AND " + dataBaseHelper.SALESMAN_ID + "=?" ;
         String[] args={date};
         String groupBy=dataBaseHelper.NAME+","+dataBaseHelper.MOBILE_NUMBER+","+dataBaseHelper.DATE_SALESLIST;
@@ -232,7 +233,7 @@ public class
         SQLiteDatabase db=dataBaseHelper.getWritableDatabase();
 
         String[] columns={dataBaseHelper.SALES_LIST_ID,dataBaseHelper.NAME,dataBaseHelper.MOBILE_NUMBER,dataBaseHelper.PRICE,
-                dataBaseHelper.MODEL_NAME,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE};
+                dataBaseHelper.MODEL_NAME,dataBaseHelper.MODEL_ID,dataBaseHelper.QUANTITY,dataBaseHelper.TOTAL_PRICE,dataBaseHelper.STATUS};
 
         String where=dataBaseHelper.MOBILE_NUMBER + "=?" + " AND " + dataBaseHelper.DATE_SALESLIST +"=?" ;
 

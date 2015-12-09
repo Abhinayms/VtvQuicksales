@@ -83,12 +83,12 @@ public class PurchaseInfo extends AppCompatActivity {
         modelId=i.getStringExtra("modelId");
         modelName=i.getStringExtra("modelName");
         qty=i.getStringExtra("qty");*/
-        status=i.getStringExtra("status");
+       status=i.getStringExtra("status");
         date=i.getStringExtra("date");
 
         txtname.setText(name);
         txtnumber.setText(number);
-        txtstatus.setText("Unpaid");
+        txtstatus.setText(status);
 
          dataBaseHelper=new DataBaseAdapter(this);
 
@@ -155,5 +155,11 @@ public class PurchaseInfo extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         dataBaseHelper.deleteSalesTable();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(PurchaseInfo.this,GetDetailsByDate.class);
+        startActivity(i);
     }
 }

@@ -3,6 +3,7 @@ package com.sevya.vtvhmobile.Adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,20 +45,20 @@ public class CustomSaleListViewAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
+        Log.d("cursor length", ""+cursor.getCount());
+
          text_name=(TextView)view.findViewById(R.id.s_name);
          text_mobile=(TextView)view.findViewById(R.id.s_mobile);
 
 
+
          name=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.NAME));
          mobile=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.MOBILE_NUMBER));
-        status="not purchased";
+         status=cursor.getString(cursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.STATUS));
 
 
         text_name.setText(name);
         text_mobile.setText(mobile);
-
-
-
 
 
 
@@ -67,15 +68,15 @@ public class CustomSaleListViewAdapter extends CursorAdapter {
 
         View view = super.getView(position, convertView, parent);
 
-        if(status.equals("not purchased"))
+        if(status.equals("NotPurchased"))
         {
             text_name.setTextColor(Color.parseColor("#F44336"));
             text_mobile.setTextColor(Color.parseColor("#F44336"));
         }
        else
         {
-            text_name.setBackgroundColor(Color.parseColor("#4CAF50"));
-            text_mobile.setBackgroundColor(Color.parseColor("#4CAF50"));
+            text_name.setTextColor(Color.parseColor("#4CAF50"));
+            text_mobile.setTextColor(Color.parseColor("#4CAF50"));
         }
         return view;
     }

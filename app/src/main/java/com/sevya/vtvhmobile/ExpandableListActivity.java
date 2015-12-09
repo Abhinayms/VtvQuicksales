@@ -69,7 +69,7 @@ public class ExpandableListActivity extends AppCompatActivity{
         salesheader.setVisibility(View.GONE);
         dataBaseHelper=new DataBaseAdapter(this);
         i=getIntent();
-          mDate=i.getStringExtra("Date");
+        mDate=i.getStringExtra("Date");
 
 
         salesmanCart=new SalesmanCart();
@@ -104,6 +104,7 @@ public class ExpandableListActivity extends AppCompatActivity{
                                     salesListResponseModel.setName(eachObject.getString("ActName"));
                                     salesListResponseModel.setMobileNumber(eachObject.getString("MobileNo"));
                                     salesListResponseModel.setSalesManId(shared.getInt("salesmanid", 0));
+                                    salesListResponseModel.setPurchaseStatus(eachObject.getString("PurchaseStatus"));
                                     salesListResponseModel.setDate(mDate);
 
                                     long id=dataBaseHelper.insertSalesListResponse(salesListResponseModel);
@@ -191,7 +192,7 @@ public class ExpandableListActivity extends AppCompatActivity{
                     intent.putExtra("name", name);
                     intent.putExtra("mobile", mobile);
                     intent.putExtra("date",mDate);
-                    intent.putExtra("status", "not purchased");
+                   intent.putExtra("status", mGroupsCursor.getString(mGroupsCursor.getColumnIndex(DataBaseAdapter.DataBaseHelper.STATUS)));
                     startActivity(intent);
 
 

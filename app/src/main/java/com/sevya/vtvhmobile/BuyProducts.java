@@ -530,7 +530,7 @@ public class BuyProducts extends AppCompatActivity  implements OnTouchListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i=new Intent(BuyProducts.this,ReceiveDetails.class);
+        Intent i=new Intent(BuyProducts.this,CartActivity.class);
         startActivity(i);
     }
 }

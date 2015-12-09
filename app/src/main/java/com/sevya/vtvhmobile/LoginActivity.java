@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public String testConnection() {
+
         thread = new Thread() {
             public void run() {
 
